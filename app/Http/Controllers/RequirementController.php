@@ -12,9 +12,18 @@ class RequirementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        if($request->has('type') && $request->type=="requirements"){
+            $requirements = Requirement::all();
+            $text = "requirements";
+        }
+        else if($request->has('type') && $request->type=="bugs"){
+            $requirements = Requirement::all();
+            $text = "bugs";
+        }
+        return view('requirements.index')->with(compact('requirements','text'));
     }
 
     /**
@@ -22,9 +31,12 @@ class RequirementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $requirement = new Requirement();
+        $text = $request->type;
+        return view('requirements.create')->with(compact('requirement','text'));
     }
 
     /**
@@ -36,6 +48,21 @@ class RequirementController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'type'=>'required',
+            'title' => 'required|max:50',
+            'description' => 'required',
+            'priority' => 'required',
+            'due_to' => 'required',
+        ]);
+        Requirement::create([
+            'type'=>$request->type,
+            'title'=>$request->title,
+            'description'=>$request->description,
+            'priority'=>$request->priority,
+            'due_to'=>$request->due_to
+        ]);
+
     }
 
     /**

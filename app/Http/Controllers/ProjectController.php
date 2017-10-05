@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\User;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -15,6 +16,8 @@ class ProjectController extends Controller
     public function index()
     {
         //
+        $projects = Project::all();
+        return view('projects.index')->with(compact('projects'));
     }
 
     /**
@@ -25,6 +28,9 @@ class ProjectController extends Controller
     public function create()
     {
         //
+        $project = new Project();
+        $users = User::all()->pluck('email','id');
+        return view('projects.create')->with(compact('project','users'));
     }
 
     /**
@@ -36,6 +42,34 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required|max:50',
+            'description' => 'required',
+        ]);
+        if($request->toogle_user==='on'){
+            $request->validate([
+                'username' => 'required|max:50',
+                'email' => 'required',
+                'password' => 'required',
+            ]);
+            $user = User::create([
+                'name'=>$request->username,
+                'email'=>$request->email,
+                'password'=>$request->password
+            ]);
+        }else{
+            $request->validate([
+                'user' => 'required'
+            ]);
+        }
+        
+        $project = Project::create($request->input());
+        if(isset($user) || $user !== null)
+        {
+            $user->projects()->attach($project->id);
+        }
+        
+        return redirect()->route('projects.index');
     }
 
     /**

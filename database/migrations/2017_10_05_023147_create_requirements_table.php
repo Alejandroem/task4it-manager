@@ -19,7 +19,7 @@ class CreateRequirementsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->integer('type');
+            $table->string('type');
             $table->string('title');
             $table->text('description');
             $table->double('rate','15','2')->nullable();

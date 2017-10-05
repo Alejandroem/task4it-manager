@@ -7,24 +7,31 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                <a class="nav-link" href="{{ route('users.index') }}">
+                    <i class="fa fa-fw fa-user"></i>
+                    <span class="nav-link-text">Users</span>
+                </a>
+            </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ route('projects.index') }}">
                     <i class="fa fa-fw fa-book"></i>
                     <span class="nav-link-text">Projects</span>
                 </a>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{{ route('requirements.index',['type'=>'requirements']) }}">
                     <i class="fa fa-fw fa-check-square-o"></i>
                     <span class="nav-link-text">Requirements</span>
                 </a>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="{{ route('bugs.index',['type'=>'bugs']) }}">
                     <i class="fa fa-fw fa-bug"></i>
                     <span class="nav-link-text">Bugs</span>
                 </a>
             </li>
+
         </ul>
 
         <ul class="navbar-nav sidenav-toggler">
