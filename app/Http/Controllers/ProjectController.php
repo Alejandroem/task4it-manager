@@ -47,6 +47,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         //
+        $user = null;
         $request->validate([
             'name' => 'required|max:50',
             'description' => 'required',

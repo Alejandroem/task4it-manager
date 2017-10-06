@@ -13,6 +13,10 @@
     </div>
     <div class="col-md-4">
         <div class="form-group">
+                {{Form::label('project', 'Select a project:')}} 
+                {{Form::select('project', $projects,null,['placeholder'=>'Select a project...','class' => 'form-control'])}}
+        </div>
+        <div class="form-group">
                 {{Form::label('priority', 'Priority: (1->100)')}} 
                 {{Form::number('priority', null,['min'=>1,'max'=>100,'class' => 'form-control'])}}
         </div>

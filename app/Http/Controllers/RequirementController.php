@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Requirement;
+use App\Project;
 use Illuminate\Http\Request;
-
+use Auth;
+use Carbon\Carbon;
 class RequirementController extends Controller
 {
 
@@ -20,14 +22,8 @@ class RequirementController extends Controller
     public function index(Request $request)
     {
         //
-        if($request->has('type') && $request->type=="requirements"){
-            $requirements = Requirement::all();
-            $text = "requirements";
-        }
-        else if($request->has('type') && $request->type=="bugs"){
-            $requirements = Requirement::all();
-            $text = "bugs";
-        }
+        $requirements = Requirement::where('type','=',$request->type)->get();
+        $text = $request->type;
         return view('requirements.index')->with(compact('requirements','text'));
     }
 
@@ -41,7 +37,8 @@ class RequirementController extends Controller
         //
         $requirement = new Requirement();
         $text = $request->type;
-        return view('requirements.create')->with(compact('requirement','text'));
+        $projects = Project::all()->pluck('name','id');
+        return view('requirements.create')->with(compact('requirement','text','projects'));
     }
 
     /**
@@ -54,6 +51,7 @@ class RequirementController extends Controller
     {
         //
         $request->validate([
+            'project'=>'required',
             'type'=>'required',
             'title' => 'required|max:50',
             'description' => 'required',
@@ -62,12 +60,15 @@ class RequirementController extends Controller
         ]);
         Requirement::create([
             'type'=>$request->type,
+            'project_id'=>$request->project,
+            'user_id'=>Auth::user()->id,
+            'type'=>$request->type,
             'title'=>$request->title,
             'description'=>$request->description,
             'priority'=>$request->priority,
-            'due_to'=>$request->due_to
+            'due_to'=>Carbon::createFromFormat('m/d/Y', $request->due_to)->format('Y-m-d')
         ]);
-
+        return redirect()->route('requirements.index',['type'=>$request->type]);
     }
 
     /**

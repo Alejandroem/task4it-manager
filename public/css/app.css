@@ -35,6 +35,9 @@ body.fixed-nav {
   .scroll-to-top i {
     font-weight: 800; }
 
+.table.dataTable {
+  font-size: 12px; }
+
 .smaller {
   font-size: 0.7rem; }
 

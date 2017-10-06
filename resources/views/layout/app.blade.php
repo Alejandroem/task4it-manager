@@ -19,7 +19,7 @@
     <link href="{{ asset('css/app.min.css')}}" rel="stylesheet">
 </head>
 
-<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<body class="fixed-nav sticky-footer bg-dark sidenav-toggled" id="page-top">
     @include('layout.partials.nav');
 
     <div class="content-wrapper">
@@ -50,7 +50,7 @@
     <script src="{{ asset('js/sb-admin-charts.min.js')}}"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <script>
-       @yield('script');
+        @yield('script');
     </script>
     </div>
 </body>
