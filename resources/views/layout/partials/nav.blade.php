@@ -7,25 +7,25 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
                 <a class="nav-link" href="{{ route('users.index') }}">
                     <i class="fa fa-fw fa-user"></i>
                     <span class="nav-link-text">Users</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Projects">
                 <a class="nav-link" href="{{ route('projects.index') }}">
                     <i class="fa fa-fw fa-book"></i>
                     <span class="nav-link-text">Projects</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Requirements">
                 <a class="nav-link" href="{{ route('requirements.index',['type'=>'requirements']) }}">
                     <i class="fa fa-fw fa-check-square-o"></i>
                     <span class="nav-link-text">Requirements</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bugs">
                 <a class="nav-link" href="{{ route('bugs.index',['type'=>'bugs']) }}">
                     <i class="fa fa-fw fa-bug"></i>
                     <span class="nav-link-text">Bugs</span>

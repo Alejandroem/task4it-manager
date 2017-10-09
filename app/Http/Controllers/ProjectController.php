@@ -98,6 +98,10 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         //
+        $users = User::whereNotIn('id',$project->users->pluck('id'))
+        ->get()
+        ->pluck('name','id');
+        return view('projects.edit')->with(compact('project','users'));
     }
 
     /**
@@ -110,6 +114,13 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         //
+        $request->validate([
+            'name'=>'required'
+        ]);
+        
+        $project->users()->sync($request->users);
+        $project->users()->attach($request->newUsers);
+        return redirect()->route('projects.index');
     }
 
     /**
@@ -122,4 +133,6 @@ class ProjectController extends Controller
     {
         //
     }
+
+
 }

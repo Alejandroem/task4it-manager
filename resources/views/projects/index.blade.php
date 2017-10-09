@@ -19,6 +19,7 @@
                         <th>Name</th>
                         <th>Description</th>
                         <th>Created at</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 {{--
@@ -35,6 +36,11 @@
                         <td>{{$project->name}}</td>
                         <td>{{$project->description}}</td>
                         <td>{{$project->created_at->toFormattedDateString()}}</td>
+                        <td>
+                            <a href="{{ route('projects.edit',['id'=>$project->id]) }}" title="Asign users">
+                                <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>
+                            </a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
