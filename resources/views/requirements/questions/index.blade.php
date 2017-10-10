@@ -1,7 +1,8 @@
 @extends('layout.app')
 
 @section('content')
-<a class="btn btn-primary" href="{{route($requirement->type.'.index',['type'=>$requirement->type])}}">Regresar</a>
+<a class="btn btn-primary" href="{{route($requirement->type.'.index',['type'=>$requirement->type])}}">Return</a>
+<a class="btn btn-primary" href="{{route('requirements.questions.create',['requirement'=>$requirement->id])}}">Create</a>
 <div class="card">
   <div class="card-body">
     <h4 class="card-title">{{ $requirement->title }}</h4>

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
     //
+    protected $guarded=[];
 
     public function requirement(){
         return $this->belongsTo('App\Requirement');

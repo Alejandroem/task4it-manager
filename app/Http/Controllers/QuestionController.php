@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Question;
 use App\Requirement;
 use Illuminate\Http\Request;
-
+use Auth;
 class QuestionController extends Controller
 {
 
@@ -30,20 +30,36 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Requirement $requirement = null)
+    public function create(Requirement $requirement)
     {
         //
+        return view('requirements.questions.create')->with(compact('requirement'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response  
      */
-    public function store(Requirement $requirement = null,Request $request)
+    public function store(Requirement $requirement,Request $request)
     {
         //
+        $request->validate([
+            'response'=>'required'
+        ]);
+        
+        $newQuestion = Question::create([
+            'user_id'=>Auth::id(),
+            'requirement_id'=>$requirement->id,
+            'content'=>$request->response
+        ]);
+        if($request->has('question')){
+            $question = Question::find($request->question);
+            $newQuestion->question_id = $question->id;
+            $question->save();
+        }
+        return redirect()->route('requirements.questions.index',['requirement'=>$requirement->id]);
     }
 
     /**
