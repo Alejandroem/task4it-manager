@@ -20,7 +20,7 @@ class CreateQuestionsTable extends Migration
             $table->integer('requirement_id')->unsigned();
             $table->foreign('requirement_id')->references('id')->on('requirements')->onDelete('cascade');
             $table->integer('question_id')->unsigned()->nullable();
-            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');;
+            $table->foreign('question_id')->references('id')->on('questions');
             $table->text('content');
             $table->timestamps();
         });

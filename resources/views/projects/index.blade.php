@@ -38,7 +38,7 @@
                         <td>{{$project->created_at->toFormattedDateString()}}</td>
                         <td>
                             <a href="{{ route('projects.edit',['id'=>$project->id]) }}" title="Asign users">
-                                <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>
+                                <i class="btn btn-primary fa fa-user-plus fa-lg" aria-hidden="true"></i>
                             </a>
                         </td>
                     </tr>

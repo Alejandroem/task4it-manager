@@ -20,6 +20,7 @@ Route::resource('projects','ProjectController');
 Route::resource('requirements','RequirementController');
 Route::resource('bugs','RequirementController');
 Route::resource('users','UserController');
+Route::resource('requirements.questions','QuestionController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');

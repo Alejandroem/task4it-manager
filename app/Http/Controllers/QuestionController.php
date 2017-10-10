@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Question;
+use App\Requirement;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -17,9 +18,11 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Requirement $requirement)
     {
         //
+        $questions = $requirement->questions()->whereNull('question_id')->get();
+        return view ('requirements.questions.index')->with(compact('requirement','questions'));
     }
 
     /**
@@ -27,7 +30,7 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Requirement $requirement = null)
     {
         //
     }
@@ -38,7 +41,7 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Requirement $requirement = null,Request $request)
     {
         //
     }
@@ -49,7 +52,7 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function show(Question $question)
+    public function show(Requirement $requirement = null, Question $question)
     {
         //
     }
@@ -60,7 +63,7 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question)
+    public function edit(Requirement $requirement = null, Question $question)
     {
         //
     }
@@ -72,7 +75,7 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(Requirement $requirement = null, Request $request, Question $question)
     {
         //
     }
@@ -83,7 +86,7 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function destroy(Requirement $requirement = null, Question $question)
     {
         //
     }

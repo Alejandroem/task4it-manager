@@ -27,6 +27,7 @@
                         <th>Payed</th>
                         <th>Estimated delivery</th>
                         <th>Created</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 {{--
@@ -103,6 +104,11 @@
                         </td>
                         <td>{{$requirement->due_to->toFormattedDateString()}}</td>
                         <td>{{$requirement->created_at->toFormattedDateString()}}</td>
+                        <td>
+                            <a href="{{route('requirements.questions.index',['bug'=>$requirement->id])}}">
+                                <i class="btn btn-primary fa fa-comments fa-lg" aria-hidden="true"></i>
+                            </a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
