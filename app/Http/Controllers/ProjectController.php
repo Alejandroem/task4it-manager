@@ -51,6 +51,7 @@ class ProjectController extends Controller
         $request->validate([
             'name' => 'required|max:50',
             'description' => 'required',
+            'budget'=>'required|numeric|min:0'
         ]);
         if($request->toogle_user==='on'){
             $request->validate([

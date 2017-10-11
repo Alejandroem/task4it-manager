@@ -18,6 +18,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Budget</th>
                         <th>Created at</th>
                         <th>Actions</th>
                     </tr>
@@ -35,6 +36,7 @@
                     <tr>
                         <td>{{$project->name}}</td>
                         <td>{{$project->description}}</td>
+                        <td>${{$project->budget}}</td>
                         <td>{{$project->created_at->toFormattedDateString()}}</td>
                         <td>
                             <a href="{{ route('projects.edit',['id'=>$project->id]) }}" title="Asign users">
