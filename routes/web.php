@@ -16,7 +16,7 @@ Route::get('/', function () {
 })->middleware('auth');
 
 Route::resource('projects','ProjectController');
-
+Route::resource('projects.milestones','MilestoneController');
 Route::resource('requirements','RequirementController');
 Route::resource('bugs','RequirementController');
 Route::resource('users','UserController');

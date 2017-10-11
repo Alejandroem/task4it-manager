@@ -12,30 +12,29 @@
     "devDependencies": {
         "axios": "^0.16.2",
         "bootstrap-sass": "^3.3.7",
-        "cross-env": "^5.0.1",
-        "gulp-sass": "^3.1.0",
-        "jquery": "^3.1.1",
-        "laravel-mix": "^1.0",
-        "lodash": "^4.17.4",
-        "vue": "^2.1.10",
         "browser-sync": "2.18.13",
+        "cross-env": "^5.0.1",
         "gulp": "^3.9.1",
         "gulp-clean-css": "3.7.0",
         "gulp-header": "1.8.9",
         "gulp-html-beautify": "^1.0.1",
         "gulp-pug": "^3.3.0",
         "gulp-rename": "^1.2.2",
-        "gulp-uglify": "3.0.0"
+        "gulp-sass": "^3.1.0",
+        "gulp-uglify": "3.0.0",
+        "jquery": "^3.1.1",
+        "laravel-mix": "^1.0",
+        "lodash": "^4.17.4",
+        "vue": "^2.1.10"
     },
     "dependencies": {
-        "gulp": "^3.9.1",
-        "require-dir": "^0.3.2",
         "bootstrap": "^4.0.0-beta",
         "chart.js": "2.6.0",
         "datatables.net-bs4": "1.10.15",
         "font-awesome": "4.7.0",
         "jquery": "^3.2.1",
         "jquery.easing": "^1.4.1",
-        "popper.js": "1.12.3"
+        "popper.js": "1.12.3",
+        "require-dir": "^0.3.2"
     }
 }

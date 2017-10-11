@@ -8,8 +8,3 @@
     @include('layout.errors')
 </div>
 @stop
-@section('script')
-    $(document).ready(function() {
-        $('.datepicker').datepicker();
-    });
-@stop

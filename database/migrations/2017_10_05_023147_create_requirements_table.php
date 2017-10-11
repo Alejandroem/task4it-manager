@@ -23,7 +23,7 @@ class CreateRequirementsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->double('rate','15','2')->nullable();
-            $table->double('percentage','2','2')->nullable();
+            $table->double('percentage','5','2')->nullable();
             $table->integer('status')->default(1);
             $table->integer('priority')->default(100);
             $table->boolean('payed')->default(0);
