@@ -24,6 +24,7 @@
         {{Form::close() }}
     @include('layout.errors')
 </div>
+
 @stop
 @section('script')
     $('#toogle_user').click(function(){

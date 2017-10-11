@@ -50,6 +50,9 @@
     <script src="{{ asset('js/sb-admin-charts.min.js')}}"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <script>
+        $(document).ready(function() {
+            $('.datepicker').datepicker();
+        });
         @yield('script');
     </script>
     </div>

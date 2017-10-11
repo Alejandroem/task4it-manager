@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Milestone;
+use App\Project;
 use Illuminate\Http\Request;
 
 class MilestoneController extends Controller
@@ -22,9 +23,11 @@ class MilestoneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Project $project)
     {
         //
+        $error_code = 5;
+        return redirect()->back()->with('error_code', ['id'=>$project->id,'name'=>$project->name]);
     }
 
     /**
@@ -36,6 +39,7 @@ class MilestoneController extends Controller
     public function store(Request $request)
     {
         //
+        dd($request->dates);
     }
 
     /**
