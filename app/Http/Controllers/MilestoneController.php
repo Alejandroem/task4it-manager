@@ -36,10 +36,23 @@ class MilestoneController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Project $project, Request $request)
     {
         //
-        dd($request->dates);
+        $request->validate([
+            'dates'=>'required',
+            'percentages'=>'required'
+        ]);
+        $merged = array_combine($request->percentages, $request->dates);
+        foreach($merged as $key => $value)
+        {
+            Milestone::create([
+                'project_id'=>$project->id,
+                'percentage'=>$key,
+                'due_to'=>$value
+            ]);
+        }
+        return redirect()->back()->with('error_code', ['id'=>$project->id,'name'=>$project->name]);
     }
 
     /**

@@ -52,6 +52,7 @@
             </table>
         </div>
     </div>
+    @include('layout.errors')
     {{--<div class="card-footer small text-muted">Updated today at 11:59 PM</div> --}}
 </div>
 
@@ -79,14 +80,14 @@
 
         $('#add-to-list').click(function(){
             var percentage = $('#percentage').val();
-            
-            var max = $('#percentage').attr("max"); 
-            $('#percentage').attr("max",max-percentage);
-            
-            $('#percentage').val('');
             var date = $('#due_to').val();
-            $('#due_to').val('');
-            if(date!=="" || percentage!=="" ){
+
+            if(date!=="" && percentage!=="" ){
+                var max = $('#percentage').attr("max");
+                $('#percentage').attr("max",max-percentage);
+                $('#percentage').val('');
+                $('#due_to').val('');
+
                 $("#milestones-list").append(`
                     <div class="row">
                         <input type=\"text\" class=\"form-control col-md-6 percentages\" readonly value=\"`+percentage+`\" name=\"percentages[]\">
@@ -95,21 +96,24 @@
                     </div>
                 `);
                 $(".delete-milestone").click(function(){
-                    console.log($(this).siblings('.percentages'));
                     var percentage = $(this).siblings('.percentages').val();
-                    console.log(percentage);
                     var max = $('#percentage').attr("max");
-                    console.log(max); 
-                    console.log(max+percentage); 
                     $('#percentage').attr("max",parseInt(max)+parseInt(percentage));
                     $(this).parent().remove();
+                    $("#create-milestones").prop('disabled',true);
                 });
-                
+                var total = 0;
+                $(".percentages").each(function(){
+                    total += parseInt($(this).val());
+                });
+                if(total===100)
+                {
+                    $("#create-milestones").prop('disabled',false);
+                }    
             }
             else{
                 alert("Error: you must fill both fields");
             }
-
         });
     });
     @endif

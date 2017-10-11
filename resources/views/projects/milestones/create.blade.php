@@ -33,9 +33,10 @@
         </ul>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Publish response</button>
+            <button type="submit" class="btn btn-primary" id="create-milestones" disabled>Create response</button>
         </div>
     {{Form::close()}}
+    @include('layout.errors')
     </form>
     </div>
 </div>
