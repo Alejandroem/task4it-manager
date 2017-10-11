@@ -42,9 +42,15 @@
                             <a href="{{ route('projects.edit',['id'=>$project->id]) }}" title="Asign users">
                                 <i class="btn btn-primary fa fa-user-plus fa-lg" aria-hidden="true"></i>
                             </a>
-                            <a href="{{ route('projects.milestones.create',['id'=>$project->id]) }}" title="Create milestones">
-                                <i class="btn btn-primary fa fa-flag fa-lg" aria-hidden="true"></i>
-                            </a>
+                            @if($project->milestones->count()==0)
+                                <a href="{{ route('projects.milestones.create',['id'=>$project->id]) }}" title="Create milestones">
+                                    <i class="btn btn-primary fa fa-flag fa-lg" aria-hidden="true"></i>
+                                </a>
+                            @else
+                                <a href="{{ route('projects.milestones.index',['id'=>$project->id]) }}" title="Show milestones">
+                                    <i class="btn btn-primary fa fa-flag-checkered fa-lg" aria-hidden="true"></i>
+                                </a>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
@@ -66,8 +72,8 @@
         $('#milestones').modal('show');
 
         $( "#percentage" ).change(function() {
-            var max = parseInt($(this).attr('max'));
-            var min = parseInt($(this).attr('min'));
+            var max = parseFloat($(this).attr('max'));
+            var min = parseFloat($(this).attr('min'));
             if ($(this).val() > max)
             {
                 $(this).val(max);
@@ -98,13 +104,13 @@
                 $(".delete-milestone").click(function(){
                     var percentage = $(this).siblings('.percentages').val();
                     var max = $('#percentage').attr("max");
-                    $('#percentage').attr("max",parseInt(max)+parseInt(percentage));
+                    $('#percentage').attr("max",parseFloat(max)+parseFloat(percentage));
                     $(this).parent().remove();
                     $("#create-milestones").prop('disabled',true);
                 });
                 var total = 0;
                 $(".percentages").each(function(){
-                    total += parseInt($(this).val());
+                    total += parseFloat($(this).val());
                 });
                 if(total===100)
                 {

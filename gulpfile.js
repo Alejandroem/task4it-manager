@@ -90,6 +90,13 @@ gulp.task('copy', function() {
         'node_modules/datatables.net-bs4/css/*.css'
     ])
     .pipe(gulp.dest('public/vendor/datatables/'))
+
+ /*    gulp.src([
+        'node_modules/timelinejs-slider/dist/js/*.js',
+        'node_modules/timelinejs-slider/dist/css/*.css',
+        'node_modules/timelinejs-slider/dist/js/*.img'
+    ])
+    .pipe(gulp.dest('public/vendor/timelinejs-slider/')) */
 })
 
 // Default task

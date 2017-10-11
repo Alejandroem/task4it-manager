@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Milestone;
 use App\Project;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 class MilestoneController extends Controller
 {
     /**
@@ -13,9 +13,10 @@ class MilestoneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Project $project)
     {
         //
+        return view ('projects.milestones.index')->with(compact('project'));
     }
 
     /**
@@ -48,11 +49,11 @@ class MilestoneController extends Controller
         {
             Milestone::create([
                 'project_id'=>$project->id,
-                'percentage'=>$key,
-                'due_to'=>$value
+                'percentage'=>(float)$key,
+                'due_to'=>Carbon::createFromFormat('m/d/Y', $value)->format('Y-m-d')
             ]);
         }
-        return redirect()->back()->with('error_code', ['id'=>$project->id,'name'=>$project->name]);
+        return view('projects.index');
     }
 
     /**

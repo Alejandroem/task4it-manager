@@ -8,6 +8,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Task4It Manager</title>
+    
+    <link src="{{ asset('vendor/timelinejs-slider/timeline.min.css')}}" rel="stylesheet">
     <!-- Bootstrap core CSS-->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Custom fonts for this template-->
@@ -48,10 +50,12 @@
     <!-- Custom scripts for this page-->
     <script src="{{ asset('js/sb-admin-datatables.min.js')}}"></script>
     <script src="{{ asset('js/sb-admin-charts.min.js')}}"></script>
+    <script src="{{ asset('vendor/timelinejs-slider/timeline.min.js')}}"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <script>
         $(document).ready(function() {
             $('.datepicker').datepicker();
+              $('.js-timeline').Timeline();
         });
         @yield('script');
     </script>
