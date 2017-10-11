@@ -53,7 +53,8 @@ class MilestoneController extends Controller
                 'due_to'=>Carbon::createFromFormat('m/d/Y', $value)->format('Y-m-d')
             ]);
         }
-        return view('projects.index');
+        $projects = Project::all();
+        return view('projects.index')->with(compact('projects'));
     }
 
     /**
