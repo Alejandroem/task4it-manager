@@ -7,12 +7,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        @role('admin')
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
                 <a class="nav-link" href="{{ route('users.index') }}">
                     <i class="fa fa-fw fa-user"></i>
                     <span class="nav-link-text">Users</span>
                 </a>
             </li>
+        @endrole
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Projects">
                 <a class="nav-link" href="{{ route('projects.index') }}">
                     <i class="fa fa-fw fa-book"></i>

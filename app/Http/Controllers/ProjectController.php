@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Project;
 use App\User;
 use Illuminate\Http\Request;
+use Auth;
 
 class ProjectController extends Controller
 {
@@ -21,7 +22,17 @@ class ProjectController extends Controller
     public function index()
     {
         //
-        $projects = Project::all();
+        if(Auth::user()->hasRole('admin'))
+        {   
+            $projects = Project::all();
+        }
+        else
+        {
+            $projects = Project::whereHas('users', function($q)
+            {
+                $q->where('id',Auth::id());
+            })->get();
+        }
         return view('projects.index')->with(compact('projects'));
     }
 
@@ -68,13 +79,11 @@ class ProjectController extends Controller
             $request->validate([
                 'user' => 'required'
             ]);
+            $user = User::find($request->user);
         }
         
         $project = Project::create($request->input());
-        if(isset($user) || $user !== null)
-        {
-            $user->projects()->attach($project->id);
-        }
+        $user->projects()->attach($project->id);
         
         return redirect()->route('projects.index');
     }

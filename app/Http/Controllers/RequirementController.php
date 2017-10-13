@@ -22,7 +22,16 @@ class RequirementController extends Controller
     public function index(Request $request)
     {
         //
-        $requirements = Requirement::where('type','=',$request->type)->get();
+        if(Auth::user()->hasRole('admin'))
+        {   
+            $requirements = Requirement::where('type','=',$request->type)->get();
+        }
+        else
+        {
+            $projects = Auth::user()->projects->pluck('id');
+            $requirements = Requirement::where('type','=',$request->type)
+            ->whereIn('project_id',$projects)->get();
+        }
         $text = $request->type;
         return view('requirements.index')->with(compact('requirements','text'));
     }
