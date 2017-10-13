@@ -2,11 +2,13 @@
 @section('content')
 
 <!-- DataTables Card-->
+@role('admin')
 <div class="row">
     <div class="col-md-4">
         <a class="btn btn-primary" href="{{route('projects.create')}}">Create new Project</a>
     </div>
 </div>
+@endrole
 
 <div class="card mb-3">
     <div class="card-header">
@@ -20,7 +22,9 @@
                         <th>Description</th>
                         <th>Budget</th>
                         <th>Created at</th>
+                        @role('admin')
                         <th>Actions</th>
+                        @endrole
                     </tr>
                 </thead>
                 {{--
@@ -38,6 +42,7 @@
                         <td>{{$project->description}}</td>
                         <td>${{$project->budget}}</td>
                         <td>{{$project->created_at->toFormattedDateString()}}</td>
+                        @role('admin')
                         <td>
                             <a href="{{ route('projects.edit',['id'=>$project->id]) }}" title="Asign users">
                                 <i class="btn btn-primary fa fa-user-plus fa-lg" aria-hidden="true"></i>
@@ -52,6 +57,7 @@
                                 </a>
                             @endif
                         </td>
+                        @endrole
                     </tr>
                     @endforeach
                 </tbody>
