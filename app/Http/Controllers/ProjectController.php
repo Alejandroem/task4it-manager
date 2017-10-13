@@ -6,6 +6,7 @@ use App\Project;
 use App\User;
 use Illuminate\Http\Request;
 use Auth;
+use Spatie\Permission\Models\Role;
 
 class ProjectController extends Controller
 {
@@ -46,8 +47,9 @@ class ProjectController extends Controller
     {
         //
         $project = new Project();
+        $roles = Role::all()->pluck('name','name');        
         $users = User::all()->pluck('email','id');
-        return view('projects.create')->with(compact('project','users'));
+        return view('projects.create')->with(compact('project','users','roles'));
     }
 
     /**
@@ -70,12 +72,14 @@ class ProjectController extends Controller
                 'username' => 'required|max:50',
                 'email' => 'required',
                 'password' => 'required',
+                'role' => 'required',
             ]);
             $user = User::create([
                 'name'=>$request->username,
                 'email'=>$request->email,
                 'password'=>$request->password
             ]);
+            $user->assignRole($request->role);
         }else{
             $request->validate([
                 'user' => 'required'

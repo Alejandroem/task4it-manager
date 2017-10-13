@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware(['role:admin']);        
+        $this->middleware(['role:admin|project-manager']);        
         $this->middleware('auth');
     }
     /**
@@ -34,7 +35,8 @@ class UserController extends Controller
     {
         //
         $user = new User();
-        return view('users.create')->with(compact('user'));
+        $roles = Role::all()->pluck('name','name');
+        return view('users.create')->with(compact('user','roles'));
     }
 
     /**
@@ -50,13 +52,17 @@ class UserController extends Controller
             'username' => 'required|max:50',
             'email' => 'required',
             'password' => 'required',
+            'role'=>'required'
         ]);
 
-        User::create([
+        $user = User::create([
             'name'=> $request->username,
             'email'=>$request->email,
             'password'=>bcrypt($request->password)
         ]);
+        
+        $user->assignRole($request->role);
+
         return redirect()->route('users.index');
     }
 
