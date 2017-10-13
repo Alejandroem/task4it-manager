@@ -135,6 +135,16 @@ class RequirementController extends Controller
         return redirect()->route('requirements.index',['type'=>$request->type]);
     }
 
+    public function updatePercentage(Request $request, Requirement $requirement)
+    {
+        $request->validate([
+            'percentage'=>'required'
+        ]);
+        $requirement->percentage = $request->percentage;
+        $requirement->save();
+        return redirect()->route('requirements.index',['type'=>$request->type]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

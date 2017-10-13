@@ -19,9 +19,9 @@
                         <th>Project</th>
                         <th>Title</th>
                         <th>Description</th>
-                        
+                        @hasanyrole('admin|project-manager|developer')
                         <th>Rate</th>
-                        
+                        @endhasanyrole
                         @hasanyrole('admin')
                         <th>%</th>
                         @endhasanyrole
@@ -30,7 +30,9 @@
                         @endhasanyrole
                         <th>Status</th>
                         <th>Priority</th>
+                        @hasanyrole('admin')
                         <th>Payed</th>
+                        @endhasanyrole
                         <th>Estimated delivery</th>
                         <th>Created</th>
                         <th>Actions</th>
@@ -51,34 +53,51 @@
                         <td>{{$requirement->title}}</td>
                         <td>{{$requirement->description}}</td>
                         
-                        <td>
+                        
                         @if($requirement->rate==null)
                             @if(Auth::user()->hasAnyRole('developer'))
+                            <td>
                                 {{Form::model($requirement, array('route' => array('requirements.updateRate', $requirement->id),'method'=>'POST'))}}
                                 <div class="row">
                                     <div class="col">
                                     <input name="type" id="type" value="{{$text}}" hidden>
-                                        {{Form::number('rate', null,['min'=>1,'max'=>100,'class' => 'form-control'])}}
+                                        {{Form::number('rate', null,['class' => 'form-control'])}}
                                     </div>
                                     <div class="col">
                                         <button class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                                 {{Form::close()}}
-                            @else
+                            </td>
+                            @elseif(Auth::user()->hasAnyRole('admin|project-manager'))
+                            <td>
                                 Waiting for developer response
+                            </td>
                             @endif
-                        @else
+                        @elseif(Auth::user()->hasAnyRole('admin|project-manager'))
+                        <td>
                             $ {{number_format($requirement->rate,2)}}
-                        @endif
                         </td>
+                        @endif
+                        
                         
                         @hasanyrole('admin')
                         <td>
                         @if($requirement->percentage==null)
-                            Waiting for admin response
+                            {{Form::model($requirement, array('route' => array('requirements.updatePercentage', $requirement->id),'method'=>'POST'))}}
+                            <div class="row">
+                                <div class="col">
+                                <input name="type" id="type" value="{{$text}}" hidden>
+                                    {{Form::number('percentage', null,['min'=>0,'max'=>100, 'step'=>'any', 'class' => 'form-control'])}}
+                                </div>
+                                <div class="col">
+                                    <button class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                            {{Form::close()}}
+                            {{--  Waiting for admin response  --}}
                         @else
-                            {{$requirement->rate}}
+                            {{"% ".number_format($requirement->percentage)}}
                         @endif
                         </td>
                         @endhasanyrole
@@ -88,7 +107,7 @@
                         @if($requirement->percentage==null||$requirement->rate==null)
                             Not available yet
                         @else
-                            {{$requirement->rate*$requirement->percentage + $requirement->rate}}
+                            ${{number_format($requirement->rate*$requirement->percentage + $requirement->rate)}}
                         @endif
                         @endhasanyrole
                         </td>
@@ -117,6 +136,7 @@
                         
                         </td>
                         <td>{{$requirement->priority}}</td>
+                        @hasanyrole('admin')
                         <td>
                             @if($requirement->payed)
                                 <div class="alert alert-success" role="alert">
@@ -128,6 +148,7 @@
                                 </div>
                             @endif
                         </td>
+                        @endhasanyrole
                         <td>{{$requirement->due_to->toFormattedDateString()}}</td>
                         <td>{{$requirement->created_at->toFormattedDateString()}}</td>
                         <td>

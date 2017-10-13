@@ -21,6 +21,10 @@ Route::post('requirements/updateRate/{requirement}',[
     'uses'=>'RequirementController@updateRate',
     'as'=>'requirements.updateRate'
 ]);
+Route::post('requirements/updatePercentage/{requirement}',[
+    'uses'=>'RequirementController@updatePercentage',
+    'as'=>'requirements.updatePercentage'
+]);
 Route::resource('requirements','RequirementController');
 Route::resource('bugs','RequirementController');
 Route::resource('users','UserController');

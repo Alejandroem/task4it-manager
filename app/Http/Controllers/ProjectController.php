@@ -126,14 +126,14 @@ class ProjectController extends Controller
             $users = User::all()->pluck('email','id');
         }else{
             $users = User::whereHas('roles',function($q){
-                $q->where('level','>',Auth::user()->roles->first()->level);
+                $q->where('level','>=',Auth::user()->roles->first()->level);
             })->get()->pluck('email','id');
         }
         if (Auth::user()->hasRole('admin')) {
             $project_users = $project->users->pluck('email','id');
         }else{
             $project_users = $project->users()->whereHas('roles',function($q){
-                $q->where('level','>',Auth::user()->roles->first()->level);
+                $q->where('level','>=',Auth::user()->roles->first()->level);
             })->get()->pluck('email','id');
         }
         return view('projects.edit')->with(compact('project', 'users','project_users'));
