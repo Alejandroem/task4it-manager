@@ -29,6 +29,13 @@ class User extends Authenticatable
     ];
 
     public $timestamps =true;
+
+    protected $dates = [
+        'last_login',
+        'created_at',
+        'updated_at'
+    ];
+
     public function projects(){
         return $this->belongsToMany('App\Project')->withTimestamps();
     }
