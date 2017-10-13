@@ -29,6 +29,7 @@ class RequirementController extends Controller
         else
         {
             $projects = Auth::user()->projects->pluck('id');
+
             $requirements = Requirement::where('type','=',$request->type)
             ->whereIn('project_id',$projects)->get();
         }
@@ -46,7 +47,17 @@ class RequirementController extends Controller
         //
         $requirement = new Requirement();
         $text = $request->type;
-        $projects = Project::all()->pluck('name','id');
+        
+        if(Auth::user()->hasRole('admin'))
+        {   
+            $projects = Project::all()->pluck('name','id');            
+        }
+        else
+        {
+            $uprojects = Auth::user()->projects->pluck('id');
+            $projects = Project::whereIn('id',$uprojects)->get()->pluck('name','id');
+        }
+
         return view('requirements.create')->with(compact('requirement','text','projects'));
     }
 
@@ -112,6 +123,16 @@ class RequirementController extends Controller
     public function update(Request $request, Requirement $requirement)
     {
         //
+    }
+
+    public function updateRate(Request $request, Requirement $requirement)
+    {
+        $request->validate([
+            'rate'=>'required'
+        ]);
+        $requirement->rate = $request->rate;
+        $requirement->save();
+        return redirect()->route('requirements.index',['type'=>$request->type]);
     }
 
     /**

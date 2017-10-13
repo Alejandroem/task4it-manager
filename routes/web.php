@@ -17,6 +17,10 @@ Route::get('/', function () {
 
 Route::resource('projects','ProjectController');
 Route::resource('projects.milestones','MilestoneController');
+Route::post('requirements/updateRate/{requirement}',[
+    'uses'=>'RequirementController@updateRate',
+    'as'=>'requirements.updateRate'
+]);
 Route::resource('requirements','RequirementController');
 Route::resource('bugs','RequirementController');
 Route::resource('users','UserController');

@@ -19,9 +19,15 @@
                         <th>Project</th>
                         <th>Title</th>
                         <th>Description</th>
+                        
                         <th>Rate</th>
+                        
+                        @hasanyrole('admin')
                         <th>%</th>
+                        @endhasanyrole
+                        @hasanyrole('admin|client') 
                         <th>Total</th>
+                        @endhasanyrole
                         <th>Status</th>
                         <th>Priority</th>
                         <th>Payed</th>
@@ -44,13 +50,30 @@
                         <td>{{$requirement->project->name}}</td>
                         <td>{{$requirement->title}}</td>
                         <td>{{$requirement->description}}</td>
+                        
                         <td>
                         @if($requirement->rate==null)
-                            Waiting for developer response
+                            @if(Auth::user()->hasAnyRole('developer'))
+                                {{Form::model($requirement, array('route' => array('requirements.updateRate', $requirement->id),'method'=>'POST'))}}
+                                <div class="row">
+                                    <div class="col">
+                                    <input name="type" id="type" value="{{$text}}" hidden>
+                                        {{Form::number('rate', null,['min'=>1,'max'=>100,'class' => 'form-control'])}}
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                                {{Form::close()}}
+                            @else
+                                Waiting for developer response
+                            @endif
                         @else
-                            {{$requirement->rate}}
+                            $ {{number_format($requirement->rate,2)}}
                         @endif
                         </td>
+                        
+                        @hasanyrole('admin')
                         <td>
                         @if($requirement->percentage==null)
                             Waiting for admin response
@@ -58,13 +81,16 @@
                             {{$requirement->rate}}
                         @endif
                         </td>
+                        @endhasanyrole
+
+                        @hasanyrole('admin|client')    
                         <td>
                         @if($requirement->percentage==null||$requirement->rate==null)
                             Not available yet
                         @else
                             {{$requirement->rate*$requirement->percentage + $requirement->rate}}
                         @endif
-                        
+                        @endhasanyrole
                         </td>
                         <td>
                         @if($requirement->status==1)
@@ -113,6 +139,7 @@
                     @endforeach
                 </tbody>
             </table>
+            @include('layout.errors')
         </div>
     </div>
     {{--<div class="card-footer small text-muted">Updated today at 11:59 PM</div> --}}

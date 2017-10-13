@@ -15,10 +15,10 @@ class UserRolesPermissionSeeder extends Seeder
     {
         //
         app()['cache']->forget('spatie.permission.cache');
-        $role = Role::create(['name' => 'admin']);
-        $role = Role::create(['name' => 'project-manager']);
-        $role = Role::create(['name' => 'developer']);       
-        $role = Role::create(['name' => 'client']);       
+        $role = Role::create(['name' => 'admin','display_name'=>'Administrator','level'=>1]);
+        $role = Role::create(['name' => 'project-manager','display_name'=>'Project Manager','level'=>2]);
+        $role = Role::create(['name' => 'developer','display_name'=>'Developer','level'=>3]);       
+        $role = Role::create(['name' => 'client','display_name'=>'Client','level'=>4]);       
         
     }
 }

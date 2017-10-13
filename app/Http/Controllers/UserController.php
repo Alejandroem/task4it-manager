@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-
+use Auth;
 class UserController extends Controller
 {
 
@@ -22,7 +22,13 @@ class UserController extends Controller
     public function index()
     {
         //
-        $users = User::all();
+        if (Auth::user()->hasRole('admin')) {
+            $users = User::all();
+        }else{
+            $users = User::whereHas('roles',function($q){
+                $q->where('level','>',Auth::user()->roles->first()->level);
+            })->get();
+        }
         return view('users.index')->with(compact('users'));
     }
 
@@ -35,7 +41,14 @@ class UserController extends Controller
     {
         //
         $user = new User();
-        $roles = Role::all()->pluck('name','name');
+        
+        if (Auth::user()->hasRole('admin')) {
+            $roles = Role::all()->pluck('display_name', 'name');
+        } elseif (Auth::user()->hasRole('project-manager')) {
+            $roles = Role::where('level', '>', Auth::user()->roles->first()->level)
+            ->pluck('display_name', 'name');
+        }
+    
         return view('users.create')->with(compact('user','roles'));
     }
 

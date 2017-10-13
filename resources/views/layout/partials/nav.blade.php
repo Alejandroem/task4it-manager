@@ -7,7 +7,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        @role('admin')
+        @hasanyrole('admin|project-manager')
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
                 <a class="nav-link" href="{{ route('users.index') }}">
                     <i class="fa fa-fw fa-user"></i>

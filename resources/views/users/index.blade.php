@@ -36,7 +36,7 @@
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
                         <td>{{$user->created_at->toFormattedDateString()}}</td>
-                        <td>{{$user->getRoleNames()->first()}}</td>
+                        <td>{{$user->roles->first()->display_name}}</td>
                     </tr>
                     @endforeach
                 </tbody>
