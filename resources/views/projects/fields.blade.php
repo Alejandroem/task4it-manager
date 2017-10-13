@@ -6,9 +6,9 @@
     {{Form::label('description', 'Description:')}} 
     {{Form::textarea('description',null,['class' => 'form-control'])}}
 </div>
-@if($project->users->count()>0)
+@if($project_users->count()>0)
 <div class="form-group">
-    {!! Form::checkboxes('users',$project->users->pluck('name','id')) !!}
+    {!! Form::checkboxes('users',$project_users) !!}
 </div>
 @endif
 

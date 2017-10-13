@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('DB_TIMEZONE', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -180,6 +180,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         App\Providers\FormMacroServiceProvider::class,
 
+        Spatie\Permission\PermissionServiceProvider::class,
+        
     ],
 
     /*

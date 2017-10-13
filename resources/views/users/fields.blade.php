@@ -10,3 +10,7 @@
     {{Form::label('password', 'Password:')}}
     {{Form::password('password',['class' => 'form-control'])}}
 </div>
+<div class="form-group">
+    {{Form::label('role', 'Roles:')}}
+    {{Form::select('role',$roles,null, ['class' => 'form-control'])}}
+</div>

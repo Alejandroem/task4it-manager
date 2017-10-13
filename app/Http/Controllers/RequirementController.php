@@ -22,7 +22,17 @@ class RequirementController extends Controller
     public function index(Request $request)
     {
         //
-        $requirements = Requirement::where('type','=',$request->type)->get();
+        if(Auth::user()->hasRole('admin'))
+        {   
+            $requirements = Requirement::where('type','=',$request->type)->get();
+        }
+        else
+        {
+            $projects = Auth::user()->projects->pluck('id');
+
+            $requirements = Requirement::where('type','=',$request->type)
+            ->whereIn('project_id',$projects)->get();
+        }
         $text = $request->type;
         return view('requirements.index')->with(compact('requirements','text'));
     }
@@ -37,7 +47,17 @@ class RequirementController extends Controller
         //
         $requirement = new Requirement();
         $text = $request->type;
-        $projects = Project::all()->pluck('name','id');
+        
+        if(Auth::user()->hasRole('admin'))
+        {   
+            $projects = Project::all()->pluck('name','id');            
+        }
+        else
+        {
+            $uprojects = Auth::user()->projects->pluck('id');
+            $projects = Project::whereIn('id',$uprojects)->get()->pluck('name','id');
+        }
+
         return view('requirements.create')->with(compact('requirement','text','projects'));
     }
 
@@ -103,6 +123,26 @@ class RequirementController extends Controller
     public function update(Request $request, Requirement $requirement)
     {
         //
+    }
+
+    public function updateRate(Request $request, Requirement $requirement)
+    {
+        $request->validate([
+            'rate'=>'required'
+        ]);
+        $requirement->rate = $request->rate;
+        $requirement->save();
+        return redirect()->route('requirements.index',['type'=>$request->type]);
+    }
+
+    public function updatePercentage(Request $request, Requirement $requirement)
+    {
+        $request->validate([
+            'percentage'=>'required'
+        ]);
+        $requirement->percentage = $request->percentage;
+        $requirement->save();
+        return redirect()->route('requirements.index',['type'=>$request->type]);
     }
 
     /**

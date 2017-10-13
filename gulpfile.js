@@ -9,6 +9,8 @@ var uglify = require('gulp-uglify');
 var beautify = require('gulp-html-beautify');
 var pkg = require('./package.json');
 var gutil = require('gulp-util')
+var pngquant = require('imagemin-pngquant');
+var $ = require('gulp-load-plugins')();
 
 // Set the banner content
 var banner = ['/*!\n',
@@ -99,8 +101,22 @@ gulp.task('copy', function() {
     .pipe(gulp.dest('public/vendor/timelinejs-slider/')) */
 })
 
+// Compress images
+gulp.task('images', function () {
+    return (
+        gulp
+            .src('resources/assets/img/*')
+            .pipe($.imagemin([
+                $.imagemin.jpegtran({progressive: true}),
+                $.imagemin.optipng({use: [pngquant()]}),
+                $.imagemin.svgo({plugins: [{removeViewBox: true}]}),
+            ]))
+            .pipe(gulp.dest('public/img'))
+    );
+});
+
 // Default task
-gulp.task('default', ['sass', 'minify-css', 'minify-js', 'copy']);
+gulp.task('default', ['sass', 'minify-css', 'minify-js', 'copy', 'images']);
 
 // Dev task with browserSync
 gulp.task('dev', ['sass', 'minify-css', 'minify-js'], function() {

@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Project;
 use App\User;
 use Illuminate\Http\Request;
+use Auth;
+use Spatie\Permission\Models\Role;
 
 class ProjectController extends Controller
 {
 
     public function __construct()
     {
+        $this->middleware(['role:admin|project-manager|client']);
         $this->middleware('auth');
     }
     /**
@@ -21,7 +24,13 @@ class ProjectController extends Controller
     public function index()
     {
         //
-        $projects = Project::all();
+        if (Auth::user()->hasAnyRole('admin|project-manager')) {
+            $projects = Project::all();
+        } else {
+            $projects = Project::whereHas('users', function ($q) {
+                $q->where('id', Auth::id());
+            })->get();
+        }
         return view('projects.index')->with(compact('projects'));
     }
 
@@ -34,8 +43,22 @@ class ProjectController extends Controller
     {
         //
         $project = new Project();
-        $users = User::all()->pluck('email','id');
-        return view('projects.create')->with(compact('project','users'));
+        
+        if (Auth::user()->hasRole('admin')) {
+            $roles = Role::all()->pluck('display_name', 'name');
+        } elseif (Auth::user()->hasRole('project-manager')) {
+            $roles = Role::where('level', '>', Auth::user()->roles->first()->level)
+            ->pluck('display_name', 'name');
+        }
+        
+        if (Auth::user()->hasRole('admin')) {
+            $users = User::all()->pluck('email','id');
+        }else{
+            $users = User::whereHas('roles',function($q){
+                $q->where('level','>',Auth::user()->roles->first()->level);
+            })->get()->pluck('email','id');
+        }
+        return view('projects.create')->with(compact('project', 'users', 'roles'));
     }
 
     /**
@@ -53,28 +76,28 @@ class ProjectController extends Controller
             'description' => 'required',
             'budget'=>'required|numeric|min:0'
         ]);
-        if($request->toogle_user==='on'){
+        if ($request->toogle_user==='on') {
             $request->validate([
                 'username' => 'required|max:50',
                 'email' => 'required',
                 'password' => 'required',
+                'role' => 'required',
             ]);
             $user = User::create([
                 'name'=>$request->username,
                 'email'=>$request->email,
                 'password'=>$request->password
             ]);
-        }else{
+            $user->assignRole($request->role);
+        } else {
             $request->validate([
                 'user' => 'required'
             ]);
+            $user = User::find($request->user);
         }
         
         $project = Project::create($request->input());
-        if(isset($user) || $user !== null)
-        {
-            $user->projects()->attach($project->id);
-        }
+        $user->projects()->attach($project->id);
         
         return redirect()->route('projects.index');
     }
@@ -99,10 +122,21 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         //
-        $users = User::whereNotIn('id',$project->users->pluck('id'))
-        ->get()
-        ->pluck('name','id');
-        return view('projects.edit')->with(compact('project','users'));
+        if (Auth::user()->hasRole('admin')) {
+            $users = User::all()->pluck('email','id');
+        }else{
+            $users = User::whereHas('roles',function($q){
+                $q->where('level','>=',Auth::user()->roles->first()->level);
+            })->get()->pluck('email','id');
+        }
+        if (Auth::user()->hasRole('admin')) {
+            $project_users = $project->users->pluck('email','id');
+        }else{
+            $project_users = $project->users()->whereHas('roles',function($q){
+                $q->where('level','>=',Auth::user()->roles->first()->level);
+            })->get()->pluck('email','id');
+        }
+        return view('projects.edit')->with(compact('project', 'users','project_users'));
     }
 
     /**
@@ -124,6 +158,7 @@ class ProjectController extends Controller
         return redirect()->route('projects.index');
     }
 
+
     /**
      * Remove the specified resource from storage.
      *
@@ -134,6 +169,4 @@ class ProjectController extends Controller
     {
         //
     }
-
-
 }
