@@ -32,3 +32,7 @@ Route::resource('requirements.questions','QuestionController');
 Auth::routes();
 Route::resource('files','FileController');
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+
+Route::get('/info',function(){
+    return dd(phpinfo());
+});

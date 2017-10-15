@@ -38,10 +38,7 @@ class FileController extends Controller
                 ->getSiblingsAndSelf()
                 ->where('relation',$request->relation)
                 ->where('relation_id',$request->relation_id);
-                Debugbar::info($files);
             }
-            //->where('id',49)
-            
             if(isset($files)) {
                 
                 foreach($files as $file) {
