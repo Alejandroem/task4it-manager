@@ -17,6 +17,11 @@
     <link href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
     <!-- Page level plugin CSS-->
     <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
+    <link href="/vendor/jasekz/laradrop/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet" type="text/css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js" ></script>
+
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/app.min.css')}}" rel="stylesheet">
 </head>
@@ -52,10 +57,44 @@
     <script src="{{ asset('js/sb-admin-charts.min.js')}}"></script>
     <script src="{{ asset('vendor/timelinejs-slider/timeline.min.js')}}"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+    <script src="/vendor/jasekz/laradrop/js/enyo.dropzone.js"></script>
+    <script src="/vendor/jasekz/laradrop/js/laradrop.js"></script>
+
     <script>
         $(document).ready(function() {
             $('.datepicker').datepicker();
-              $('.js-timeline').Timeline();
+            $('.js-timeline').Timeline();
+             // With custom params:
+            $('.laradrop').laradrop({
+                breadCrumbRootText: 'My Root', // optional 
+                actionConfirmationText: 'Sure about that?', // optional
+                customData: {"form":$(".custom-data").serializeArray()},
+                onInsertCallback: function (obj){ // optional 
+                    //console.log(obj);
+                    // if you need to bind the select button, implement here
+                    //console.log('Thumb src: '+obj.src+'. File ID: '+obj.id+'.  Please implement onInsertCallback().');
+                    //window.location.href = obj.src;
+                    $.ajax({
+                        url: "{{URL::to('files/show/')}}/"+obj.id,
+                        type: "GET",
+                        success: function(response) {
+                            window.location.href = response;
+                        },
+                        error: function(xhr) {
+
+                        }
+                    });
+
+                },
+                onErrorCallback: function(msg){ // optional
+                    // if you need an error status indicator, implement here
+                    alert('An error occured: '+msg);
+                },
+                onSuccessCallback: function(serverRes){ // optional
+                    // if you need a success status indicator, implement here
+                }
+            });
         });
         @yield('script');
     </script>

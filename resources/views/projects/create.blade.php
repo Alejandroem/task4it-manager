@@ -20,6 +20,7 @@
                     </div>
                 </div>
             </div>
+           
             {{Form::submit('Create',['class'=>'btn btn-primary'])}}
         {{Form::close() }}
     @include('layout.errors')

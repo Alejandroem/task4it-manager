@@ -19,7 +19,7 @@ return [
     |--------------------------------------------------------------------------
     | Default Cloud Filesystem Disk
     |--------------------------------------------------------------------------
-    |
+    |FILESYSTEM_DRIVER
     | Many applications store files both locally and in the cloud. For this
     | reason, you may specify a default "cloud" driver here. This driver
     | will be bound as the Cloud disk implementation in the container.
@@ -61,6 +61,10 @@ return [
             'secret' => env('AWS_SECRET'),
             'region' => env('AWS_REGION'),
             'bucket' => env('AWS_BUCKET'),
+        ],
+        'laradrop' => [
+            'driver' => 'local',
+            'root' => public_path('uploads'), // will put files in 'public/upload' directory
         ],
 
     ],

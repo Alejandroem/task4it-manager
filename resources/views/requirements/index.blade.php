@@ -155,7 +155,11 @@
                             <a href="{{route('requirements.questions.index',['bug'=>$requirement->id])}}">
                                 <i class="btn btn-primary fa fa-comments fa-lg" aria-hidden="true"></i>
                             </a>
+                            <a href="{{ route('requirements.show',['requirement'=>$requirement->id,'type'=>$text]) }}" title="View files">
+                                <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
+                            </a>
                         </td>
+                        
                     </tr>
                     @endforeach
                 </tbody>
