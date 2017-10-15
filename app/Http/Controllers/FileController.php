@@ -79,9 +79,31 @@ class FileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createPOST(String $relation, String $relation_id, Request $request)
     {
         //
+        try {            
+            $fileData['alias'] = $request->filename ? $request->filename : date('m.d.Y - G:i:s');
+            $fileData['type'] = 'folder';
+            // $fileDate['relation']= Input::get('relation');
+            // $fileDate['relation_id']= Input::get('relation_id');
+            if($request->pid > 0) {
+                $fileData['parent_id'] = $request->pid;
+            }
+            $file = File::create($fileData);
+            $file->relation = $relation;
+            $file->relation_id = $relation_id;
+            $file->save();
+
+            return response()->json([
+                'status' => 'success'
+            ]);
+        }
+        
+        catch (Exception $e) {
+            return $this->handleError($e);
+        }
+        
     }
 
     /**

@@ -30,7 +30,16 @@ Route::resource('bugs','RequirementController');
 Route::resource('users','UserController');
 Route::resource('requirements.questions','QuestionController');
 Auth::routes();
-Route::resource('files','FileController');
+
+Route::post('files/create/{relation}/{relation_id}',[
+    'uses'=>'FileController@createPost',
+    'as'=>'files.createPost'
+]);
+Route::get('files/{relation}/{relation_id}',[
+    'uses'=>'FileController@index',
+    'as'=>'files.index'
+]);
+
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::get('/info',function(){

@@ -1,5 +1,7 @@
-<div class="laradrop" 
+<div class="well col-md-12 ">
+<div class="laradrop bootstrap-3" 
     laradrop-file-source="{{ route('files.index',['relation'=>$relation,'relation_id'=>$id]) }}" 
+    laradrop-file-create-handler="{{ route('files.createPost',['relation'=>$relation,'relation_id'=>$id]) }}" 
     {{--laradrop-upload-handler="{{ route('files.store') }}"
     laradrop-file-delete-handler="{{ route('files.destroy', 0) }}"
     laradrop-file-create-handler="{{ route('files.create') }}"  --}}
@@ -9,4 +11,5 @@
         <input  type="text" name="relation" id="relation" value="{{$relation}}" hidden>
         <input  type="text" name="relation_id" id="relation_id" value="{{$id}}" hidden>
     </form>
+</div>
 </div>
