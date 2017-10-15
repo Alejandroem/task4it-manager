@@ -58,7 +58,15 @@ class ProjectController extends Controller
                 $q->where('level','>',Auth::user()->roles->first()->level);
             })->get()->pluck('email','id');
         }
-        return view('projects.create')->with(compact('project', 'users', 'roles'));
+
+        if (Auth::user()->hasRole('admin')) {
+            $project_users = $project->users->pluck('email','id');
+        }else{
+            $project_users = $project->users()->whereHas('roles',function($q){
+                $q->where('level','>=',Auth::user()->roles->first()->level);
+            })->get()->pluck('email','id');
+        }
+        return view('projects.create')->with(compact('project', 'users', 'roles','project_users'));
     }
 
     /**
@@ -111,6 +119,7 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         //
+        return view ('projects.show')->with(compact('project'));
     }
 
     /**
