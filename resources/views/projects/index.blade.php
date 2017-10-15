@@ -57,7 +57,7 @@
                                 </a>
                             @endif
                             <a href="{{ route('projects.show',['id'=>$project->id]) }}" title="View files">
-                                <i class="btn btn-primary fa fa-files-o" aria-hidden="true"></i>
+                                <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
                         </td>
                         @endhasanyrole

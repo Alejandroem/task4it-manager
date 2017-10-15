@@ -126,6 +126,9 @@ class FileController extends Controller
     public function show(File $file)
     {
         //
+        Debugbar::info($file);
+        //return response()->download($file->public_resource_url);
+        return $file->public_resource_url;
     }
 
     /**

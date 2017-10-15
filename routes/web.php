@@ -35,11 +35,14 @@ Route::post('files/create/{relation}/{relation_id}',[
     'uses'=>'FileController@createPost',
     'as'=>'files.createPost'
 ]);
+Route::get('files/show/{file}',[
+    'uses'=>'FileController@show',
+    'as'=>'files.show'
+]);
 Route::get('files/{relation}/{relation_id}',[
     'uses'=>'FileController@index',
     'as'=>'files.index'
 ]);
-
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::get('/info',function(){

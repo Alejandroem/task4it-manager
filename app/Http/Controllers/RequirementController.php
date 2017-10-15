@@ -97,9 +97,11 @@ class RequirementController extends Controller
      * @param  \App\Requirement  $requirement
      * @return \Illuminate\Http\Response
      */
-    public function show(Requirement $requirement)
+    public function show(Request $request, Requirement $requirement)
     {
         //
+        $type = $request->type;
+        return view ('requirements.show')->with(compact('requirement','type'));
     }
 
     /**

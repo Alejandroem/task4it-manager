@@ -71,10 +71,21 @@
                 actionConfirmationText: 'Sure about that?', // optional
                 customData: {"form":$(".custom-data").serializeArray()},
                 onInsertCallback: function (obj){ // optional 
-                    console.log(obj);
+                    //console.log(obj);
                     // if you need to bind the select button, implement here
-                    alert('Thumb src: '+obj.src+'. File ID: '+obj.id+'.  Please implement onInsertCallback().');
-                    
+                    //console.log('Thumb src: '+obj.src+'. File ID: '+obj.id+'.  Please implement onInsertCallback().');
+                    //window.location.href = obj.src;
+                    $.ajax({
+                        url: "{{URL::to('files/show/')}}/"+obj.id,
+                        type: "GET",
+                        success: function(response) {
+                            window.location.href = response;
+                        },
+                        error: function(xhr) {
+
+                        }
+                    });
+
                 },
                 onErrorCallback: function(msg){ // optional
                     // if you need an error status indicator, implement here
