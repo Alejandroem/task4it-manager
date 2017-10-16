@@ -17,7 +17,8 @@
     <link href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
     <!-- Page level plugin CSS-->
     <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
-    <link href="/vendor/jasekz/laradrop/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/vendor/jasekz/laradrop/css/styles.css')}}" rel="stylesheet" type="text/css">
+    
     <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet" type="text/css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js" ></script>
@@ -58,8 +59,8 @@
     <script src="{{ asset('vendor/timelinejs-slider/timeline.min.js')}}"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
-    <script src="/vendor/jasekz/laradrop/js/enyo.dropzone.js"></script>
-    <script src="/vendor/jasekz/laradrop/js/laradrop.js"></script>
+    <script src="{{ asset('/vendor/jasekz/laradrop/js/enyo.dropzone.js')}}"></script>
+    <script src="{{ asset('/vendor/jasekz/laradrop/js/laradrop.js')}}"></script>
 
     <script>
         $(document).ready(function() {
@@ -69,6 +70,7 @@
             $('.laradrop').laradrop({
                 breadCrumbRootText: 'My Root', // optional 
                 actionConfirmationText: 'Sure about that?', // optional
+                containersUrl:"{{route('laradrop.containers')}}",
                 customData: {"form":$(".custom-data").serializeArray()},
                 onInsertCallback: function (obj){ // optional 
                     //console.log(obj);
