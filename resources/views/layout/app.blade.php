@@ -90,6 +90,7 @@
 
                 },
                 onErrorCallback: function(msg){ // optional
+                    console.log(msg);
                     // if you need an error status indicator, implement here
                     alert('An error occured: '+msg);
                 },
