@@ -2,16 +2,15 @@
 @section('content')
 
 <!-- DataTables Card-->
-@hasanyrole('admin|project-manager')
-<div class="row">
-    <div class="col-md-4">
-        <a class="btn btn-primary" href="{{route('projects.create')}}">Create new Project</a>
-    </div>
-</div>
-@endhasanyrole
+
+
+
 
 <div class="card mb-3">
     <div class="card-header">
+        @hasanyrole('admin|project-manager')
+        <a class="btn btn-primary pull-right" href="{{route('projects.create')}}">Create new Project</a>
+        @endhasanyrole
         <i class="fa fa-table"></i> Projects </div>
     <div class="card-body">
         <div class="table-responsive">

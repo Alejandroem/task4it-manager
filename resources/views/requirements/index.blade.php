@@ -1,15 +1,8 @@
 @extends('layout.app')
 @section('content')
-
-<!-- DataTables Card-->
-<div class="row">
-    <div class="col-md-4">
-        <a class="btn btn-primary" href="{{route('requirements.create',['type'=>$text])}}">Create new {{$text}}</a>
-    </div>
-</div>
-
 <div class="card mb-3">
     <div class="card-header">
+        <a class="btn btn-primary pull-right" href="{{route('requirements.create',['type'=>$text])}}">Create new {{$text}}</a>
         <i class="fa fa-table"></i> {{$text}} </div>
     <div class="card-body">
         <div class="table-responsive">
