@@ -11,7 +11,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['role:admin|project-manager']);        
+        $this->middleware(['role:admin|project-manager|client']);        
         $this->middleware('auth');
     }
     /**
@@ -88,6 +88,8 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
+
+        return view('users.show')->with(compact('user'));
     }
 
     /**

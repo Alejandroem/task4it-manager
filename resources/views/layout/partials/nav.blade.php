@@ -50,7 +50,19 @@
         <ul class="navbar-nav ml-auto">
         
         @include('layout.partials.nav-items.messages')
+
+        <div class="nav-item">
+            <div class="mr-4 my-2">
+                @hasanyrole('client')
+                <button class="btn">
+                Balance: <span class="badge badge-secondary"><i class="fa fa-usd" aria-hidden="true"></i> {{Auth::User()->balance}}</span>
+                </button>
+                @endhasanyrole
+            </div>
+        </div>
         @include('layout.partials.nav-items.avatar')
+
+        
         {{--  @include('layout.partials.nav-items.search')  --}}
             <li class="nav-item">
                 <a class="nav-link" data-toggle="modal" data-target="#exampleModal">

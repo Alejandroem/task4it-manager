@@ -32,6 +32,7 @@
 
     <div class="content-wrapper">
         <div class="container-fluid">
+
             @yield('content')
         </div>
     </div>
@@ -73,7 +74,6 @@
                 containersUrl:"{{route('laradrop.containers')}}",
                 customData: {"form":$(".custom-data").serializeArray()},
                 onInsertCallback: function (obj){ // optional 
-                    //console.log(obj);
                     // if you need to bind the select button, implement here
                     //console.log('Thumb src: '+obj.src+'. File ID: '+obj.id+'.  Please implement onInsertCallback().');
                     //window.location.href = obj.src;
@@ -96,6 +96,7 @@
                 },
                 onSuccessCallback: function(serverRes){ // optional
                     // if you need a success status indicator, implement here
+                    console.log(serverRes);
                 }
             });
         });
