@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
-
+use Jasekz\Laradrop\Models\File;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -38,5 +38,9 @@ class User extends Authenticatable
 
     public function projects(){
         return $this->belongsToMany('App\Project')->withTimestamps();
+    }
+
+    public function files(){
+        return $this->hasMany(File::class,'relation_id');
     }
 }

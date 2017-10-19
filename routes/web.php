@@ -65,6 +65,10 @@ Route::get('files/{relation}/{relation_id}',[
     'uses'=>'FileController@index',
     'as'=>'files.index'
 ]);
+Route::post('files',[
+    'uses'=>'FileController@store',
+    'as'=>'files.store'
+]);
 
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');

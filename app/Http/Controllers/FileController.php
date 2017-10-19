@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 // use App\File;
 use Illuminate\Http\Request;
 use Jasekz\Laradrop\Models\File;
+
+use Intervention\Image\ImageManagerStatic as Image;
 use Debugbar;
+use Storage, Auth;
 class FileController extends Controller
 {
 
@@ -23,8 +26,6 @@ class FileController extends Controller
         //
         try {
             $out = [];            
-            // $files = File::where('parent_id',$request->pid)
-            // ->get();
             if(File::count() && $request->pid > 0) {
                 $files = File::where('id', '=', $request->pid)
                 ->first()
@@ -40,9 +41,7 @@ class FileController extends Controller
                 ->where('relation_id',$request->relation_id);
             }
             if(isset($files)) {
-                
                 foreach($files as $file) {
-                    
                     if( $file->has_thumbnail && config('laradrop.disk_public_url')) {
                         
                         $publicResourceUrlSegments = explode('/', $file->public_resource_url);
@@ -62,8 +61,6 @@ class FileController extends Controller
                     }
                 }
             }
-            
-
             return response()->json([
                 'status' => 'success',
                 'data' => $out,
@@ -85,8 +82,6 @@ class FileController extends Controller
         try {            
             $fileData['alias'] = $request->filename ? $request->filename : date('m.d.Y - G:i:s');
             $fileData['type'] = 'folder';
-            // $fileDate['relation']= Input::get('relation');
-            // $fileDate['relation_id']= Input::get('relation_id');
             if($request->pid > 0) {
                 $fileData['parent_id'] = $request->pid;
             }
@@ -99,7 +94,6 @@ class FileController extends Controller
                 'status' => 'success'
             ]);
         }
-        
         catch (Exception $e) {
             return $this->handleError($e);
         }
@@ -114,7 +108,108 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            if (! $request->hasFile('file')) {
+                throw new Exception(trans('err.fileNotProvided'));
+            }
+            
+            if( ! $request->file('file')->isValid()) {
+                throw new Exception(trans('err.invalidFile'));
+            }
+            
+            /*
+             * move file to temp location
+             */
+            $fileExt = $request->file('file')->getClientOriginalExtension();
+            $fileName = str_replace('.' . $fileExt, '', $request->file('file')->getClientOriginalName()) . '-' . date('Ymdhis');
+            $mimeType = $request->file('file')->getMimeType();
+            $tmpStorage = storage_path();
+            $movedFileName = $fileName . '.' . $fileExt;
+            $fileSize = $request->file('file')->getSize();
+
+            if($fileSize > ( (int) config('laradrop.max_upload_size') * 1000000) ) {
+                throw new Exception(trans('err.invalidFileSize'));
+            }
+            
+            $request->file('file')->move($tmpStorage, $movedFileName);
+            
+            $disk = Storage::disk(config('laradrop.disk'));
+
+            /*
+             * create thumbnail if needed
+             */
+            $fileData['has_thumbnail'] = 0;
+            if ($fileSize <= ( (int) config('laradrop.max_thumbnail_size') * 1000000) && in_array($mimeType, ["image/jpg", "image/jpeg", "image/png", "image/gif"])) {
+
+                $thumbDims = config('laradrop.thumb_dimensions');
+                $img = Image::make($tmpStorage . '/' . $movedFileName);
+                $img->resize($thumbDims['width'], $thumbDims['height']);
+                $img->save($tmpStorage . '/_thumb_' . $movedFileName);
+
+                // move thumbnail to final location
+                $disk->put('_thumb_' . $movedFileName, fopen($tmpStorage . '/_thumb_' . $movedFileName, 'r+'));
+                Storage::delete($tmpStorage . '/_thumb_' . $movedFileName);                
+                $fileData['has_thumbnail'] = 1;
+                
+            } 
+
+            /*
+             * move uploaded file to final location
+             */
+            $disk->put($movedFileName, fopen($tmpStorage . '/' . $movedFileName, 'r+'));
+            Storage::delete($tmpStorage . '/' . $movedFileName);
+            
+            /*
+             * save in db
+             */          
+            $fileData['filename'] = $movedFileName;  
+            $fileData['alias'] = $request->file('file')->getClientOriginalName();
+            $fileData['public_resource_url'] = config('laradrop.disk_public_url') . '/' . $movedFileName;
+            $fileData['type'] = $fileExt;
+            if($request->pid > 0) {
+                $fileData['parent_id'] = $request->pid;
+            }
+            $meta = $disk->getDriver()->getAdapter()->getMetaData($movedFileName);
+            $meta['disk'] = config('laradrop.dfileisk');
+            $fileData['meta'] = json_encode($meta);
+            
+            $file = File::create($fileData);
+            if($request->relation=="avatar"){
+                $oldAvatar = File::where('relation_id',Auth::id())
+                ->where('relation','avatar')
+                ->first();
+                if($oldAvatar){
+                    $disk->delete($oldAvatar->filename);
+                    $disk->delete('_thumb_' . $oldAvatar->filename);
+                    $oldAvatar->delete();
+                }
+            }
+
+            $file->relation = $request->relation;
+            $file->relation_id = $request->relation_id;
+            $file->save();
+
+            
+            /*
+             * fire 'file uploaded' event
+             */
+
+            
+            return back();
+            
+        } 
+
+        catch (Exception $e) {
+            
+            // delete the file(s)
+            if( isset($disk) && $disk) {
+                $disk->delete($movedFileName);
+                $disk->delete('_thumb_' . $movedFileName);
+            }
+            
+            return $this->handleError($e);
+        }
     }
 
     /**
