@@ -12,6 +12,9 @@ class Requirement extends Model
     
     protected $fillable = ['type','project_id','user_id','title','description','priority','due_to'];
 
+    protected $appends = ['total'];
+    
+
     public function project(){
         return $this->belongsTo('App\Project');
     }
@@ -19,4 +22,10 @@ class Requirement extends Model
     public function questions(){
         return $this->hasMany('App\Question');
     }
+
+    public function getTotalAttribute()
+    {
+        return $this->rate * ($this->percentage/100) + $this->rate;
+    }
+
 }

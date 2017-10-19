@@ -157,4 +157,22 @@ class RequirementController extends Controller
     {
         //
     }
+    
+    public function changeStatus(Requirement $requirement, Request $request){
+        $request->validate([
+            'status'=>'required',
+            'type'=>'required'
+        ]);
+            
+        $requirement->status = $request->status;
+        $requirement->save();
+        if($request->has('type') && $request->type =="json"){
+            return response()->json([
+                'status' => 'success',
+                'data'=>json_encode($requirement)
+            ]);
+        }
+        return redirect()->route('requirements.index',['type'=>$request->type]);
+
+    }
 }

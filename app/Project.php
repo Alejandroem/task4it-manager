@@ -14,6 +14,10 @@ class Project extends Model
         return $this->belongsToMany('App\User')->withTimestamps();
     }
 
+    public function requirements(){
+        return $this->hasMany('App\Requirement');
+    }
+
     public function milestones(){
         return $this->hasMany('App\Milestone');
     }

@@ -50,10 +50,9 @@
                         @if($requirement->rate==null)
                             @if(Auth::user()->hasAnyRole('developer'))
                             <td>
-                                {{Form::model($requirement, array('route' => array('requirements.updateRate', $requirement->id),'method'=>'POST'))}}
+                                {{Form::model($requirement, array('route' => array('requirements.updateRate', 'requirement'=>$requirement->id,'type'=>$text),'method'=>'POST'))}}
                                 <div class="row">
                                     <div class="col">
-                                    <input name="type" id="type" value="{{$text}}" hidden>
                                         {{Form::number('rate', null,['class' => 'form-control'])}}
                                     </div>
                                     <div class="col">
@@ -77,10 +76,9 @@
                         @hasanyrole('admin')
                         <td>
                         @if($requirement->percentage==null)
-                            {{Form::model($requirement, array('route' => array('requirements.updatePercentage', $requirement->id),'method'=>'POST'))}}
+                            {{Form::model($requirement, array('route' => array('requirements.updatePercentage', $requirement->id,'type'=>$text),'method'=>'POST'))}}
                             <div class="row">
                                 <div class="col">
-                                <input name="type" id="type" value="{{$text}}" hidden>
                                     {{Form::number('percentage', null,['min'=>0,'max'=>100, 'step'=>'any', 'class' => 'form-control'])}}
                                 </div>
                                 <div class="col">
@@ -100,15 +98,23 @@
                         @if($requirement->percentage==null||$requirement->rate==null)
                             Not available yet
                         @else
-                            ${{number_format($requirement->rate*$requirement->percentage + $requirement->rate)}}
+                            ${{number_format($requirement->rate*($requirement->percentage/100) + $requirement->rate,2)}}
                         @endif
                         @endhasanyrole
                         </td>
                         <td>
                         @if($requirement->status==1)
-                        <div class="alert alert-primary" role="alert">
-                            Created
-                        </div>
+                            @if($requirement->percentage!=null&&$requirement->rate!=null)
+                                @hasanyrole('client')
+                                     {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>2,'type'=>$text),'method'=>'POST'))}}
+                                        {{Form::submit('Approve',['class'=>'btn btn-primary'])}}
+                                    {{Form::close()}}
+                                @endhasanyrole
+                            @else
+                                <div class="alert alert-primary" role="alert">
+                                    Created
+                                </div>
+                            @endif
                         @elseif($requirement->status==2)
                         <div class="alert alert-secondary" role="alert">
                             ongoing
