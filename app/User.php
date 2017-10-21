@@ -39,7 +39,7 @@ class User extends Authenticatable
         'updated_at'
     ];
 
-    protected $appends = ['balance'];
+    protected $appends = ['balance','newNotifications'];
     
 
     public function projects(){
@@ -48,6 +48,16 @@ class User extends Authenticatable
 
     public function files(){
         return $this->hasMany(File::class,'relation_id');
+    }
+
+    public function notifications(){
+        return $this->hasMany('App\Notification');
+    }
+
+    public function getNewNotificationsAttribute(){
+        if($this->notifications->count()){
+            return $this->notifications()->where('created_at'>$this->last_login_at)->count();
+        }
     }
 
     public function getBalanceAttribute()
