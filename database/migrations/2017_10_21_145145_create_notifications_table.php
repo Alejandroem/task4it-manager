@@ -20,7 +20,7 @@ class CreateNotificationsTable extends Migration
             $table->integer('priority')->unsigned()->default(0);
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->timestamp('last_seen');
+            $table->timestamp('last_seen')->nullable();
             $table->timestamps();
         });
     }

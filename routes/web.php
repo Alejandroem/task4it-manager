@@ -34,6 +34,7 @@ Route::resource('requirements','RequirementController');
 Route::resource('bugs','RequirementController');
 Route::resource('users','UserController');
 Route::resource('payments','PaymentController');
+Route::resource('notifications','NotificationController');
 Route::resource('requirements.questions','QuestionController');
 Auth::routes();
 

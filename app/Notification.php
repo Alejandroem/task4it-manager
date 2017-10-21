@@ -16,4 +16,8 @@ class Notification extends Model
         'updated_at',
         'last_seen'
     ];
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }

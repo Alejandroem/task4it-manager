@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Notification;
+use App\User;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['role:admin']);        
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +22,8 @@ class NotificationController extends Controller
     public function index()
     {
         //
+        $notifications = Notification::all();
+        return view('notifications.index')->with(compact('notifications'));
     }
 
     /**
@@ -25,6 +34,8 @@ class NotificationController extends Controller
     public function create()
     {
         //
+        $users = User::all()->pluck('email','id');
+        return view('notifications.create')->with(compact('users'));
     }
 
     /**
@@ -36,6 +47,21 @@ class NotificationController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'users'=>'required',
+            'title'=>'required',
+            'priority'=>'required',
+            'message'=>'required'
+        ]);
+
+        foreach($request->users as $userid){
+            Notification::create([
+                'title'=>$request->title,
+                'message'=>$request->message,
+                'priority'=>$request->priority,
+                'user_id'=>$userid
+            ]);
+        }
     }
 
     /**
