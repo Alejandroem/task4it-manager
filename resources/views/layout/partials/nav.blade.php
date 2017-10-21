@@ -35,6 +35,12 @@
                     <span class="nav-link-text">Bugs</span>
                 </a>
             </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Payments">
+                <a class="nav-link" href="{{ route('payments.index') }}">
+                    <i class="fa fa-credit-card" aria-hidden="true"></i>
+                    <span class="nav-link-text">Payments</span>
+                </a>
+            </li>
 
         </ul>
 

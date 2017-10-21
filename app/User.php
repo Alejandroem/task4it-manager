@@ -8,6 +8,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Jasekz\Laradrop\Models\File;
 use App\Project;
 use App\Requirement;
+use App\Payment;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -61,6 +62,9 @@ class User extends Authenticatable
                 $balance+= $requirement->rate * ($requirement->percentage/100);
             }
         }
-        return $balance;
+
+        $payments = Payment::where('user_id',$this->id)->sum('amount');
+
+        return $balance - $payments;
     }
 }

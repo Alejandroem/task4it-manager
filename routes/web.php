@@ -33,6 +33,7 @@ Route::post('requirements/status/{requirement}',[
 Route::resource('requirements','RequirementController');
 Route::resource('bugs','RequirementController');
 Route::resource('users','UserController');
+Route::resource('payments','PaymentController');
 Route::resource('requirements.questions','QuestionController');
 Auth::routes();
 
