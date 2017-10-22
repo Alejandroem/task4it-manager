@@ -2,7 +2,9 @@
 @section('content')
 <div class="card mb-3">
     <div class="card-header">
-        <a class="btn btn-primary pull-right" href="{{route('requirements.create',['type'=>$text])}}">Create new {{$text}}</a>
+        
+        <a class="btn btn-primary pull-right @if(Auth::user()->hasRole('client')&& !Auth::user()->can('create')) disabled @endif" href="{{route('requirements.create',['type'=>$text])}}">Create new {{$text}}</a>
+
         <i class="fa fa-table"></i> {{$text}} </div>
     <div class="card-body">
         <div class="table-responsive">

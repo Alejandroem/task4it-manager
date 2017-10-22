@@ -75,6 +75,9 @@ class PaymentController extends Controller
                 'description'=>$request->description,
                 'amount'=>$request->amount
             ]);
+            $user = Auth::user();
+            $user->balance -= $request->amount;
+            $user->save();
             
             /*
                 * move file to temp location

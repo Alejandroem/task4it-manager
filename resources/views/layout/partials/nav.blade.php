@@ -7,14 +7,32 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        @hasanyrole('admin|project-manager')
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
-                <a class="nav-link" href="{{ route('users.index') }}">
-                    <i class="fa fa-fw fa-user"></i>
-                    <span class="nav-link-text">Users</span>
-                </a>
+            @hasanyrole('admin|project-manager')
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-user"></i>
+                <span class="nav-link-text">Users</span>
+            </a>
+            @endhasanyrole
+            <ul class="sidenav-second-level collapse" id="collapseComponents">
+                @hasanyrole('admin|project-manager')
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+                    <a class="nav-link" href="{{ route('users.index') }}">
+                        <i class="fa fa-fw fa-users"></i>
+                        <span class="nav-link-text">List</span>
+                    </a>
+                </li>
+                @endrole
+                @hasanyrole('admin')
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+                    <a class="nav-link" href="{{ route('notifications.index') }}">
+                        <i class="fa fa-fw fa-bell"></i>
+                        <span class="nav-link-text">Notifications</span>
+                    </a>
+                </li>
+                @endrole
+            </ul>
             </li>
-        @endrole
         @hasanyrole('admin|project-manager|client')
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Projects">
                 <a class="nav-link" href="{{ route('projects.index') }}">
@@ -35,12 +53,14 @@
                     <span class="nav-link-text">Bugs</span>
                 </a>
             </li>
+            @hasanyrole('admin|client|projectm')
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Payments">
                 <a class="nav-link" href="{{ route('payments.index') }}">
                     <i class="fa fa-credit-card" aria-hidden="true"></i>
                     <span class="nav-link-text">Payments</span>
                 </a>
             </li>
+            @endhasanyrole
 
         </ul>
 
@@ -54,9 +74,9 @@
         <ul class="navbar-nav ml-auto">
         </ul>
         <ul class="navbar-nav ml-auto">
-        
+        @hasanyrole('client')
         @include('layout.partials.nav-items.messages')
-
+        @endhasanyrole
         <div class="nav-item">
             <div class="mr-4 my-2">
                 @hasanyrole('client')

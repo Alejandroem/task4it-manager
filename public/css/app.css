@@ -4747,3 +4747,22 @@ footer.sticky-footer {
       display: none !important; } }
 
 /*# sourceMappingURL=bootstrap.min.css.map */
+.flash-message {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10; }
+
+@-webkit-keyframes flash-message {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    display: none; } }
+
+@keyframes flash-message {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    display: none; } }

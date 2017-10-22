@@ -57,7 +57,7 @@ class RequirementController extends Controller
             $uprojects = Auth::user()->projects->pluck('id');
             $projects = Project::whereIn('id',$uprojects)->get()->pluck('name','id');
         }
-
+        
         return view('requirements.create')->with(compact('requirement','text','projects'));
     }
 
@@ -163,6 +163,12 @@ class RequirementController extends Controller
             'status'=>'required',
             'type'=>'required'
         ]);
+
+        if($request->status==2){
+            $user = Auth::user();
+            $user->balance += $requirement->rate*($requirement->percentage/100) + $requirement->rate;
+            $user->save();
+        }
             
         $requirement->status = $request->status;
         $requirement->save();

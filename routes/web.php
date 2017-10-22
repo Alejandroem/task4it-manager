@@ -32,8 +32,32 @@ Route::post('requirements/status/{requirement}',[
 ]);
 Route::resource('requirements','RequirementController');
 Route::resource('bugs','RequirementController');
+
+Route::post('users/endis/{user}',[
+    'uses'=>'UserController@endis',
+    'as'=>'users.endis'
+]);
 Route::resource('users','UserController');
+
+
 Route::resource('payments','PaymentController');
+
+
+Route::get('notifications/display',[
+    'uses'=>'NotificationController@display',
+    'as'=>'notifications.display'
+]);
+Route::post('notifications/check',[
+    'uses'=>'NotificationController@check',
+    'as'=>'notifications.check'
+]);
+
+Route::get('notifications/list',[
+    'uses'=>'NotificationController@list',
+    'as'=>'notifications.list'
+]);
+
+Route::resource('notifications','NotificationController');
 Route::resource('requirements.questions','QuestionController');
 Auth::routes();
 

@@ -39,7 +39,7 @@ class User extends Authenticatable
         'updated_at'
     ];
 
-    protected $appends = ['balance'];
+    protected $appends = ['newNotifications'];
     
 
     public function projects(){
@@ -50,21 +50,13 @@ class User extends Authenticatable
         return $this->hasMany(File::class,'relation_id');
     }
 
-    public function getBalanceAttribute()
-    {
-        $projects = $this->projects()->pluck('id');
+    public function notifications(){
+        return $this->hasMany('App\Notification');
+    }
 
-        $requirements = Requirement::whereIn('project_id',$projects)->get();
-        $balance = 0;
-        foreach($requirements as $requirement){
-            if($requirement->rate!=null && $requirement->percentage!=null && ($requirement->status ==2 || $requirement->status == 3)){
-                $balance+= $requirement->rate;
-                $balance+= $requirement->rate * ($requirement->percentage/100);
-            }
+    public function getNewNotificationsAttribute(){
+        if($this->notifications->count()){
+            return $this->notifications()->where('last_seen',null)->get();
         }
-
-        $payments = Payment::where('user_id',$this->id)->sum('amount');
-
-        return $balance - $payments;
     }
 }
