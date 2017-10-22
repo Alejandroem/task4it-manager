@@ -7,11 +7,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            @hasanyrole('admin|project-manager')
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
                 <i class="fa fa-fw fa-user"></i>
                 <span class="nav-link-text">Users</span>
             </a>
+            @endhasanyrole
             <ul class="sidenav-second-level collapse" id="collapseComponents">
                 @hasanyrole('admin|project-manager')
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">

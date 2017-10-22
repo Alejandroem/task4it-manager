@@ -28,10 +28,21 @@
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark sidenav-toggled" id="page-top">
+    
     @include('layout.partials.nav');
 
     <div class="content-wrapper">
         <div class="container-fluid">
+            @if(Session::get('alerts'))
+                @foreach(Session::get('alerts') as $key => $alert)
+                <div style="width:300px; bottom: {{80*$key}}px" data-id="{{$alert->id}}" class="flash-message alert {{$alert->type}} alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"  aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>{{$alert->title}}</strong> {{$alert->message}}
+                </div>
+                @endforeach
+            @endif
 
             @yield('content')
         </div>
@@ -65,6 +76,15 @@
 
     <script>
         $(document).ready(function() {
+            $('.alert').on('closed.bs.alert', function () {
+                console.log($(this).data('id'));
+                $.ajax({
+                    'url':'{{route('notifications.check')}}',
+                    'method':'POST',
+                    'data':{'_token':'{{ csrf_token() }}','id':$(this).data('id')}
+                });
+            })
+
             $('.datepicker').datepicker();
             $('.js-timeline').Timeline();
              // With custom params:

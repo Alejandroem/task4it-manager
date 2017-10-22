@@ -34,6 +34,22 @@ Route::resource('requirements','RequirementController');
 Route::resource('bugs','RequirementController');
 Route::resource('users','UserController');
 Route::resource('payments','PaymentController');
+
+
+Route::get('notifications/display',[
+    'uses'=>'NotificationController@display',
+    'as'=>'notifications.display'
+]);
+Route::post('notifications/check',[
+    'uses'=>'NotificationController@check',
+    'as'=>'notifications.check'
+]);
+
+Route::get('notifications/list',[
+    'uses'=>'NotificationController@list',
+    'as'=>'notifications.list'
+]);
+
 Route::resource('notifications','NotificationController');
 Route::resource('requirements.questions','QuestionController');
 Auth::routes();

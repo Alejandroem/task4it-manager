@@ -24,7 +24,13 @@
                         <td>{{$notification->message}}</td>
                         <td>{{$notification->user->name}}</td>
                         <td>{{$notification->user->email}}</td>
-                        <td>{{$notification->last_seen->toFormattedDateString()}}</td>
+                        <td>
+                        @if($notification->last_seen)
+                            {{$notification->last_seen->toFormattedDateString()}}
+                        @else
+                            Not yet seen
+                        @endif
+                        </td>
                         <td>{{$notification->created_at->toFormattedDateString()}}</td>
                     </tr>
                     @endforeach

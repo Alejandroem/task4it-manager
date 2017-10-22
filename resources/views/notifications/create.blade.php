@@ -12,5 +12,11 @@
 @stop
 
 @section('script')
-    
+    $(document).ready(function(){
+        $('.alert').click(function(){
+            $('.alert').css('border','none');
+            $(this).css('border','solid');
+            $("#priority").val($(this).data('value'));
+        });
+    });
 @endsection

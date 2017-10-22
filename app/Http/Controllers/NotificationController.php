@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Notification;
 use App\User;
 use Illuminate\Http\Request;
+use Auth, Session;
 
 class NotificationController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware(['role:admin']);        
+        $this->middleware(['role:admin|client']);        
         $this->middleware('auth');
     }
     /**
@@ -26,6 +27,11 @@ class NotificationController extends Controller
         return view('notifications.index')->with(compact('notifications'));
     }
 
+    public function list(User $user){
+        $notifications = $user->notifications;
+        return view('notifications.list')->with(compact('notifications'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -34,7 +40,7 @@ class NotificationController extends Controller
     public function create()
     {
         //
-        $users = User::all()->pluck('email','id');
+        $users = User::role('client')->pluck('email','id');
         return view('notifications.create')->with(compact('users'));
     }
 
@@ -49,11 +55,11 @@ class NotificationController extends Controller
         //
         $request->validate([
             'users'=>'required',
-            'title'=>'required',
+            'title'=>'required|max:25',
             'priority'=>'required',
-            'message'=>'required'
+            'message'=>'required|max:50'
         ]);
-
+        
         foreach($request->users as $userid){
             Notification::create([
                 'title'=>$request->title,
@@ -62,6 +68,8 @@ class NotificationController extends Controller
                 'user_id'=>$userid
             ]);
         }
+
+        return redirect()->route('notifications.index');
     }
 
     /**
@@ -107,5 +115,16 @@ class NotificationController extends Controller
     public function destroy(Notification $notification)
     {
         //
+    }
+
+    public function check(Request $request){
+        $request->validate([
+            'id'=>'required'
+        ]);
+        if(Auth::user()){
+            $notification = Notification::find($request->id);
+            $notification->last_seen = \Carbon\Carbon::now();
+            $notification->save();
+        }
     }
 }

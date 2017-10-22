@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     public function getNewNotificationsAttribute(){
         if($this->notifications->count()){
-            return $this->notifications()->where('created_at'>$this->last_login_at)->count();
+            return $this->notifications()->where('last_seen',null)->get();
         }
     }
 
