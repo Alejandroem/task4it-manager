@@ -39,7 +39,7 @@ class User extends Authenticatable
         'updated_at'
     ];
 
-    protected $appends = ['balance','newNotifications'];
+    protected $appends = ['newNotifications'];
     
 
     public function projects(){
@@ -58,23 +58,5 @@ class User extends Authenticatable
         if($this->notifications->count()){
             return $this->notifications()->where('last_seen',null)->get();
         }
-    }
-
-    public function getBalanceAttribute()
-    {
-        $projects = $this->projects()->pluck('id');
-
-        $requirements = Requirement::whereIn('project_id',$projects)->get();
-        $balance = 0;
-        foreach($requirements as $requirement){
-            if($requirement->rate!=null && $requirement->percentage!=null && ($requirement->status ==2 || $requirement->status == 3)){
-                $balance+= $requirement->rate;
-                $balance+= $requirement->rate * ($requirement->percentage/100);
-            }
-        }
-
-        $payments = Payment::where('user_id',$this->id)->sum('amount');
-
-        return $balance - $payments;
     }
 }

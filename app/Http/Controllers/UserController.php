@@ -75,6 +75,9 @@ class UserController extends Controller
         ]);
         
         $user->assignRole($request->role);
+        if($request->role=='client'){
+            $user->givePermissionTo('create');
+        }
 
         return redirect()->route('users.index');
     }
@@ -125,5 +128,17 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function endis(User $user, Request $request){
+        $request->validate([
+            'value'=>'required'
+        ]);
+        if($request->value){
+            $user->givePermissionTo('create');
+        }else{
+            $user->revokePermissionTo('create');
+        }
+        return back();
     }
 }

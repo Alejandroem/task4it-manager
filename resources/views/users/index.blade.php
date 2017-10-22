@@ -26,10 +26,33 @@
                 <tbody>
                     @foreach($users as $user)
                     <tr>
-                        <td>{{$user->name}}</td>
+                        <td>
+                            {{$user->name}}
+                        </td>
                         <td>{{$user->email}}</td>
                         <td>{{$user->created_at->toFormattedDateString()}}</td>
-                        <td>{{$user->roles->first()->display_name}}</td>
+                        <td>{{$user->roles->first()->display_name}}
+                            @if($user->hasRole('client'))
+                                &nbsp
+                                &nbsp
+                                &nbsp
+                                @if($user->can('create'))
+                                    <form class="float-right" action="{{ route('users.endis',['user'=>$user->id,'value'=>0]) }}" method="POST">
+                                        {{csrf_field()}}
+                                        <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Disable user">
+                                            <i class="btn btn-primary fa fa-check-square" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                @else
+                                    <form class="float-right" action="{{ route('users.endis',['user'=>$user->id,'value'=>1]) }}" method="POST">
+                                        {{csrf_field()}}
+                                        <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Enable user">
+                                            <i class="btn btn-primary fa fa-square" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                @endif
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

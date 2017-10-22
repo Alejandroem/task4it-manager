@@ -16,3 +16,9 @@
     {{Form::label('budget','Budget:')}}
     {{Form::number('budget',null,['class'=>'form-control','min'=>0,'step'=>'any' ])}}
 </div>
+@if(isset($clients))
+<div class="form-group">
+    {{Form::label('charge_to','Select the user to charge the budget:')}}
+    {{Form::select('charge_to',$clients,null,['class'=>'form-control'])}}
+</div>
+@endif

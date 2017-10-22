@@ -20,29 +20,31 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('admin'),
         ]);
         $admin->assignRole('admin');
-        $admin = User::create([
+        $projectm = User::create([
             'name' => 'projectm',
             'email' => 'projectm@projectm.com',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now(),
             'password' => bcrypt('projectm'),
         ]);
-        $admin->assignRole('project-manager');
-        $admin = User::create([
+        $projectm->assignRole('project-manager');
+        $developer = User::create([
             'name' => 'developer',
             'email' => 'developer@developer.com',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now(),
             'password' => bcrypt('developer'),
         ]);
-        $admin->assignRole('developer');
-        $admin = User::create([
+        $developer->assignRole('developer');
+        $client = User::create([
             'name' => 'client',
             'email' => 'client@client.com',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now(),
             'password' => bcrypt('client'),
         ]);
-        $admin->assignRole('client');
+        $client->assignRole('client');
+        $client->givePermissionTo('create');
+
     }
 }

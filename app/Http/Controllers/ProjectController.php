@@ -66,7 +66,10 @@ class ProjectController extends Controller
                 $q->where('level','>=',Auth::user()->roles->first()->level);
             })->get()->pluck('email','id');
         }
-        return view('projects.create')->with(compact('project', 'users', 'roles','project_users'));
+
+        $clients = User::role('client')->pluck('email','id');
+
+        return view('projects.create')->with(compact('project', 'users', 'roles','project_users','clients'));
     }
 
     /**
@@ -82,7 +85,8 @@ class ProjectController extends Controller
         $request->validate([
             'name' => 'required|max:50',
             'description' => 'required',
-            'budget'=>'required|numeric|min:0'
+            'budget'=>'required|numeric|min:0',
+            'charge_to'=>'required'
         ]);
         if ($request->toogle_user==='on') {
             $request->validate([
@@ -106,6 +110,9 @@ class ProjectController extends Controller
         
         $project = Project::create($request->input());
         $user->projects()->attach($project->id);
+        $client = User::find($request->charge_to);
+        $client->balance+=$project->budget;
+        $client->save();
         
         return redirect()->route('projects.index');
     }

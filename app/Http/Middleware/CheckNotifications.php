@@ -15,8 +15,8 @@ class CheckNotifications
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()){
-            if(Auth::user()->newnotifications->count()>0){
+        if(Auth::user() && Auth::user()->hasRole('client')){
+            if(Auth::user()->newnotifications){
                 Session::flash('alerts',Auth::user()->newnotifications);
             }
         }

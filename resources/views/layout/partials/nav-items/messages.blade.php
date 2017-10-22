@@ -3,12 +3,12 @@
     <i class="fa fa-fw fa-envelope"></i>
     <span class="d-lg-none">Messages
         <span class="badge badge-pill badge-primary">
-        
-        {{Auth::user()->newnotifications->count()}} New
-        
+        @if(Auth::user()->newnotifications)
+            {{Auth::user()->newnotifications->count()}} New
+        @endif
         </span>
     </span>
-    @if(Auth::user()->newnotifications->count()>0)
+    @if(Auth::user()->newnotifications)
     <span class="indicator text-primary d-none d-lg-block">
         <i class="fa fa-fw fa-circle"></i>
     </span>

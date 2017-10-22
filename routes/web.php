@@ -32,7 +32,14 @@ Route::post('requirements/status/{requirement}',[
 ]);
 Route::resource('requirements','RequirementController');
 Route::resource('bugs','RequirementController');
+
+Route::post('users/endis/{user}',[
+    'uses'=>'UserController@endis',
+    'as'=>'users.endis'
+]);
 Route::resource('users','UserController');
+
+
 Route::resource('payments','PaymentController');
 
 
