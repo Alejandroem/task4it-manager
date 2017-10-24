@@ -153,9 +153,12 @@ class RequirementController extends Controller
      * @param  \App\Requirement  $requirement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Requirement $requirement)
+    public function destroy(Requirement $requirement, Request $request)
     {
         //
+        $requirement->delete();
+        return redirect()->route('requirements.index',['type'=>$request->type]);        
+
     }
     
     public function changeStatus(Requirement $requirement, Request $request){

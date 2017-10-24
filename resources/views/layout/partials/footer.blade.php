@@ -1,7 +1,7 @@
 <footer class="sticky-footer">
     <div class="container">
     <div class="text-center">
-        <small>Copyright © Task4It ( link for http://www.task4it.pt ) 2017</small>
+        <small>Copyright © 2017 <a href="http://www.task4it.pt">Task4it</a></small>
     </div>
     </div>
 </footer>

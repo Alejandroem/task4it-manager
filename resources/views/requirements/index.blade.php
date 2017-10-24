@@ -90,7 +90,7 @@
                             {{Form::close()}}
                             {{--  Waiting for admin response  --}}
                         @else
-                            {{"% ".number_format($requirement->percentage)}}
+                            {{"€ ".number_format($requirement->percentage)}}
                         @endif
                         </td>
                         @endhasanyrole
@@ -100,7 +100,7 @@
                         @if($requirement->percentage==null||$requirement->rate==null)
                             Not available yet
                         @else
-                            {{number_format($requirement->rate*($requirement->percentage/100) + $requirement->rate,2)}}€
+                            {{number_format($requirement->rate+$requirement->percentage + $requirement->rate,2)}}€
                         @endif
                         @endhasanyrole
                         </td>
@@ -136,7 +136,23 @@
                         @endif
                         
                         </td>
-                        <td>{{$requirement->priority}}</td>
+                        <td>
+                        
+                        @if($requirement->priority==0)
+                            <div class="alert alert-success" role="alert">
+                                Low
+                            </div>
+                        @elseif($requirement->priority==1)
+                            <div class="alert alert-warning" role="alert">
+                                Medium
+                            </div>
+                        @elseif($requirement->priority==2)
+                            <div class="alert alert-danger" role="alert">
+                                High
+                            </div>
+                        @endif
+                        
+                        </td>
                         @hasanyrole('admin')
                         <td>
                             @if($requirement->payed)
@@ -159,6 +175,14 @@
                             <a href="{{ route('requirements.show',['requirement'=>$requirement->id,'type'=>$text]) }}" title="View files">
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
+                            @hasanyrol('admin')
+                            {{Form::open(array('route'=>array('notifications.destroy',$requirement->id,'type'=>$text),'method'=>'DELETE'))}}
+                                {{csrf_field()}}
+                                <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete {{$text}}">
+                                    <i class="btn btn-danger fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            {{Form::close()}}
+                        @endhasanyrol
                         </td>
                         
                     </tr>

@@ -58,6 +58,14 @@
                             <a href="{{ route('projects.show',['id'=>$project->id]) }}" title="View files">
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
+                            @hasanyrol('admin')
+                            {{Form::open(array('route'=>array('projects.destroy',$project->id),'method'=>'DELETE'))}}
+                                {{csrf_field()}}
+                                <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete project">
+                                    <i class="btn btn-danger fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            {{Form::close()}}
+                        @endhasanyrol
                         </td>
                         @endhasanyrole
                     </tr>
