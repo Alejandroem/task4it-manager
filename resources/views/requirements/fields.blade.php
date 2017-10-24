@@ -17,8 +17,12 @@
                 {{Form::select('project', $projects,null,['placeholder'=>'Select a project...','class' => 'form-control'])}}
         </div>
         <div class="form-group">
-                {{Form::label('priority', 'Priority: (1->100)')}} 
-                {{Form::number('priority', null,['min'=>1,'max'=>100,'class' => 'form-control'])}}
+                {{Form::label('priority', 'Priority:')}}
+                <select class="form-control" name="priority" id="priority">
+                    <option value="0">Low</option>
+                    <option value="1">Medium</option>
+                    <option value="2">High</option>
+                </select>
         </div>
         <div class="form-group">
             {{Form::label('due_to', 'Due to:')}} 

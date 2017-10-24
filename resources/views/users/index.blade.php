@@ -52,6 +52,14 @@
                                     </form>
                                 @endif
                             @endif
+                            @if(Auth::user()->hasRole('admin'))
+                                {{Form::open(array('route'=>array('users.destroy',$user->id),'method'=>'DELETE'))}}
+                                    {{csrf_field()}}
+                                    <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete user">
+                                        <i class="btn btn-danger fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                {{Form::close()}}
+                            @endif
                         </td>
                     </tr>
                     @endforeach

@@ -19,7 +19,7 @@
                 </div>
                 <div class="mr-5">26 New projects!</div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="{{route('projects.index')}}">
               <span class="float-left">View Details</span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="mr-5">11 New requirements!</div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="{{ route('requirements.index',['type'=>'requirements']) }}">
               <span class="float-left">View Details</span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="mr-5">123 New bugs!</div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="{{ route('bugs.index',['type'=>'bugs']) }}">
               <span class="float-left">View Details</span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>

@@ -81,7 +81,7 @@
             <div class="mr-4 my-2">
                 @hasanyrole('client')
                 <button class="btn">
-                Balance: <span class="badge badge-secondary"><i class="fa fa-usd" aria-hidden="true"></i> {{Auth::User()->balance}}</span>
+                Balance: <span class="badge badge-secondary"><i class="fa fa-usd" aria-hidden="true"></i> {{Auth::User()->balance}}€</span>
                 </button>
                 @endhasanyrole
             </div>

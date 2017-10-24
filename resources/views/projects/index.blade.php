@@ -39,7 +39,7 @@
                     <tr>
                         <td>{{$project->name}}</td>
                         <td>{{$project->description}}</td>
-                        <td>${{$project->budget}}</td>
+                        <td>{{$project->budget}}€</td>
                         <td>{{$project->created_at->toFormattedDateString()}}</td>
                         @hasanyrole('admin|project-manager')
                         <td>

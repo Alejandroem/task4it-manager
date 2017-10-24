@@ -70,7 +70,7 @@
                             @endif
                         @elseif(Auth::user()->hasAnyRole('admin|project-manager'))
                         <td>
-                            $ {{number_format($requirement->rate,2)}}
+                            {{number_format($requirement->rate,2)}}€
                         </td>
                         @endif
                         
@@ -81,7 +81,7 @@
                             {{Form::model($requirement, array('route' => array('requirements.updatePercentage', $requirement->id,'type'=>$text),'method'=>'POST'))}}
                             <div class="row">
                                 <div class="col">
-                                    {{Form::number('percentage', null,['min'=>0,'max'=>100, 'step'=>'any', 'class' => 'form-control'])}}
+                                    {{Form::number('percentage', null,['min'=>0, 'step'=>'any', 'class' => 'form-control'])}}
                                 </div>
                                 <div class="col">
                                     <button class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
@@ -100,7 +100,7 @@
                         @if($requirement->percentage==null||$requirement->rate==null)
                             Not available yet
                         @else
-                            ${{number_format($requirement->rate*($requirement->percentage/100) + $requirement->rate,2)}}
+                            {{number_format($requirement->rate*($requirement->percentage/100) + $requirement->rate,2)}}€
                         @endif
                         @endhasanyrole
                         </td>
@@ -124,7 +124,7 @@
                         @elseif($requirement->status==3)
                         <div class="alert alert-success" role="alert">
                             Completed
-                        </div>
+                        </div>balance
                         @elseif($requirement->status==4)
                         <div class="alert alert-warning" role="alert">
                             Awaiting Payment

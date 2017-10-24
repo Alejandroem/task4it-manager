@@ -115,6 +115,8 @@ class NotificationController extends Controller
     public function destroy(Notification $notification)
     {
         //
+        $notification->delete();
+        return back();
     }
 
     public function check(Request $request){
