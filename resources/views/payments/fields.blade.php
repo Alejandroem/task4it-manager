@@ -18,3 +18,10 @@
 </div>
 
 
+<div class="form-group col-md-6">
+    Company - Dreamers & Heroes Unipessoal, LDA <br>
+    Address: Rua Ary dos Santos nº5 -2º Esquerdo 2925-061 Azeitão<br>
+    VAT ID: 513805168<br>
+    IBAN: PT50 0035 0275 00029494830 52<br>
+    BIC SWIFT: CGDIPTPL<br>
+</div>
