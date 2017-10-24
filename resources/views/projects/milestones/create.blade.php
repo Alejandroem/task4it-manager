@@ -8,7 +8,7 @@
         <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    {{ Form::open(array('route' => array('projects.milestones.store','project'=>session('error_code')['id']),'method'=>'POST')) }}
+    {{ Form::open(array('route'I have change it => array('projects.milestones.store','project'=>session('error_code')['id']),'method'=>'POST')) }}
     {{Form::token()}}
         <div class="modal-body">
         <input type="text" hidden value="5" name="question" id="question">
