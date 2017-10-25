@@ -18,7 +18,7 @@
                         <th>Rate</th>
                         @endhasanyrole
                         @hasanyrole('admin')
-                        <th>%</th>
+                        <th>Admin rate</th>
                         @endhasanyrole
                         @hasanyrole('admin|client') 
                         <th>Total</th>
@@ -68,7 +68,7 @@
                                 Waiting for developer response
                             </td>
                             @endif
-                        @elseif(Auth::user()->hasAnyRole('admin|project-manager'))
+                        @elseif(Auth::user()->hasAnyRole('admin|project-manager|developer'))
                         <td>
                             {{number_format($requirement->rate,2)}}€
                         </td>
@@ -90,7 +90,7 @@
                             {{Form::close()}}
                             {{--  Waiting for admin response  --}}
                         @else
-                            {{"€ ".number_format($requirement->percentage)}}
+                            {{number_format($requirement->percentage)." €"}}
                         @endif
                         </td>
                         @endhasanyrole
@@ -107,15 +107,15 @@
                         <td>
                         @if($requirement->status==1)
                             @if($requirement->percentage!=null&&$requirement->rate!=null)
-                                @hasanyrole('client')
+                                @if(Auth::user()->hasRole('client'))
                                      {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>2,'type'=>$text),'method'=>'POST'))}}
                                         {{Form::submit('Approve',['class'=>'btn btn-primary'])}}
                                     {{Form::close()}}
-                                @endhasanyrole
-                            @else
-                                <div class="alert alert-primary" role="alert">
-                                    Created
-                                </div>
+                                @else
+                                    <div class="alert alert-primary" role="alert">
+                                        Created
+                                    </div>
+                                @endif
                             @endif
                         @elseif($requirement->status==2)
                         <div class="alert alert-secondary" role="alert">
@@ -169,20 +169,22 @@
                         <td>{{$requirement->due_to->toFormattedDateString()}}</td>
                         <td>{{$requirement->created_at->toFormattedDateString()}}</td>
                         <td>
+                        <div class="row">
                             <a href="{{route('requirements.questions.index',['bug'=>$requirement->id])}}">
                                 <i class="btn btn-primary fa fa-comments fa-lg" aria-hidden="true"></i>
                             </a>
                             <a href="{{ route('requirements.show',['requirement'=>$requirement->id,'type'=>$text]) }}" title="View files">
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
-                            @hasanyrol('admin')
-                            {{Form::open(array('route'=>array('notifications.destroy',$requirement->id,'type'=>$text),'method'=>'DELETE'))}}
+                            @hasanyrole('admin')
+                            {{Form::open(array('route'=>array('notifications.destroy',$requirement->id,'type'=>$text),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
                                 {{csrf_field()}}
                                 <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete {{$text}}">
-                                    <i class="btn btn-danger fa fa-trash" aria-hidden="true"></i>
+                                    <i class="btn btn-danger fa fa-trash fa-lg" aria-hidden="true"></i>
                                 </button>
                             {{Form::close()}}
-                        @endhasanyrol
+                            @endhasanyrole
+                        </div>
                         </td>
                         
                     </tr>
