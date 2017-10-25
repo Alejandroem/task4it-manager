@@ -116,6 +116,10 @@
                                         Created
                                     </div>
                                 @endif
+                            @else 
+                                <div class="alert alert-primary" role="alert">
+                                    Created
+                                </div>
                             @endif
                         @elseif($requirement->status==2)
                         <div class="alert alert-secondary" role="alert">
