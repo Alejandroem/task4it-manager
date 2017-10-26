@@ -169,7 +169,7 @@ class RequirementController extends Controller
 
         if($request->status==2){
             $user = Auth::user();
-            $user->balance += $requirement->rate*($requirement->percentage/100) + $requirement->rate;
+            $user->balance += $requirement->rate;
             $user->save();
         }
             
