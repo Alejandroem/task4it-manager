@@ -128,6 +128,10 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+        return config('app.super_user');
+        if($user->email==config('app.super_user')){
+            return back();
+        }
         $user->delete();
         return back();
     }

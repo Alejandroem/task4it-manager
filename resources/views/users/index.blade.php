@@ -52,7 +52,8 @@
                                     </form>
                                 @endif
                             @endif
-                            @if(Auth::user()->hasRole('admin'))
+                            
+                            @if(Auth::user()->hasRole('admin')&&config('app.super_user')!=$user->email)
                                 {{Form::open(array('class'=>'float-right','route'=>array('users.destroy',$user->id),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
                                     {{csrf_field()}}
                                     <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete user">
@@ -65,6 +66,7 @@
                     @endforeach
                 </tbody>
             </table>
+            
         </div>
     </div>
     {{--<div class="card-footer small text-muted">Updated today at 11:59 PM</div> --}}

@@ -54,6 +54,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'super_user'    => env('SUPER_USER','mario.silva@task4it.pt'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

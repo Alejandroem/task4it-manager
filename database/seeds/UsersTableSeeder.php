@@ -12,6 +12,14 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         //
+        $sadmin = User::create([
+            'name' => 'Mario Silva',
+            'email' => 'mario.silva@task4it.pt',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+            'password' => bcrypt('mario.silva'),
+        ]);
+        $sadmin->assignRole('admin');
         $admin = User::create([
             'name' => 'admin',
             'email' => 'admin@admin.com',
