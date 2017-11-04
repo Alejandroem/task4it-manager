@@ -23,9 +23,9 @@
                         <th>Budget</th>
                         @endhasanyrole
                         <th>Created at</th>
-                        @hasanyrole('admin|project-manager|developer')
+                        
                         <th>Actions</th>
-                        @endhasanyrole
+                        
                     </tr>
                 </thead>
                 {{--
@@ -45,9 +45,9 @@
                         <td>{{$project->budget}}€</td>
                         @endhasanyrole
                         <td>{{$project->created_at->toFormattedDateString()}}</td>
-                        @hasanyrole('admin|project-manager|developer')
+                        
                         <td>
-                            @hasanyrole('admin|project-manager|')
+                            @hasanyrole('admin|project-manager')
                             <a href="{{ route('projects.edit',['id'=>$project->id]) }}" title="Asign users">
                                 <i class="btn btn-primary fa fa-user-plus fa-lg" aria-hidden="true"></i>
                             </a>
@@ -73,7 +73,7 @@
                             {{Form::close()}}
                         @endhasanyrole
                         </td>
-                        @endhasanyrole
+                        
                     </tr>
                     @endforeach
                 </tbody>
