@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 // use App\File;
 use Illuminate\Http\Request;
 use Jasekz\Laradrop\Models\File;
-
+use Jasekz\Laradrop\Events\FileWasDeleted;
 use Intervention\Image\ImageManagerStatic as Image;
 use Debugbar;
 use Storage, Auth;
@@ -257,6 +257,42 @@ class FileController extends Controller
      */
     public function destroy(File $file)
     {
-        //
+        if(Auth::user()->hasAnyRole('admin|projectm|developer')){
+            //
+            try{
+                $disk = Storage::disk(config('laradrop.disk'));
+                if($file->descendants()->exists()) {
+                    foreach($file->descendants()->where('type', '!=', 'folder')->get() as $descendant) {
+                        $disk->delete('_thumb_'.$file->filename);        
+                        $disk->delete($file->filename);        
+                        event(new FileWasDeleted([ // fire 'file deleted' event for each descendant
+                            'file' => $descendant
+                        ]));
+                    }
+                }
+                $disk->delete('_thumb_'.$file->filename);
+                $disk->delete($file->filename);
+                $file->delete();
+
+                if($file->type != 'folder') {
+                    event(new FileWasDeleted([ // fire 'file deleted' event for file
+                        'file' => $file
+                    ]));
+                }
+            
+                return response()->json([
+                    'status' => 'success'
+                ]);
+            } 
+
+            catch (Exception $e) {
+                return $this->handleError($e);
+            }
+        }else{
+            return response()->json([
+                'status' => 'success'
+            ]);
+        }
+
     }
 }

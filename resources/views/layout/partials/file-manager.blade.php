@@ -3,7 +3,7 @@
     laradrop-file-source="{{ route('files.index',['relation'=>$relation,'relation_id'=>$id]) }}" 
     laradrop-file-create-handler="{{ route('files.createPost',['relation'=>$relation,'relation_id'=>$id]) }}" 
     laradrop-upload-handler="{{ route('laradrop.store') }}"
-    laradrop-file-delete-handler="{{ route('laradrop.destroy', 0) }}"
+    laradrop-file-delete-handler="{{ route('files.destroy', 0) }}"
     laradrop-file-create-handler="{{ route('laradrop.create') }}"
     laradrop-csrf-token="{{ csrf_token() }}"
     >
