@@ -129,9 +129,11 @@ class RequirementController extends Controller
 
     public function updateRate(Request $request, Requirement $requirement)
     {
+        
         $request->validate([
-            'rate'=>'required'
+            'rate'=>'required|min:0'
         ]);
+        
         $requirement->rate = $request->rate;
         $requirement->save();
         return redirect()->route('requirements.index',['type'=>$request->type]);

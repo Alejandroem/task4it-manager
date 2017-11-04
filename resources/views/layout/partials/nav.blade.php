@@ -33,7 +33,7 @@
                 @endrole
             </ul>
             </li>
-        @hasanyrole('admin|project-manager|client')
+        @hasanyrole('admin|project-manager|client|developer')
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Projects">
                 <a class="nav-link" href="{{ route('projects.index') }}">
                     <i class="fa fa-fw fa-book"></i>
