@@ -24,7 +24,7 @@ class ProjectController extends Controller
     public function index()
     {
         //
-        if (Auth::user()->hasAnyRole('admin|project-manager')) {
+        if (Auth::user()->hasAnyRole('admin')) {
             $projects = Project::all();
         } else {
             $projects = Project::whereHas('users', function ($q) {
