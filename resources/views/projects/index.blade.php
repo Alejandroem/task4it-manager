@@ -19,11 +19,13 @@
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
-                        <th>Budget</th>
-                        <th>Created at</th>
                         @hasanyrole('admin|project-manager')
-                        <th>Actions</th>
+                        <th>Budget</th>
                         @endhasanyrole
+                        <th>Created at</th>
+                        
+                        <th>Actions</th>
+                        
                     </tr>
                 </thead>
                 {{--
@@ -39,10 +41,13 @@
                     <tr>
                         <td>{{$project->name}}</td>
                         <td>{{$project->description}}</td>
-                        <td>{{$project->budget}}€</td>
-                        <td>{{$project->created_at->toFormattedDateString()}}</td>
                         @hasanyrole('admin|project-manager')
+                        <td>{{$project->budget}}€</td>
+                        @endhasanyrole
+                        <td>{{$project->created_at->toFormattedDateString()}}</td>
+                        
                         <td>
+                            @hasanyrole('admin|project-manager')
                             <a href="{{ route('projects.edit',['id'=>$project->id]) }}" title="Asign users">
                                 <i class="btn btn-primary fa fa-user-plus fa-lg" aria-hidden="true"></i>
                             </a>
@@ -55,6 +60,7 @@
                                     <i class="btn btn-primary fa fa-flag-checkered fa-lg" aria-hidden="true"></i>
                                 </a>
                             @endif
+                            @endhasanyrole
                             <a href="{{ route('projects.show',['id'=>$project->id]) }}" title="View files">
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
@@ -67,7 +73,7 @@
                             {{Form::close()}}
                         @endhasanyrole
                         </td>
-                        @endhasanyrole
+                        
                     </tr>
                     @endforeach
                 </tbody>

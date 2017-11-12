@@ -13,7 +13,7 @@ class ProjectController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['role:admin|project-manager|client']);
+        $this->middleware(['role:admin|project-manager|client|developer']);
         $this->middleware('auth');
     }
     /**

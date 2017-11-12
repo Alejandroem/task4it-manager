@@ -19,7 +19,7 @@
             <div class="card-body">
                 <div class="mr-5">Projects</div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="{{ route('projects.index') }}">
               <span class="float-left">View Details</span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>
@@ -32,7 +32,7 @@
             <div class="card-body">
                 <div class="mr-5">Requirements</div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="{{ route('requirements.index',['type'=>'requirements']) }}">
               <span class="float-left">View Details</span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>
@@ -45,7 +45,7 @@
             <div class="card-body">
                 <div class="mr-5">Bugs</div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="{{ route('bugs.index',['type'=>'bugs']) }}">
               <span class="float-left">View Details</span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>

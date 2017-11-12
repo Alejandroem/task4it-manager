@@ -99,6 +99,10 @@ Route::post('files',[
     'uses'=>'FileController@store',
     'as'=>'files.store'
 ]);
+Route::delete('files/destroy/{file}',[
+    'uses'=>'FileController@destroy',
+    'as'=>'files.destroy'
+]);
 
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
