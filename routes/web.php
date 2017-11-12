@@ -99,6 +99,10 @@ Route::post('files',[
     'uses'=>'FileController@store',
     'as'=>'files.store'
 ]);
+Route::post('files/update/{file}',[
+    'uses'=>'FileController@update',
+    'as'=>'files.update'
+]);
 Route::delete('files/destroy/{file}',[
     'uses'=>'FileController@destroy',
     'as'=>'files.destroy'
