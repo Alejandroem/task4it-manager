@@ -10,3 +10,21 @@
 
     @include('layout.partials.file-manager',['relation'=>'projects','id'=>$project->id])
 @endsection
+
+@section('script')
+    @hasanyrole('client')
+    $(document).ready(function ()
+    {
+        var i = setInterval(function ()
+        {
+            if ($(".btn-add-folder").length && $(".btn-add-files"))
+            {
+                clearInterval(i);
+                // safe to execute your code here
+                $(".btn-add-folder").hide();
+                $(".btn-add-files").hide();
+            }
+        }, 100);
+    });
+    @endhasanyrole
+@stop

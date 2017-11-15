@@ -93,6 +93,12 @@ gulp.task('copy', function() {
     ])
     .pipe(gulp.dest('public/vendor/datatables/'))
 
+    gulp.src([
+        'node_modules/sweetalert2/dist/*.js',
+        'node_modules/sweetalert2/dist/*.css',
+    ])
+    .pipe(gulp.dest('public/vendor/sweetalert2/'))
+
  /*    gulp.src([
         'node_modules/timelinejs-slider/dist/js/*.js',
         'node_modules/timelinejs-slider/dist/css/*.css',

@@ -74,6 +74,10 @@
     <script src="{{ asset('/vendor/jasekz/laradrop/js/enyo.dropzone.js')}}"></script>
     <script src="{{ asset('/vendor/jasekz/laradrop/js/laradrop.js')}}"></script>
 
+    <script src="{{ asset('/vendor/sweetalert2/sweetalert2.all.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
+
     <script>
         $(document).ready(function() {
             $('.alert').on('closed.bs.alert', function () {
@@ -97,16 +101,49 @@
                     // if you need to bind the select button, implement here
                     //console.log('Thumb src: '+obj.src+'. File ID: '+obj.id+'.  Please implement onInsertCallback().');
                     //window.location.href = obj.src;
-                    $.ajax({
-                        url: "{{URL::to('files/show/')}}/"+obj.id,
-                        type: "GET",
-                        success: function(response) {
-                            window.location.href = response;
-                        },
-                        error: function(xhr) {
+                    if (obj.src.indexOf("folder") >= 0){
+                        swal({
+                            title: 'Enter the new name of the folder',
+                            input: 'text',
+                            showCancelButton: true,
+                            confirmButtonText: 'Submit',
+                            showLoaderOnConfirm: true,
+                            preConfirm: function (name) {
+                                return new Promise(function (resolve, reject) {
+                                    $.ajax({
+                                        url: "{{URL::to('files/update/')}}/"+obj.id,
+                                        data:{'_token':'{{ csrf_token() }}','filename':name},
+                                        type: "POST",
+                                        success: function(response) {
+                                            $("div[file-id="+obj.id+"]").find(".laradrop-filealias").text(name);
+                                            resolve();
+                                        },
+                                        error: function(xhr) {
+                                            reject("Something went wrong");
+                                        }
+                                    });
+                                })
+                            },
+                            allowOutsideClick: false
+                        }).then(function (name) {
+                            swal({
+                                type: 'success',
+                                title: 'The folder name has been updated!',
+                                html: 'New folder name: ' + name
+                            })
+                        })
+                    }else{
+                        $.ajax({
+                            url: "{{URL::to('files/show/')}}/"+obj.id,
+                            type: "GET",
+                            success: function(response) {
+                                window.location.href = response;
+                            },
+                            error: function(xhr) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
 
                 },
                 onErrorCallback: function(msg){ // optional
@@ -119,6 +156,8 @@
                     console.log(serverRes);
                 }
             });
+
+            $('.laradrop')
         });
         @yield('script');
     </script>

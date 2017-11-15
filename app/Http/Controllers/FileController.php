@@ -79,6 +79,7 @@ class FileController extends Controller
     public function createPOST(String $relation, String $relation_id, Request $request)
     {
         //
+        Debugbar::info("Request name ", $request);
         try {            
             $fileData['alias'] = $request->filename ? $request->filename : date('m.d.Y - G:i:s');
             $fileData['type'] = 'folder';
@@ -247,6 +248,20 @@ class FileController extends Controller
     public function update(Request $request, File $file)
     {
         //
+        Debugbar::info("update",$request->filename,$file);
+        try {
+            $file->filename = $request->filename;
+            $file->alias = $request->filename;
+            $file->save();
+
+            return response()->json([
+                'status' => 'success'
+            ]);
+        } 
+
+        catch (Exception $e) {
+            return $this->handleError($e);
+        }
     }
 
     /**
