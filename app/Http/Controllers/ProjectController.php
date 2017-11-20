@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Requirement;
+use App\RequirementName;
 use App\User;
 use Illuminate\Http\Request;
-use Auth;
+use Auth, Purifier;
 use Spatie\Permission\Models\Role;
 
 class ProjectController extends Controller
@@ -44,6 +46,8 @@ class ProjectController extends Controller
         //
         $project = new Project();
         
+        $requirements = RequirementName::all()->pluck('name','id');
+
         if (Auth::user()->hasRole('admin')) {
             $roles = Role::all()->pluck('display_name', 'name');
         } elseif (Auth::user()->hasRole('project-manager')) {
@@ -69,7 +73,7 @@ class ProjectController extends Controller
 
         $clients = User::role('client')->pluck('email','id');
 
-        return view('projects.create')->with(compact('project', 'users', 'roles','project_users','clients'));
+        return view('projects.create')->with(compact('project', 'users', 'roles','project_users','clients','requirements'));
     }
 
     /**
@@ -82,10 +86,12 @@ class ProjectController extends Controller
     {
         //
         $user = null;
+        
         $request->validate([
             'name' => 'required|max:50',
             'description' => 'required',
             'budget'=>'required|numeric|min:0',
+            'requirements-list'=>'required',
             'charge_to'=>'required'
         ]);
         if ($request->toogle_user==='on') {
@@ -108,7 +114,13 @@ class ProjectController extends Controller
             $user = User::find($request->user);
         }
         
-        $project = Project::create($request->input());
+        $project = Project::create([
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'budget'=>$request->budget,
+            'requirements'=>Purifier::clean($request->get('requirements-list'))
+        ]);
+        
         $user->projects()->attach($project->id);
         $client = User::find($request->charge_to);
         $client->balance+=$project->budget;

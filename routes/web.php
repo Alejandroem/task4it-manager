@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+
 Route::get('/', function () {
     return view('welcome');
 })->middleware('auth');
@@ -108,9 +110,4 @@ Route::delete('files/destroy/{file}',[
     'as'=>'files.destroy'
 ]);
 
-
-Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
-
-Route::get('/info',function(){
-    return dd(phpinfo());
-});
+Route::resource('/requirement/names','RequirementNameController');
