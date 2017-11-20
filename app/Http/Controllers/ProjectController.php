@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Requirement;
+use App\RequirementName;
 use App\User;
 use Illuminate\Http\Request;
-use Auth;
+use Auth, Purifier;
 use Spatie\Permission\Models\Role;
-
+use Debugbar;
 class ProjectController extends Controller
 {
 
@@ -44,6 +46,8 @@ class ProjectController extends Controller
         //
         $project = new Project();
         
+        $requirements = RequirementName::all()->pluck('name','id');
+
         if (Auth::user()->hasRole('admin')) {
             $roles = Role::all()->pluck('display_name', 'name');
         } elseif (Auth::user()->hasRole('project-manager')) {
@@ -69,7 +73,7 @@ class ProjectController extends Controller
 
         $clients = User::role('client')->pluck('email','id');
 
-        return view('projects.create')->with(compact('project', 'users', 'roles','project_users','clients'));
+        return view('projects.create')->with(compact('project', 'users', 'roles','project_users','clients','requirements'));
     }
 
     /**
@@ -82,6 +86,7 @@ class ProjectController extends Controller
     {
         //
         $user = null;
+        
         $request->validate([
             'name' => 'required|max:50',
             'description' => 'required',
@@ -108,7 +113,13 @@ class ProjectController extends Controller
             $user = User::find($request->user);
         }
         
-        $project = Project::create($request->input());
+        $project = Project::create([
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'budget'=>$request->budget,
+            'requirements'=>$request->get('requirements-list')
+        ]);
+        
         $user->projects()->attach($project->id);
         $client = User::find($request->charge_to);
         $client->balance+=$project->budget;
@@ -138,6 +149,7 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         //
+        $requirements = RequirementName::all()->pluck('name','id');
         if (Auth::user()->hasRole('admin')) {
             $users = User::all()->pluck('email','id');
         }else{
@@ -152,7 +164,7 @@ class ProjectController extends Controller
                 $q->where('level','>=',Auth::user()->roles->first()->level);
             })->get()->pluck('email','id');
         }
-        return view('projects.edit')->with(compact('project', 'users','project_users'));
+        return view('projects.edit')->with(compact('project', 'users','project_users','requirements'));
     }
 
     /**
@@ -166,14 +178,39 @@ class ProjectController extends Controller
     {
         //
         $request->validate([
-            'name'=>'required'
+            'name'=>'required',
+            'description' => 'required',
+            'budget'=>'required|numeric|min:0',
+            'requirements-list'=>'required'
         ]);
         
+        $project->name = $request->name;
+        $project->description=$request->description;
+        $project->budget = $request->budget;
+        $project->requirements = $request->get('requirements-list');
+        $project->save();
+
         $project->users()->sync($request->users);
         $project->users()->attach($request->newUsers);
         return redirect()->route('projects.index');
     }
 
+    public function exportRequirements(Request $request){
+        Debugbar::info($request->input());
+        $request->validate([
+            'message'=>'required'
+        ]);
+        $requirements = json_decode($request->message);
+        $total = 0;
+        foreach($requirements as $requirement){
+            $total+= floatval($requirement->rate);
+        }
+        Debugbar::info($requirements);
+        $view =  \View::make('pdf.requirements', compact('requirements', 'total'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->download('invoice');
+    }
 
     /**
      * Remove the specified resource from storage.
