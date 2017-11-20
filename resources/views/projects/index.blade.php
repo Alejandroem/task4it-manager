@@ -49,7 +49,7 @@
                         <td>
                             @hasanyrole('admin|project-manager')
                             <a href="{{ route('projects.edit',['id'=>$project->id]) }}" title="Asign users">
-                                <i class="btn btn-primary fa fa-user-plus fa-lg" aria-hidden="true"></i>
+                                <i class="btn btn-primary fa fa-info-circle fa-lg" aria-hidden="true"></i>
                             </a>
                             @if($project->milestones->count()==0)
                                 <a href="{{ route('projects.milestones.create',['id'=>$project->id]) }}" title="Create milestones">

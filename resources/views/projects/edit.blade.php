@@ -13,19 +13,19 @@
                     <br>
                     <hr>
                     <input type="text" id="requirements-list" name="requirements-list" hidden>
-                    <div class="form-group req-grid"  data-children="0">
+                    <div class="form-group req-grid" >
                         <div class="row my-2">
                             <div class="col-md-12">
                                 <div class="pull-right">
                                     <button type="button" class="btn btn-primary" id="new-req">New requirement name</button>
-                                    <button type="button" class="btn btn-primary">Export</button>
+                                    <button type="button" class="btn btn-primary" id="export">Export</button>
                                     <button type="button" class="btn btn-primary add" id="add" data-id="0">></button>
                                 </div>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="req-panel" data-id="0">
+                            <div class="req-panel" data-id="0" data-children="0">
                                 {!! $project->requirements !!} 
                             </div>
                         </div>
@@ -63,6 +63,24 @@
     $("#save").click(function(){
         var requirements = $('.req-panel[data-id=0]').html();
         $("#requirements-list").val(requirements);
+    });
+
+    $("#export").click(function(){
+        var requirements = new Array();
+        console.log("afterbla");
+        $('.req').each(function(){
+            var requirement = new Object();
+            var id = $(this).data('id');
+            requirement.id = id;
+            requirement.parent = $(this).data('parent');
+            requirement.rate = $('.admin-rate[data-id='+id+']').val();
+            requirement.name_id = $('.requirements[data-id='+id+']').val();
+            var count = (id.match(/-/g) || []).length;
+            requirement.level = count -1;
+            requirements.push(requirement);
+        });
+        console.log(requirements);
+        window.open("{{ route('project.export') }}?message="+JSON.stringify(requirements),'_blank');
     });
 
     $("#new-req").click(function(){
@@ -103,12 +121,12 @@
     });
 
     $("body").on('click','.add',function(){
-        var children = $(".req-grid").data('children');
-        $(this).closest('.req-grid').data('children',children+1);
         var id = $(this).data('id');
+        var children = $('.req-panel[data-id='+id+']').data('children');
+        $('.req-panel[data-id='+id+']').data('children',children+1);
         $('.req-panel[data-id='+id+']').append(@include('projects.requirement'));
         
-    }); 
+    });  
 
     $("body").on('click','.del',function(){
         var id = $(this).data('id');

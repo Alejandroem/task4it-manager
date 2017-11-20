@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('auth');
 
+Route::get('/projects/export',[
+    'uses'=>'ProjectController@exportRequirements',
+    'as'=>'project.export'
+]);
 Route::resource('projects','ProjectController');
 Route::resource('projects.milestones','MilestoneController');
 Route::post('requirements/updateRate/{requirement}',[

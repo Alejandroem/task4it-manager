@@ -189,6 +189,7 @@ return [
         
         Mews\Purifier\PurifierServiceProvider::class,
         
+        Barryvdh\DomPDF\ServiceProvider::class,
         
     ],
 
@@ -245,6 +246,8 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,     
         
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
+        
+        'PDF' => Barryvdh\DomPDF\Facade::class,
         
     ],
 

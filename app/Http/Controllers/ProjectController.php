@@ -9,7 +9,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Auth, Purifier;
 use Spatie\Permission\Models\Role;
-
+use Debugbar;
 class ProjectController extends Controller
 {
 
@@ -193,6 +193,23 @@ class ProjectController extends Controller
         $project->users()->sync($request->users);
         $project->users()->attach($request->newUsers);
         return redirect()->route('projects.index');
+    }
+
+    public function exportRequirements(Request $request){
+        Debugbar::info($request->input());
+        $request->validate([
+            'message'=>'required'
+        ]);
+        $requirements = json_decode($request->message);
+        $total = 0;
+        foreach($requirements as $requirement){
+            $total+= floatval($requirement->rate);
+        }
+        Debugbar::info($requirements);
+        $view =  \View::make('pdf.requirements', compact('requirements', 'total'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->download('invoice');
     }
 
     /**
