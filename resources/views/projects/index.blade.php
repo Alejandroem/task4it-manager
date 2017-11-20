@@ -71,7 +71,7 @@
                                     <i class="btn btn-danger fa fa-trash" aria-hidden="true"></i>
                                 </button>
                             {{Form::close()}}
-                        @endhasanyrole
+                            @endhasanyrole
                         </td>
                         
                     </tr>

@@ -91,7 +91,6 @@ class ProjectController extends Controller
             'name' => 'required|max:50',
             'description' => 'required',
             'budget'=>'required|numeric|min:0',
-            'requirements-list'=>'required',
             'charge_to'=>'required'
         ]);
         if ($request->toogle_user==='on') {
@@ -118,7 +117,7 @@ class ProjectController extends Controller
             'name'=>$request->name,
             'description'=>$request->description,
             'budget'=>$request->budget,
-            'requirements'=>Purifier::clean($request->get('requirements-list'))
+            'requirements'=>$request->get('requirements-list')
         ]);
         
         $user->projects()->attach($project->id);
@@ -150,6 +149,7 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         //
+        $requirements = RequirementName::all()->pluck('name','id');
         if (Auth::user()->hasRole('admin')) {
             $users = User::all()->pluck('email','id');
         }else{
@@ -164,7 +164,7 @@ class ProjectController extends Controller
                 $q->where('level','>=',Auth::user()->roles->first()->level);
             })->get()->pluck('email','id');
         }
-        return view('projects.edit')->with(compact('project', 'users','project_users'));
+        return view('projects.edit')->with(compact('project', 'users','project_users','requirements'));
     }
 
     /**
@@ -178,14 +178,22 @@ class ProjectController extends Controller
     {
         //
         $request->validate([
-            'name'=>'required'
+            'name'=>'required',
+            'description' => 'required',
+            'budget'=>'required|numeric|min:0',
+            'requirements-list'=>'required'
         ]);
         
+        $project->name = $request->name;
+        $project->description=$request->description;
+        $project->budget = $request->budget;
+        $project->requirements = $request->get('requirements-list');
+        $project->save();
+
         $project->users()->sync($request->users);
         $project->users()->attach($request->newUsers);
         return redirect()->route('projects.index');
     }
-
 
     /**
      * Remove the specified resource from storage.

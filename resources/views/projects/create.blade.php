@@ -18,6 +18,7 @@
                     <div id="create-user" style="display:none">
                         @include('users.fields')
                     </div>
+                    @hasanyrole('admin')
                     <br>
                     <hr>
                     <input type="text" id="requirements-list" name="requirements-list" hidden>
@@ -34,9 +35,13 @@
                         <hr>
                         <div class="row">
                             <div class="req-panel" data-id="0">
+                                @if(count($errors))
+                                    {!! old('requirements-list') !!} 
+                                @endif
                             </div>
                         </div>
                     </div>
+                    @endhasanyrole
                 </div>
             </div>
            
@@ -47,6 +52,12 @@
 
 @stop
 @section('script')
+    $(document).on("change","select",function(){
+        $("option[value=" + this.value + "]", this)
+        .attr("selected", true).siblings()
+        .removeAttr("selected")
+    });
+
     $("#create").click(function(){
         var requirements = $('.req-panel[data-id=0]').html();
         $("#requirements-list").val(requirements);
@@ -96,7 +107,10 @@
         $('.req-panel[data-id='+id+']').append(@include('projects.requirement'));
         
     });  
-
+    $("body").on('click','.del',function(){
+        var id = $(this).data('id');
+        $('.req[data-id='+id+']').remove();
+    });  
 
     $('#toogle_user').click(function(){
         $('#create-user').toggle();
