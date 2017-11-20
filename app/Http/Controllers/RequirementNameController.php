@@ -39,7 +39,7 @@ class RequirementNameController extends Controller
     {
         //
         $request->validate([
-            'name'=>'required'
+            'name'=>'required|unique:requirement_names'
         ]);
         $requirement = RequirementName::create([
             'name'=>$request->name

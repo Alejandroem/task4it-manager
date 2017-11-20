@@ -93,7 +93,7 @@
             preConfirm: function (name) {
                 return new Promise(function (resolve, reject) {
                     $.ajax({
-                        url: "{{ route('names.store') }}/",
+                        url: "{{ route('names.store') }}",
                         data:{'_token':'{{ csrf_token() }}','name':name},
                         type: "POST",
                         success: function(response) {
