@@ -117,7 +117,7 @@ class ProjectController extends Controller
             'name'=>$request->name,
             'description'=>$request->description,
             'budget'=>$request->budget,
-            'requirements'=>$request->get('requirements-list')
+            'requirements'=>$request->has('requirements-list')?$request->get('requirements-list'):""
         ]);
         
         $user->projects()->attach($project->id);
@@ -180,14 +180,13 @@ class ProjectController extends Controller
         $request->validate([
             'name'=>'required',
             'description' => 'required',
-            'budget'=>'required|numeric|min:0',
-            'requirements-list'=>'required'
+            'budget'=>'required|numeric|min:0'
         ]);
         
         $project->name = $request->name;
         $project->description=$request->description;
         $project->budget = $request->budget;
-        $project->requirements = $request->get('requirements-list');
+        $project->requirements = $request->has('requirements-list')?$request->get('requirements-list'):" ";
         $project->save();
 
         $project->users()->sync($request->users);

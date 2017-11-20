@@ -15,7 +15,7 @@ class AddColumnRequirementsProjectTable extends Migration
     {
         //
         Schema::table('projects', function (Blueprint $table) {
-            $table->text('requirements');
+            $table->text('requirements')->nullable();
         });
     }
 
