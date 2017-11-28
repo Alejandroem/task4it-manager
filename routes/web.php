@@ -115,3 +115,5 @@ Route::delete('files/destroy/{file}',[
 ]);
 
 Route::resource('/requirement/names','RequirementNameController');
+
+Route::resource('/proposal','ProposalController');
