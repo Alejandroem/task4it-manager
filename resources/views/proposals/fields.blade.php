@@ -48,13 +48,20 @@
             <div class="col-md-12 mb-5">
                 {{Form::label('members', 'Team Members:')}}
             </div>
+            <div class="team col-md-12">
             @include('proposals.team')
+            </div>
         </div>
     </div>
     {{--  ./Obligations Tab  --}}
     {{--  Price Tab  --}}
     <div class="tab-pane fade" id="price" role="tabpanel" aria-labelledby="price-tab">
-        <div class="row my-5">
+        <div class="row my-5" data-milestones="1">
+            <div class="form-group col-md-6">
+                {{Form::label('name', 'Project name:')}}
+                {{Form::text('name',null,['class' => 'form-control'])}}
+            </div>
+            <div class="col-md-6"></div>
             <div class="form-group col-md-6">
                 {{Form::label('webdev', 'Web Development:')}}
                 {{Form::text('webdev',null,['class' => 'form-control'])}}
@@ -67,7 +74,9 @@
             <div class="col-md-12 mb-3">
                 {{Form::label('milestones', 'Milestones:')}}
             </div>
-            @include('proposals.milestones')
+            <div class="milestones col-md-12 ">
+                @include('proposals.milestones')
+            </div>
         </div>
     </div>
     {{--  ./Price Tab  --}}

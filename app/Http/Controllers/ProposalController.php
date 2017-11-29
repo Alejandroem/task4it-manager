@@ -38,6 +38,12 @@ class ProposalController extends Controller
     public function store(Request $request)
     {
         //
+        dd($request->input());
+        $values = [];
+        $view =  \View::make('pdf.proposal', compact('values'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->download('invoice');
     }
 
     /**

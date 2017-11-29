@@ -9,96 +9,178 @@
 
 <body>
     <header class="clearfix">
-        <div id="logo">
-            <img src="logo.png">
+        <div style="text-align:center;">
+            <img src="{{ base_path() }}/public/img/task4it-contract-logo.png" height="150px">
+            <h3><b>SERVICES PRE CONTRACT</b></h3>
         </div>
         <div id="company">
-            <h2 class="name">Company Name</h2>
-            <div>455 Foggy Heights, AZ 85004, US</div>
-            <div>(602) 519-0450</div>
-            <div>
-                <a href="mailto:company@example.com">company@example.com</a>
-            </div>
-        </div>
+            
         </div>
     </header>
     <main>
-        <div id="details" class="clearfix">
-            <div id="client">
-                <div class="to">INVOICE TO:</div>
-                <h2 class="name">John Doe</h2>
-                <div class="address">796 Silver Harbour, TX 79273, US</div>
-                <div class="email">
-                    <a href="mailto:john@example.com">john@example.com</a>
-                </div>
-            </div>
-            <div id="invoice">
-                <h1>INVOICE 3-2-1</h1>
-                <div class="date">Date of Invoice: 01/06/2014</div>
-                <div class="date">Due Date: 30/06/2014</div>
-            </div>
-        </div>
-        <table border="0" cellspacing="0" cellpadding="0">
-            <thead>
-                <tr>
-                    <th class="no">#</th>
-                    <th class="desc">DESCRIPTION</th>
-                    <th class="unit">UNIT PRICE</th>
-                    <th class="qty">QUANTITY</th>
-                    <th class="total">TOTAL</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="no">01</td>
-                    <td class="desc">
-                        <h3>Website Design</h3>Creating a recognizable design solution based on the company's existing visual
-                        identity
-                    </td>
-                    <td class="unit">$40.00</td>
-                    <td class="qty">30</td>
-                    <td class="total">$1,200.00</td>
-                </tr>
-                <tr>
-                    <td class="no">02</td>
-                    <td class="desc">
-                        <h3>Website Development</h3>Developing a Content Management System-based Website</td>
-                    <td class="unit">$40.00</td>
-                    <td class="qty">80</td>
-                    <td class="total">$3,200.00</td>
-                </tr>
-                <tr>
-                    <td class="no">03</td>
-                    <td class="desc">
-                        <h3>Search Engines Optimization</h3>Optimize the site for search engines (SEO)</td>
-                    <td class="unit">$40.00</td>
-                    <td class="qty">20</td>
-                    <td class="total">$800.00</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="2"></td>
-                    <td colspan="2">SUBTOTAL</td>
-                    <td>$5,200.00</td>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
-                    <td colspan="2">TAX 25%</td>
-                    <td>$1,300.00</td>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
-                    <td colspan="2">GRAND TOTAL</td>
-                    <td>$6,500.00</td>
-                </tr>
-            </tfoot>
-        </table>
-        <div id="thanks">Thank you!</div>
-        <div id="notices">
-            <div>NOTICE:</div>
-            <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
-        </div>
+    <p style="text-align: justify;text-justify: inter-word;">
+    Celebrated between the CONTRACTOR - Dreamers & Heroes, Unipessoal, LDA, VAT ID
+    Number (VAT) 513805168, with head office at Rua Ary dos Santos no 5 - 2o Esquerdo,
+    2925-061 Azeitão - Portugal, represented by the manager Mário Ribeiro Inês da Silva and
+    the CONTRACTING PART – Company Name – Represented by Owner of the company name <br>
+    It is agreed and reduced in writing to this Service Agreement, under the terms and subject
+    to the following clauses:
+    </p>
+    <h3><b>1 - OBJECT OF THE CONTRACT</b></h3>
+    <p style="text-align: justify;text-justify: inter-word;">
+    The purpose of this contract is to create a Online Marketplace for Business and Executive
+    Coaching, here simply referred to as "SITE" or "WEB SITE", for exclusive use on the
+    Internet, with institutional references of the CONTRACTING PART, demonstrating its
+    products, services and technology. Including also the provision of service regarding the
+    maintenance of this "SITE" for the duration mentioned below.
+    </p>
+    <h3><b>2 - OBLIGATIONS</b></h3>
+    <p style="text-align: justify;text-justify: inter-word;">
+    The purpose of this contract is to create a Online Marketplace for Business and Executive
+    Coaching, here simply referred to as "SITE" or "WEB SITE", for exclusive use on the
+    Internet, with institutional references of the CONTRACTING PART, demonstrating its
+    products, services and technology. Including also the provision of service regarding the
+    maintenance of this "SITE" for the duration mentioned below.
+    </p>
+    <h3>2.1 - THE CONTRACTOR'S OBLIGATIONS</h3>
+    <p style="text-align: justify;text-justify: inter-word;">
+    The CONTRACTOR undertakes to develop the object of this contract in the most adequate
+    and dynamic manner, developing all the functions intended by the CONTRACTING PART.
+    The following services are also performed by the CONTRACTOR:
+    </p>
+    <br>
+    <b>Team:</b>
+    <br>
+    <br>
+    Position(ex:Full Stack developer) – Team member 1 <br><br>
+    Position(Ex:Backend Developer) – Team member 2 <br><br>
+    Position(ex:Full Stack developer) – Team member 3 <br><br>
+    Position(Ex:Backend Developer) – Team member 4 <br> <br>
+    Position(ex:Full Stack developer) – Team member <br><br>
+    <h3>2.2 - THE CONTRACTOR'S OBLIGATIONS</h3>
+    <p style="text-align: justify;text-justify: inter-word;">
+    The CONTRACTING PART will be responsible for the delivery of all the necessary material
+    for carrying out the works, such as:
+    </p>
+    <br>
+    - Contents to be included in the "WEBSITE".
+    <br>
+    <br>
+    <p style="text-align: justify;text-justify: inter-word;">
+    The CONTRACTING PART must correctly make the payments to the CONTRACTED,
+    according to item 4.
+    </p>
+    <h3>2.3 – COMMUNICATION</h3>
+    <p style="text-align: justify;text-justify: inter-word;">
+    The communication between the CONTRACTOR PART and CONTRACTING PART will be
+    attending several tools combined, such as: Skype, Slack , Task4IT Manager / Internal
+    Issue Tracker Tool and GitHub - where it will be exposed the project code.
+    </p>
+    <h3><b>3 - SERVICES MAINTENANCE</b></h3>
+    <p style="text-align: justify;text-justify: inter-word;">
+    The CONTRACTOR shall, through the maintenance of the services, maintain the WEBSITE
+    in the better web navigation condition, making the necessary adjustments, configurations
+    and repairs in front or Backend.
+    </p>
+    <b>A)</b> Only the CONTRACTOR's technicians may perform preventive and corrective technical
+    services, to which this clause refers. <br><br>
+    <b>B)</b> The maintenance of the services contracted here does not include: <br><br>
+    <div style="padding-left:5em;">
+    - Services additional to those mentioned in this contract; <br>
+    - Elaboration and construction of extra databases;<br>
+    - Creation of extra modules regarding the discussed between the parts.<br>
+    - Future problems resulting from third party security updates.<br>
+    - Problems that are not directly linked to Dreamers & Heroes, Unipessoal, LDA.<br>
+    </div>
+    <br>
+    <b>C)</b> The CONTRACTED PARTY undertakes to make the Setup, Installation and
+    configuration of the "WEBSITE" of the CONTRACTING PARTY in order to become
+    operational and operate in full production.
+    <br>
+    <br>
+
+    <h3><b>4 – PRICE AND DELIVERY DATES</b></h3>
+    <p style="text-align: justify;text-justify: inter-word;">
+    For the services of construction, maintenance and guarantee of "WEBSITE", object of this
+    contract, will have the value of: <br>
+    </p>
+    <div style="padding-left:5em;">
+    –Web Development: 3250€+VAT/VAT FREE (EU Member)
+    <br>
+    <br>
+    –Timeline: 3 months
+    <br>
+    <br>
+    </div>
+    Milestones:
+    <br>
+    <br>
+    <div style="padding-left:2em;">
+    <b>1o</b> – June 23th(date)- Adjudication/start of the project(title) - 25%(percentage) =
+    812.5€(total In euros).
+    <br>
+    <br>
+    <b>2o</b> – Jully 21th - First delivery (Mockup Design templates, Database structure,
+    setup/installation of all modules, initial frontend templates) - 25% = 812.5€.
+    <br>
+    <br>
+    <br>
+    </div>
+    <p style="text-align: justify;text-justify: inter-word;">
+    Technical support: 6 months after the final delivery of the project for technical issues
+    related with bugs/issues found in name of the project. <br>
+    </p>
+
+    <h3><b>5 - FORM OF PAYMENT</b></h3>
+    <p style="text-align: justify;text-justify: inter-word;">
+    The form of payment to be used is by Bank Transfer to the Account Number of the
+    company, indicated below: <br><br>
+    IBAN - PT50 0035 0275 00029494830 52 <br><br>
+    BIC SWIFT – CGDIPTPL <br><br>
+    Company: Dreamers & Heroes, Unipessoal Lda <br><br>
+    Rua Ary dos Santos, no 5 – 2o Esquerdo <br><br>
+    2925-061 Brejos de Azeitão - Portugal <br><br>
+    Vat ID: 513805168 <br><br>
+    European VAT Validation: http://ec.europa.eu/taxation_customs/vies/vatResponse.html <br><br>
+    </p>
+    <h3><b>6 - TERMINATION OF THE CONTRACT</b></h3>
+    <b>A)</b> This contract may be terminated by the CONTRACTOR, without any charge, when: <br><br>
+    - The CONTRACTED PARTY does not perform the services requested by the
+    CONTRACTING PARTY, and that they are in agreement with the clauses of this contract.<br><br>
+    - When the CONTRACTOR does not comply with any of the clauses of this contract.<br><br>
+    <b>B)</b> This contract may be terminated by the CONTRACTOR when:<br><br>
+    - The CONTRACTING PARTY in the event of breach of the obligations assumed herein, and
+    the innocent party must notify the guilty party to remedy its failure within 30 days, after
+    which, the debt will not be remedied, the CONTRACTED PARTY shall not perform any typeof work to the CONTRACTING PARTY.<br><br>
+    <b>C)</b> In case of judicial litigation, the court competent to settle the conflict will be the judicial
+    Court of the Setubal District – Portugal. <br><br>
+
+    <h3><b>7 - TERMINATION OF THE AGREEMENT</b></h3>
+    <p style="text-align: justify;text-justify: inter-word;">
+    This contract will be in force for a fixed term of two and half months starting on June 21,
+    2017.
+    </p>
+    <p style="text-align: justify;text-justify: inter-word;">
+    The present contract will be printed twice having both same content and form, being
+    signed by both parts as sign of agreement with all the display context.
+    <br>
+    <br>
+    Lisbon, __ June 2017
+    <br>
+    <br>
+    <br>
+    CONTRACTED
+    <br>
+    <br>
+    <br>
+    <hr style="width:10em; margin-left:-1px;">
+    <br>
+    CONTRACTOR
+    <br>
+    <br>
+    <br>
+    <hr style="width:10em; margin-left:-1px;">
+
     </main>
     <footer>
         Invoice was created on a computer and is valid without the signature and seal.

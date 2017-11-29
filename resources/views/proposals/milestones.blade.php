@@ -1,8 +1,9 @@
-<div class="col-md-12 row">
-    <div class="col-md-1 form-group">
-        {{Form::label('number', '#1:',['class'=>'milestone-number','data-milestone'=>'1'])}}
+<div class="row">
+    <div class="col-md-10 form-group">
+        {{Form::text('position',null,['id'=>'milestones[]', 'name'=>'milestones[]','class' => 'form-control milestone-description'])}}
     </div>
-    <div class="col-md-11 form-group">
-        {{Form::text('position',null,['class' => 'form-control milestone-description','data-milestone'=>'1'])}}
+    <div class="col-md-2 form-group">
+        <button type="button" class="add btn btn-primary" data-class="milestones">+</button>
+        <button type="button" class="del btn btn-primary">-</button>
     </div>
 </div>
