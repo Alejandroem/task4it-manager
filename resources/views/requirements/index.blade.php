@@ -11,6 +11,7 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Project</th>
                         <th>Title</th>
                         <th>Description</th>
@@ -44,6 +45,7 @@
                 <tbody>
                     @foreach($requirements as $requirement)
                     <tr>
+                        <td>{{$requirement->id}}</td>
                         <td>{{$requirement->project->name}}</td>
                         <td>{{$requirement->title}}</td>
                         <td>{{$requirement->description}}</td>

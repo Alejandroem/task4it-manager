@@ -17,6 +17,7 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Name</th>
                         <th>Description</th>
                         @hasanyrole('admin|project-manager')
@@ -39,6 +40,7 @@
                 <tbody>
                     @foreach($projects as $project)
                     <tr>
+                        <td>{{$project->id}}</td>
                         <td>{{$project->name}}</td>
                         <td>{{$project->description}}</td>
                         @hasanyrole('admin|project-manager')
