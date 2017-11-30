@@ -116,4 +116,8 @@ Route::delete('files/destroy/{file}',[
 
 Route::resource('/requirement/names','RequirementNameController');
 
+Route::get('/proposal/export/{proposal}',[
+    'uses'=>'ProposalController@export',
+    'as'=>'proposal.export'
+]);
 Route::resource('/proposal','ProposalController');

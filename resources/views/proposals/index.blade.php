@@ -12,12 +12,23 @@
                         <th>Client</th>
                         <th>Description</th>
                         <th>Created at</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                       
-                    </tr>
+                    @foreach($proposals as $proposal)
+                        <tr>
+                            <td>{{$proposal->company}}</td>                   
+                            <td>{{$proposal->object}}</td>                   
+                            <td>{{$proposal->created_at->toFormattedDateString()}}</td>                   
+                            <td>
+                                <a href="{{ route('proposal.export',['id'=>$proposal->id]) }}" title="Export proposal" target="_blank">
+                                    <i class="btn btn-primary fa fa-download fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    
                 </tbody>
             </table>
         </div>

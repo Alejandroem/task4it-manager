@@ -35,10 +35,28 @@
             </li>
         @hasanyrole('admin|project-manager|client|developer')
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Projects">
-                <a class="nav-link" href="{{ route('projects.index') }}">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseProjects" data-parent="#collapseProjects">
                     <i class="fa fa-fw fa-book"></i>
                     <span class="nav-link-text">Projects</span>
                 </a>
+                <ul class="sidenav-second-level collapse" id="collapseProjects">
+                    @hasanyrole('admin|project-manager')
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+                        <a class="nav-link" href="{{ route('projects.index') }}">
+                            <i class="fa fa-fw fa-file-text"></i>
+                            <span class="nav-link-text">List</span>
+                        </a>
+                    </li>
+                    @endrole
+                    @hasanyrole('admin')
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+                        <a class="nav-link" href="{{ route('proposal.index') }}">
+                            <i class="fa fa-fw fa-files-o"></i>
+                            <span class="nav-link-text">Proposals</span>
+                        </a>
+                    </li>
+                    @endrole
+                </ul>
             </li>
         @endhasanyrole
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Requirements">

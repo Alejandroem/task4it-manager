@@ -36,8 +36,9 @@
     <div class="tab-pane fade" id="object" role="tabpanel" aria-labelledby="object-tab">
         <div class="row my-5">
             <div class="form-group col-md-6">
-                {{Form::label('object', 'Object of the contract:')}}
+                {{Form::label('object', 'Object of the contract: "To create')}}
                 {{Form::text('object',null,['class' => 'form-control'])}}
+                <small id="nameHelp" class="form-text text-muted">"a Online Marketplace for Business and Executive Coaching"</small>
             </div>
         </div>
     </div>
@@ -49,7 +50,13 @@
                 {{Form::label('members', 'Team Members:')}}
             </div>
             <div class="team col-md-12">
-            @include('proposals.team')
+            @if(count($errors))
+                @foreach(old('positions') as $key=>$position)
+                    @include('proposals.team',['position'=>$position,'name'=>old('names')[$key]])
+                @endforeach
+            @else
+                @include('proposals.team',['position'=>null, 'name'=>null])
+            @endif
             </div>
         </div>
     </div>
@@ -65,17 +72,26 @@
             <div class="form-group col-md-6">
                 {{Form::label('webdev', 'Web Development:')}}
                 {{Form::text('webdev',null,['class' => 'form-control'])}}
+                <small id="webdevHelp" class="form-text text-muted">3250€+VAT/VAT FREE (EU Member)</small>
             </div>
             <div class="col-md-6"></div>
             <div class="form-group col-md-6">
                 {{Form::label('timeline', 'Timeline:')}}
                 {{Form::text('timeline',null,['class' => 'form-control'])}}
+                <small id="timelineHelp" class="form-text text-muted">3 Months</small>
             </div>
             <div class="col-md-12 mb-3">
                 {{Form::label('milestones', 'Milestones:')}}
+                <small id="milestonesHelp" class="form-text text-muted">June 23th(date)- Adjudication/start of the project(title) - 25%(percentage) =812.5€(total In euros).</small>
             </div>
             <div class="milestones col-md-12 ">
-                @include('proposals.milestones')
+                @if(count($errors))
+                    @foreach(old('milestones') as $milestone)
+                        @include('proposals.milestones',['milestone'=>$milestone])
+                    @endforeach
+                @else
+                    @include('proposals.milestones',['milestone'=>null])
+                @endif
             </div>
         </div>
     </div>
@@ -84,13 +100,15 @@
     <div class="tab-pane fade" id="termination" role="tabpanel" aria-labelledby="termination-tab">
         <div class="row my-5">
             <div class="form-group col-md-6">
-                {{Form::label('lenght', 'Contract time:')}}
+                {{Form::label('lenght', 'Contract time: "This contract will be in force for a fixed term of ')}}
                 {{Form::text('lenght',null,['class' => 'form-control'])}}
+                <small id="lenghtHelp" class="form-text text-muted">two and half months starting on June 21,2017</small>                
             </div>
             <div class="col-md-6"></div>
             <div class="form-group col-md-6">
                 {{Form::label('date', 'Contract printing date:')}}
                 {{Form::text('date',null,['class' => 'form-control'])}}
+                <small id="dateHelp" class="form-text text-muted">23 June 2017</small>
             </div>
         </div>
     </div>

@@ -15,7 +15,8 @@ class ProposalController extends Controller
     public function index()
     {
         //
-        return view('proposals.index');
+        $proposals = Proposal::all();
+        return view('proposals.index')->with(compact('proposals'));
     }
 
     /**
@@ -38,13 +39,44 @@ class ProposalController extends Controller
     public function store(Request $request)
     {
         //
-        dd($request->input());
-        $values = [];
-        $view =  \View::make('pdf.proposal', compact('values'))->render();
+        $request->validate([
+            'company'=>'required',
+            'owner'=>'required',
+            'object'=>'required',
+            'positions'=>'required',
+            'names'=>'required',
+            'name'=>'required',
+            'webdev'=>'required',
+            'timeline'=>'required',
+            'milestones'=>'required',
+            'lenght'=>'required',
+            'date'=>'required'
+        ]);
+        
+        $team = array_combine($request->positions,$request->names);
+
+        Proposal::create([
+            'company'=>$request->company,
+            'owner'=>$request->owner,
+            'object'=>$request->object,
+            'team'=>serialize($team),
+            'name'=>$request->name,
+            'webdev'=>$request->webdev,
+            'timeline'=>$request->timeline,
+            'milestones'=>serialize($request->milestones),
+            'lenght'=>$request->lenght,
+            'date'=>$request->date
+        ]);
+        return redirect()->route('proposal.index');        
+    }
+
+    public function export(Proposal $proposal){
+        $view =  \View::make('pdf.proposal', compact('proposal'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
-        return $pdf->download('invoice');
+        return $pdf->download('Contract');
     }
+
 
     /**
      * Display the specified resource.

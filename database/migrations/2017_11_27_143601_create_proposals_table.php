@@ -15,6 +15,16 @@ class CreateProposalsTable extends Migration
     {
         Schema::create('proposals', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('company');
+            $table->string('owner');
+            $table->string('object');
+            $table->string('team');
+            $table->string('name');
+            $table->string('webdev');
+            $table->string('timeline');
+            $table->string('milestones');
+            $table->string('lenght');
+            $table->string('date');
             $table->timestamps();
         });
     }

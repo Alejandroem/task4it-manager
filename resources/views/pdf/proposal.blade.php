@@ -22,14 +22,14 @@
     Celebrated between the CONTRACTOR - Dreamers & Heroes, Unipessoal, LDA, VAT ID
     Number (VAT) 513805168, with head office at Rua Ary dos Santos no 5 - 2o Esquerdo,
     2925-061 Azeitão - Portugal, represented by the manager Mário Ribeiro Inês da Silva and
-    the CONTRACTING PART – Company Name – Represented by Owner of the company name <br>
+    the CONTRACTING PART – {{$proposal->company}} – Represented by {{$proposal->owner}} <br>
     It is agreed and reduced in writing to this Service Agreement, under the terms and subject
     to the following clauses:
     </p>
     <h3><b>1 - OBJECT OF THE CONTRACT</b></h3>
     <p style="text-align: justify;text-justify: inter-word;">
-    The purpose of this contract is to create a Online Marketplace for Business and Executive
-    Coaching, here simply referred to as "SITE" or "WEB SITE", for exclusive use on the
+    The purpose of this contract is to create {{$proposal->object}}
+    , here simply referred to as "SITE" or "WEB SITE", for exclusive use on the
     Internet, with institutional references of the CONTRACTING PART, demonstrating its
     products, services and technology. Including also the provision of service regarding the
     maintenance of this "SITE" for the duration mentioned below.
@@ -52,11 +52,9 @@
     <b>Team:</b>
     <br>
     <br>
-    Position(ex:Full Stack developer) – Team member 1 <br><br>
-    Position(Ex:Backend Developer) – Team member 2 <br><br>
-    Position(ex:Full Stack developer) – Team member 3 <br><br>
-    Position(Ex:Backend Developer) – Team member 4 <br> <br>
-    Position(ex:Full Stack developer) – Team member <br><br>
+    @foreach(unserialize($proposal->team) as $position=>$name)
+        {{$position}} – {{$name}} <br><br>
+    @endforeach
     <h3>2.2 - THE CONTRACTOR'S OBLIGATIONS</h3>
     <p style="text-align: justify;text-justify: inter-word;">
     The CONTRACTING PART will be responsible for the delivery of all the necessary material
@@ -105,10 +103,10 @@
     contract, will have the value of: <br>
     </p>
     <div style="padding-left:5em;">
-    –Web Development: 3250€+VAT/VAT FREE (EU Member)
+    –Web Development: {{$proposal->webdev}}
     <br>
     <br>
-    –Timeline: 3 months
+    –Timeline: {{$proposal->timeline}}
     <br>
     <br>
     </div>
@@ -116,19 +114,14 @@
     <br>
     <br>
     <div style="padding-left:2em;">
-    <b>1o</b> – June 23th(date)- Adjudication/start of the project(title) - 25%(percentage) =
-    812.5€(total In euros).
-    <br>
-    <br>
-    <b>2o</b> – Jully 21th - First delivery (Mockup Design templates, Database structure,
-    setup/installation of all modules, initial frontend templates) - 25% = 812.5€.
-    <br>
-    <br>
+    @foreach(unserialize($proposal->milestones) as $key => $milestone)
+    <b>#{{$key+1}}</b> – {{$milestone}} <br>
+    @endforeach
     <br>
     </div>
     <p style="text-align: justify;text-justify: inter-word;">
     Technical support: 6 months after the final delivery of the project for technical issues
-    related with bugs/issues found in name of the project. <br>
+    related with bugs/issues found in {{$proposal->name}}. <br>
     </p>
 
     <h3><b>5 - FORM OF PAYMENT</b></h3>
@@ -157,15 +150,14 @@
 
     <h3><b>7 - TERMINATION OF THE AGREEMENT</b></h3>
     <p style="text-align: justify;text-justify: inter-word;">
-    This contract will be in force for a fixed term of two and half months starting on June 21,
-    2017.
+    This contract will be in force for a fixed term of {{$proposal->lenght}}.
     </p>
     <p style="text-align: justify;text-justify: inter-word;">
     The present contract will be printed twice having both same content and form, being
     signed by both parts as sign of agreement with all the display context.
     <br>
     <br>
-    Lisbon, __ June 2017
+    Lisbon, {{$proposal->date}}
     <br>
     <br>
     <br>
