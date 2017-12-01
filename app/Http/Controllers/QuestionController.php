@@ -21,6 +21,10 @@ class QuestionController extends Controller
     public function index(Requirement $requirement)
     {
         //
+        $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
+        if(!$pageWasRefreshed ) {
+            $requirement->markReadQuestionsNotifications();
+        }
         $questions = $requirement->questions()->whereNull('question_id')->get();
         return view ('requirements.questions.index')->with(compact('requirement','questions'));
     }
@@ -54,11 +58,13 @@ class QuestionController extends Controller
             'requirement_id'=>$requirement->id,
             'content'=>$request->response
         ]);
+        
         if($request->has('question')){
             $question = Question::find($request->question);
             $newQuestion->question_id = $question->id;
-            $question->save();
+            $newQuestion->save();
         }
+        $newQuestion->notify();
         return redirect()->route('requirements.questions.index',['requirement'=>$requirement->id]);
     }
 

@@ -80,6 +80,8 @@
 
     <script>
         $(document).ready(function() {
+            $('.notify-bubble').show(400);
+
             $('.alert').on('closed.bs.alert', function () {
                 console.log($(this).data('id'));
                 $.ajax({
@@ -156,9 +158,8 @@
                     console.log(serverRes);
                 }
             });
-
-            $('.laradrop')
         });
+        
         @yield('script');
     </script>
     </div>

@@ -27,8 +27,8 @@ class NotificationController extends Controller
         return view('notifications.index')->with(compact('notifications'));
     }
 
-    public function list(User $user){
-        $notifications = $user->notifications;
+    public function listNotifications(User $user){
+        $notifications = $user->notifications()->where('asset',null)->get();
         return view('notifications.list')->with(compact('notifications'));
     }
 

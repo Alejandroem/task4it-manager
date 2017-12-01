@@ -33,7 +33,7 @@
                 @endrole
             </ul>
             </li>
-        @hasanyrole('admin|project-manager|client|developer')
+        @hasanyrole('admin')
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Projects">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseProjects" data-parent="#collapseProjects">
                     <i class="fa fa-fw fa-book"></i>
@@ -57,6 +57,14 @@
                     </li>
                     @endrole
                 </ul>
+            </li>
+        @endhasanyrole
+        @hasanyrole('project-manager|client|developer')
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Projects">
+                <a class="nav-link" href="{{ route('projects.index') }}">
+                    <i class="fa fa-fw fa-file-text"></i>
+                    <span class="nav-link-text">List</span>
+                </a>
             </li>
         @endhasanyrole
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Requirements">

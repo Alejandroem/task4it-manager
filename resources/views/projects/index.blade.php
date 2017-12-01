@@ -17,6 +17,7 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Name</th>
                         <th>Description</th>
                         @hasanyrole('admin|project-manager')
@@ -39,6 +40,7 @@
                 <tbody>
                     @foreach($projects as $project)
                     <tr>
+                        <td>{{$project->id}}</td>
                         <td>{{$project->name}}</td>
                         <td>{{$project->description}}</td>
                         @hasanyrole('admin|project-manager')
@@ -61,7 +63,10 @@
                                 </a>
                             @endif
                             @endhasanyrole
-                            <a href="{{ route('projects.show',['id'=>$project->id]) }}" title="View files">
+                            <a href="{{ route('projects.show',['id'=>$project->id]) }}" title="View files" class="notify-container">
+                                @if($project->newFilesNotifications()->count()>0)
+                                    <span class="notify-bubble">{{$project->newFilesNotifications()->count()}}</span>
+                                @endif
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
                             @hasanyrole('admin')
@@ -89,6 +94,8 @@
 @stop
 
 @section('script')
+
+
     @if(session()->has('error_code'))
     $(function() {
         $('#milestones').modal('show');
