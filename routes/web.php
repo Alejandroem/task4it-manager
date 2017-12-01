@@ -58,8 +58,8 @@ Route::post('notifications/check',[
     'as'=>'notifications.check'
 ]);
 
-Route::get('notifications/list',[
-    'uses'=>'NotificationController@list',
+Route::get('notifications/list/{user}',[
+    'uses'=>'NotificationController@listNotifications',
     'as'=>'notifications.list'
 ]);
 

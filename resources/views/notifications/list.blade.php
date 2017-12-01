@@ -5,7 +5,7 @@
         Notifications 
     </div>
     <div class="card-body">
-        @foreach(Auth::user()->notifications()->orderBy('created_at','DESC')->get() as $notification)
+        @foreach($notifications as $notification)
         <a class="dropdown-item p-0" href="#">
             <div class="alert {{$notification->type}}">
                 <strong>{{$notification->title}}</strong>
