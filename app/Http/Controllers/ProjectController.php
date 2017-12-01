@@ -137,6 +137,10 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         //
+        $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
+       if(!$pageWasRefreshed ) {
+            $project->markReadFilesNotifications();
+       }    
         return view ('projects.show')->with(compact('project'));
     }
 

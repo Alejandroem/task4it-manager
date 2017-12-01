@@ -64,7 +64,9 @@
                             @endif
                             @endhasanyrole
                             <a href="{{ route('projects.show',['id'=>$project->id]) }}" title="View files" class="notify-container">
-                                <span class="notify-bubble">1</span>
+                                @if($project->newFilesNotifications()->count()>0)
+                                    <span class="notify-bubble">{{$project->newFilesNotifications()->count()}}</span>
+                                @endif
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
                             @hasanyrole('admin')

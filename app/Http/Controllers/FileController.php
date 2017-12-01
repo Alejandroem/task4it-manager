@@ -190,7 +190,7 @@ class FileController extends Controller
             $file->relation = $request->relation;
             $file->relation_id = $request->relation_id;
             $file->save();
-
+            
             
             /*
              * fire 'file uploaded' event

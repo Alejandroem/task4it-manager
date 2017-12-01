@@ -15,9 +15,9 @@ class AddRelationColumnsNotificationTable extends Migration
     {
         //
         Schema::table('notifications', function (Blueprint $table) {
-            $table->text('asset')->nullable()->default('global');
+            $table->text('asset')->nullable();
             $table->text('relation')->nullable();
-            $table->text('realtion_id')->nullable();
+            $table->text('relation_id')->nullable();
         });
     }
 

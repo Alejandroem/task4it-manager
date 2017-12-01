@@ -105,6 +105,10 @@ class RequirementController extends Controller
     public function show(Request $request, Requirement $requirement)
     {
         //
+        $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
+        if(!$pageWasRefreshed ) {
+             $requirement->markReadFilesNotifications();
+        }    
         $type = $request->type;
         return view ('requirements.show')->with(compact('requirement','type'));
     }

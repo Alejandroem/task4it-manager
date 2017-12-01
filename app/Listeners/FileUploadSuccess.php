@@ -7,6 +7,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Debugbar;
 use Jasekz\Laradrop\Models\File;
+use App\Requirement;
+use App\Project;
 
 class FileUploadSuccess
 {
@@ -31,9 +33,20 @@ class FileUploadSuccess
         //
         $file = $event->data["file"];
         $object = json_decode($event->data["postData"]["customData"]);
-        foreach($object->form as $input)
+        foreach($object->form as $input){
             $file[$input->name] = $input->value;
+        }
         $file->save();
+        switch($file['relation']){
+            case "projects":
+                Project::find($file['relation_id'])->notify();
+                Debugbar::info("notification projects");
+            break;
+            case "requirement":
+                Requirement::find($file['relation_id'])->notify();
+                Debugbar::info("notification requirement");
+            break;
+        }
         
     }
 }

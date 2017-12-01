@@ -213,10 +213,16 @@
                         <td>{{$requirement->created_at->toFormattedDateString()}}</td>
                         <td>
                         <div class="row">
-                            <a href="{{route('requirements.questions.index',['bug'=>$requirement->id])}}" data-toggle="tooltip" data-placement="top" title="Tooltip on top" >
+                            <a href="{{route('requirements.questions.index',['bug'=>$requirement->id])}}" data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="notify-container">
+                                @if($requirement->newQuestionsNotifications()->count()>0)
+                                    <span class="notify-bubble">{{$requirement->newQuestionsNotifications()->count()}}</span>
+                                @endif
                                 <i class="btn btn-primary fa fa-comments fa-lg" aria-hidden="true"></i>
                             </a>
-                            <a href="{{ route('requirements.show',['requirement'=>$requirement->id,'type'=>$text]) }}" title="View files">
+                            <a href="{{ route('requirements.show',['requirement'=>$requirement->id,'type'=>$text]) }}" title="View files" class="notify-container">
+                                @if($requirement->newFilesNotifications()->count()>0)
+                                    <span class="notify-bubble">{{$requirement->newFilesNotifications()->count()}}</span>
+                                @endif
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
                             @hasanyrole('admin')
@@ -428,10 +434,16 @@
                         <td>{{$requirement->created_at->toFormattedDateString()}}</td>
                         <td>
                         <div class="row">
-                            <a href="{{route('requirements.questions.index',['bug'=>$requirement->id])}}" data-toggle="tooltip" data-placement="top" title="Tooltip on top" >
+                            <a href="{{route('requirements.questions.index',['bug'=>$requirement->id])}}" data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="notify-container">
+                                @if($requirement->newQuestionsNotifications()->count()>0)
+                                    <span class="notify-bubble">{{$requirement->newQuestionsNotifications()->count()}}</span>
+                                @endif
                                 <i class="btn btn-primary fa fa-comments fa-lg" aria-hidden="true"></i>
                             </a>
-                            <a href="{{ route('requirements.show',['requirement'=>$requirement->id,'type'=>$text]) }}" title="View files">
+                            <a href="{{ route('requirements.show',['requirement'=>$requirement->id,'type'=>$text]) }}" title="View files" class="notify-container">
+                                @if($requirement->newFilesNotifications()->count()>0)
+                                    <span class="notify-bubble">{{$requirement->newFilesNotifications()->count()}}</span>
+                                @endif
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
                             @hasanyrole('admin')
