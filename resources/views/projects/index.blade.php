@@ -63,7 +63,8 @@
                                 </a>
                             @endif
                             @endhasanyrole
-                            <a href="{{ route('projects.show',['id'=>$project->id]) }}" title="View files">
+                            <a href="{{ route('projects.show',['id'=>$project->id]) }}" title="View files" class="notify-container">
+                                <span class="notify-bubble">1</span>
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
                             @hasanyrole('admin')
@@ -91,6 +92,8 @@
 @stop
 
 @section('script')
+
+
     @if(session()->has('error_code'))
     $(function() {
         $('#milestones').modal('show');

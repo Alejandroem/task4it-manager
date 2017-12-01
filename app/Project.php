@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
 class Project extends Model
 {
     //
@@ -20,5 +19,9 @@ class Project extends Model
 
     public function milestones(){
         return $this->hasMany('App\Milestone');
+    }
+
+    public function newMessages(\App\User $user){
+        
     }
 }

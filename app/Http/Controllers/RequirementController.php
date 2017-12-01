@@ -25,6 +25,7 @@ class RequirementController extends Controller
         if(Auth::user()->hasRole('admin'))
         {   
             $requirements = Requirement::where('type','=',$request->type)->get();
+            $projects = Project::pluck('name');
         }
         else
         {
@@ -32,9 +33,13 @@ class RequirementController extends Controller
 
             $requirements = Requirement::where('type','=',$request->type)
             ->whereIn('project_id',$projects)->get();
+
+            $projects = Auth::user()->projects()->whereHas('requirements',function($q)use($request){
+                $q->where('type','=',$request->type);
+            })->pluck('name');
         }
         $text = $request->type;
-        return view('requirements.index')->with(compact('requirements','text'));
+        return view('requirements.index')->with(compact('requirements','text','projects'));
     }
 
     /**
@@ -133,7 +138,9 @@ class RequirementController extends Controller
         $request->validate([
             'rate'=>'required|min:0'
         ]);
-        
+        if($requirement->status == 5){
+            $requirement->status =1;
+        }
         $requirement->rate = $request->rate;
         $requirement->save();
         return redirect()->route('requirements.index',['type'=>$request->type]);
@@ -144,6 +151,9 @@ class RequirementController extends Controller
         $request->validate([
             'percentage'=>'required'
         ]);
+        if($requirement->statussatus == 5){
+            $requirement->status =1;
+        }
         $requirement->percentage = $request->percentage;
         $requirement->save();
         return redirect()->route('requirements.index',['type'=>$request->type]);
@@ -173,6 +183,11 @@ class RequirementController extends Controller
             $user = Auth::user();
             $user->balance += $requirement->rate;
             $user->save();
+        }
+        if($request->status==5){
+            $requirement->rate = null;
+            $requirement->percentage = null;
+            $requirement->save();
         }
             
         $requirement->status = $request->status;
