@@ -274,7 +274,7 @@ footer {
       </div>
     </main>
     <footer>
-      Report was created on a computer and is valid without the signature and seal.
+      
     </footer>
   </body>
 </html>
