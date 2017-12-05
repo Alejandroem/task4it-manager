@@ -154,7 +154,7 @@
                             </div>
                         @endhasanyrole
                         @elseif($requirement->status==3)
-                        @hasanyrole('client')
+                        {{--  @hasanyrole('client')
                             
                             {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>4,'type'=>$text),'method'=>'POST'))}}
                                 {{Form::submit('Accept',['class'=>'btn btn-primary'])}}
@@ -163,11 +163,11 @@
                                 {{Form::submit('Reject',['class'=>'btn btn-primary'])}}
                             {{Form::close()}}
                             
-                        @else
+                        @else  --}}
                             <div class="alert alert-success" role="alert">
                                 Completed
                             </div>
-                        @endhasanyrole
+                        {{--  @endhasanyrole  --}}
                         @elseif($requirement->status==4)
                         <div class="alert alert-warning" role="alert">
                             Awaiting Payment
@@ -204,7 +204,7 @@
                                 </div>
                             @else
                                 <div class="alert alert-danger" role="alert">
-                                Pendient
+                                Pending
                                 </div>
                             @endif
                         </td>
@@ -243,6 +243,8 @@
             @include('layout.errors')
         </div>
         <hr>
+        <h4 class="ml-2">Finished</h4>
+        <br>
         <div class="table-responsive">
             <table class="table table-bordered dataTable" width="100%" cellspacing="0">
                 <thead>
@@ -422,10 +424,10 @@
                             @if($requirement->payed)
                                 <div class="alert alert-success" role="alert">
                                 Payed
-                                </div>
+                                </div>|
                             @else
                                 <div class="alert alert-danger" role="alert">
-                                Pendient
+                                Pending
                                 </div>
                             @endif
                         </td>
