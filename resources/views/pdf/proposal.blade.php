@@ -35,13 +35,6 @@
     maintenance of this "SITE" for the duration mentioned below.
     </p>
     <h3><b>2 - OBLIGATIONS</b></h3>
-    <p style="text-align: justify;text-justify: inter-word;">
-    The purpose of this contract is to create a Online Marketplace for Business and Executive
-    Coaching, here simply referred to as "SITE" or "WEB SITE", for exclusive use on the
-    Internet, with institutional references of the CONTRACTING PART, demonstrating its
-    products, services and technology. Including also the provision of service regarding the
-    maintenance of this "SITE" for the duration mentioned below.
-    </p>
     <h3>2.1 - THE CONTRACTOR'S OBLIGATIONS</h3>
     <p style="text-align: justify;text-justify: inter-word;">
     The CONTRACTOR undertakes to develop the object of this contract in the most adequate
