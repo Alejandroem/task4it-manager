@@ -16,6 +16,7 @@ class AddRelationRequirementNamesTable extends Migration
         //
         Schema::table('requirement_names', function (Blueprint $table) {
             $table->integer('parent_id')->unsigned()->nullable();
+            $table->double('base_rate')->default(0);
         });
     }
 
@@ -28,7 +29,7 @@ class AddRelationRequirementNamesTable extends Migration
     {
         //
         Schema::table('requirement_names', function (Blueprint $table) {
-            $table->dropColumn(['parent_id']);
+            $table->dropColumn(['parent_id','base_rate']);
         });
     }
 }
