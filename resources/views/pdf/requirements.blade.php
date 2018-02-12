@@ -241,12 +241,21 @@ footer {
           </tr>
         </thead>
         <tbody>
-          @foreach($requirements as $requirement)
-            <tr>
-                <td class="no">{{str_replace('0.','',str_replace('-','.',$requirement->id))}}</td>
-                <td class="desc" colspan="3">{{$requirement->name}}</td>
-                <td class="unit">€{{floatval($requirement->pivot->rate)}}</td>
-            </tr>
+        <?php $pos=1 ?>
+
+          @foreach($requirements as $key => $slug)
+          <tr>
+              <td colspan="5" style="text-align: center; font-size: 12px; background-color:white;">
+                {{App\RequirementName::find($key)->name}}
+              </td>
+          </tr>
+            @foreach($slug as $requirement)
+                <tr>
+                    <td class="no"><?php print $pos++ ?></td>
+                    <td class="desc" colspan="3">{{$requirement->name}}</td>
+                    <td class="unit">€{{floatval($requirement->pivot->rate)}}</td>
+                </tr>
+            @endforeach
           @endforeach
         </tbody>
         <tfoot>

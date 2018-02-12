@@ -150,8 +150,8 @@ class BudgetController extends Controller
         foreach($budget->requirements as $requirement){
             $total+= floatval($requirement->pivot->rate);
         }
-        Debugbar::info($budget->requirements);
-        $requirements = $budget->requirements;
+        Debugbar::info($budget->requirements->groupBy('parent_id'));
+        $requirements = $budget->requirements->groupBy('parent_id');
         $view =  \View::make('pdf.requirements', compact('requirements', 'total'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
