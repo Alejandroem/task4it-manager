@@ -121,3 +121,5 @@ Route::get('/proposal/export/{proposal}',[
     'as'=>'proposal.export'
 ]);
 Route::resource('/proposal','ProposalController');
+
+Route::resource('/budgets','BudgetController');

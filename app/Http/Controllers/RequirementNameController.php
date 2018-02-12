@@ -12,9 +12,16 @@ class RequirementNameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $names = RequirementName::all();
+        if($request->ajax()){
+            return response()->json([
+                'names'=>$names
+            ],201);
+        }
+        return $names;
     }
 
     /**
@@ -25,8 +32,6 @@ class RequirementNameController extends Controller
     public function create()
     {
         //
-        
-
     }
 
     /**
@@ -42,7 +47,8 @@ class RequirementNameController extends Controller
             'name'=>'required|unique:requirement_names'
         ]);
         $requirement = RequirementName::create([
-            'name'=>$request->name
+            'name'=>$request->name,
+            'parent_id'=>$request->parent == -1? null : $request->parent
         ]);
 
         if($request->ajax()){
@@ -51,6 +57,7 @@ class RequirementNameController extends Controller
                 'name'=>$requirement->name
             ],201);
         }
+        return back();
     }
 
     /**

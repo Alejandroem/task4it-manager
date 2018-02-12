@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Requirement;
-use App\RequirementName;
 use App\User;
 use Illuminate\Http\Request;
 use Auth, Purifier;
@@ -46,8 +45,6 @@ class ProjectController extends Controller
         //
         $project = new Project();
         
-        $requirements = RequirementName::all()->pluck('name','id');
-
         if (Auth::user()->hasRole('admin')) {
             $roles = Role::all()->pluck('display_name', 'name');
         } elseif (Auth::user()->hasRole('project-manager')) {
@@ -73,7 +70,7 @@ class ProjectController extends Controller
 
         $clients = User::role('client')->pluck('email','id');
 
-        return view('projects.create')->with(compact('project', 'users', 'roles','project_users','clients','requirements'));
+        return view('projects.create')->with(compact('project', 'users', 'roles','project_users','clients'));
     }
 
     /**
@@ -153,7 +150,6 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         //
-        $requirements = RequirementName::all()->pluck('name','id');
         if (Auth::user()->hasRole('admin')) {
             $users = User::all()->pluck('email','id');
         }else{
@@ -168,7 +164,7 @@ class ProjectController extends Controller
                 $q->where('level','>=',Auth::user()->roles->first()->level);
             })->get()->pluck('email','id');
         }
-        return view('projects.edit')->with(compact('project', 'users','project_users','requirements'));
+        return view('projects.edit')->with(compact('project', 'users','project_users'));
     }
 
     /**
