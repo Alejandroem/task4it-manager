@@ -1,7 +1,7 @@
 @extends('layout.app')
 @section('content')
 
-{!! Form::open(['route'=>'budgets.store']) !!}
+{!! Form::open(['route'=>['budgets.update',$budget->id],'method'=>'PUT']) !!}
 {{csrf_field()}}
 <div class="card mb-3">
     <div class="card-header">
@@ -14,13 +14,13 @@
                 {!! Form::label('name', 'Budget Name') !!}                                
             </div>
             <div class="col-md-2">
-                {!! Form::text("name", "", ['class'=>'form-control']) !!}
+                {!! Form::text("name", $budget->name, ['class'=>'form-control']) !!}
             </div>
             <div class="col-md-1">
                 {!! Form::label('project', 'Project:') !!}
             </div>
             <div class="col-md-2">
-                {!! Form::select("project", $projects, null,['class'=>'form-control','placeholder'=>'Select a project']) !!}
+                {!! Form::select("project", $projects, $budget->project_id,['class'=>'form-control','placeholder'=>'Select a project']) !!}
             </div>
             <div class="col-md-2">
                 <button class="btn btn-primary pull-right add">Add Requirement </button> 

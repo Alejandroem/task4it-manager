@@ -52,7 +52,7 @@ class BudgetController extends Controller
         array_filter($values, function($element){
             return isset($element) && $element== "on";
         });
-
+        
         $budget = Budget::create([
             'name'=>$request->name,
             'project_id'=> $request->project? $request->project : null,
@@ -64,11 +64,6 @@ class BudgetController extends Controller
             $reqObj =  RequirementName::where('name',$key)->first();
             $budget->requirements()->save($reqObj,['rate'=>$rate]);
         }
-
-
-
-        
-
         return redirect()->route('budgets.index');
         
     }
@@ -93,6 +88,10 @@ class BudgetController extends Controller
     public function edit($id)
     {
         //
+        $names = RequirementName::where('parent_id',null)->get();
+        $projects = Project::pluck('name','id');
+        $budget = Budget::find($id);
+        return view('budgets.edit')->with(compact('names','projects','budget'));
     }
 
     /**
@@ -105,6 +104,27 @@ class BudgetController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request,[
+            'name'=>'required'
+        ]);
+        
+        $values = $request->input();
+        $selectedReq = 
+        array_filter($values, function($element){
+            return isset($element) && $element== "on";
+        });
+        $budget = Budget::find($id);
+        $budget->name = $request->name;
+        $budget->project_id = $request->project? $request->project : null;
+        $budget->requirements()->detach($budget->requirements()->pluck('id'));
+        foreach($selectedReq as $key => $requirement){
+            $rate = $request->get($key.'-amount');
+            $rate = $rate? $rate : 0;
+            $reqObj =  RequirementName::where('name',$key)->first();
+            $budget->requirements()->save($reqObj,['rate'=>$rate]);
+        }
+        $budget->save();
+        return redirect()->route('budgets.index');
     }
 
     /**

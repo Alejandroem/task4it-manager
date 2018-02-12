@@ -11,9 +11,13 @@ class Budget extends Model
     public $timestamps = true;
 
 
+    public function project(){
+        return $this->hasOne('App\Project','id','project_id');
+    }
+
     public function requirements()
     {
         return $this->belongsToMany('App\RequirementName', 'budget_requirements', 
-        'budget_id', 'requirement_id')->withPivot('rate');
+        'budget_id', 'requirement_id')->withPivot('rate')->withTimestamps();
     }
 }

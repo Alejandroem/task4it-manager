@@ -17,10 +17,10 @@
                             {!! Form::label($subrequirement->name, $subrequirement->name, ['class'=>'form-control']) !!}
                         </div>
                         <div class="col-md-2">
-                            {!! Form::checkbox($subrequirement->name, null, false, ['class'=>'form-control']) !!}
+                            {!! Form::checkbox($subrequirement->name, null, $budget && $budget->requirements->contains($subrequirement->id)?true: false, ['class'=>'form-control']) !!}
                         </div>
                         <div class="col-md-3">
-                            {!! Form::number($subrequirement->name.'-amount', 0, ['class'=>'form-control','min'=>'0']) !!}
+                            {!! Form::number($subrequirement->name.'-amount', $budget && $budget->requirements->where('id',$subrequirement->id)->first()?$budget->requirements->where('id',$subrequirement->id)->first()->pivot->rate: 0, ['class'=>'form-control','min'=>'0']) !!}
                         </div>
                     </div>
                 </div>

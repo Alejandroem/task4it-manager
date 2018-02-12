@@ -27,7 +27,7 @@
                                 {{$budget->name}}
                             </td>
                             <td>
-                                {{$budget->project? $budget->project : "Unassigned"}}
+                                {{$budget->project? $budget->project->name : "Unassigned"}}
                             </td>
                             <td>
                                 <a href="{{ route('budgets.export',['id'=>$budget->id]) }}" title="download">
