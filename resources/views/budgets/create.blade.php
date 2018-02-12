@@ -5,6 +5,7 @@
 
 <div class="card mb-3">
     <div class="card-header">
+        @include('layout.errors')
         <div class="row">
             <div class="col-md-2">
                 Create budget  
@@ -19,7 +20,7 @@
                 {!! Form::label('project', 'Project:') !!}
             </div>
             <div class="col-md-2">
-                {!! Form::select("project", $projects, null,['class'=>'form-control']) !!}
+                {!! Form::select("project", $projects, null,['class'=>'form-control','placeholder'=>'Select a project']) !!}
             </div>
             <div class="col-md-2">
                 <button class="btn btn-primary pull-right add">Add Requirement </button> 
@@ -47,7 +48,8 @@
 @section('script')
 $(document).ready(function(){
     
-    $('body').on('click','.add',function(){
+    $('body').on('click','.add',function(e){
+        e.preventDefault();
         var parent = $(this).data('parent');
         parent = parent? parent: -1;
         console.log("Parent", parent);

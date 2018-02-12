@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\RequirementName;
 use App\Project;
+use App\Budget;
 use Illuminate\Http\Request;
-
+use Debugbar;
 class BudgetController extends Controller
 {
     /**
@@ -16,7 +17,8 @@ class BudgetController extends Controller
     public function index()
     {
         //
-        return view('budgets.index');
+        $budgets = Budget::all();
+        return view('budgets.index')->with(compact('budgets'));
     }
 
     /**
@@ -41,11 +43,33 @@ class BudgetController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request,[
+            'name'=>'required'
+        ]);
+        
         $values = $request->input();
-        $filteredArray = 
+        $selectedReq = 
         array_filter($values, function($element){
             return isset($element) && $element== "on";
         });
+
+        $budget = Budget::create([
+            'name'=>$request->name,
+            'project_id'=> $request->project? $request->project : null,
+        ]);
+        
+        foreach($selectedReq as $key => $requirement){
+            $rate = $request->get($key.'-amount');
+            $rate = $rate? $rate : 0;
+            $reqObj =  RequirementName::where('name',$key)->first();
+            $budget->requirements()->save($reqObj,['rate'=>$rate]);
+        }
+
+
+
+        
+
+        return redirect()->route('budgets.index');
         
     }
 
@@ -92,5 +116,25 @@ class BudgetController extends Controller
     public function destroy($id)
     {
         //
+        $budget = Budget::find($id);
+        $budget->requirements()->detach($budget->requirements()->pluck('id'));
+        $budget->delete();
+        return back();
+    }
+
+
+    public function export($id){
+        $budget = Budget::find($id);
+        
+        $total = 0;
+        foreach($budget->requirements as $requirement){
+            $total+= floatval($requirement->pivot->rate);
+        }
+        Debugbar::info($budget->requirements);
+        $requirements = $budget->requirements;
+        $view =  \View::make('pdf.requirements', compact('requirements', 'total'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->download($budget->name.($budget->project? "-".$budget->project."-":"").'-invoice.pdf');
     }
 }
