@@ -59,7 +59,7 @@
                     @hasanyrole('admin')
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Detailed Budgets">
                         <a class="nav-link" href="{{ route('budgets.index') }}">
-                            <i class="fa fa-fw fa-files-o"></i>
+                            <i class="fa fa-fw fa-file-o"></i>
                             <span class="nav-link-text">Detailed Budgets</span>
                         </a>
                     </li>
