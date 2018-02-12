@@ -204,7 +204,7 @@ class ProjectController extends Controller
         foreach($requirements as $requirement){
             $total+= floatval($requirement->rate);
         }
-        Debugbar::info($requirements);f
+        Debugbar::info($requirements);
         $view =  \View::make('pdf.requirements', compact('requirements', 'total'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
