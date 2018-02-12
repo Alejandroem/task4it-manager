@@ -41,7 +41,7 @@
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseProjects">
                     @hasanyrole('admin|project-manager')
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="List">
                         <a class="nav-link" href="{{ route('projects.index') }}">
                             <i class="fa fa-fw fa-file-text"></i>
                             <span class="nav-link-text">List</span>
@@ -49,10 +49,18 @@
                     </li>
                     @endrole
                     @hasanyrole('admin')
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Proposals">
                         <a class="nav-link" href="{{ route('proposal.index') }}">
                             <i class="fa fa-fw fa-files-o"></i>
                             <span class="nav-link-text">Proposals</span>
+                        </a>
+                    </li>
+                    @endrole
+                    @hasanyrole('admin')
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Detailed Budgets">
+                        <a class="nav-link" href="{{ route('budgets.index') }}">
+                            <i class="fa fa-fw fa-file-o"></i>
+                            <span class="nav-link-text">Detailed Budgets</span>
                         </a>
                     </li>
                     @endrole

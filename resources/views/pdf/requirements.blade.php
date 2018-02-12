@@ -244,8 +244,8 @@ footer {
           @foreach($requirements as $requirement)
             <tr>
                 <td class="no">{{str_replace('0.','',str_replace('-','.',$requirement->id))}}</td>
-                <td class="desc" colspan="3">{{\App\RequirementName::find($requirement->name_id)->name}}</td>
-                <td class="unit">€{{floatval($requirement->rate)}}</td>
+                <td class="desc" colspan="3">{{$requirement->name}}</td>
+                <td class="unit">€{{floatval($requirement->pivot->rate)}}</td>
             </tr>
           @endforeach
         </tbody>
