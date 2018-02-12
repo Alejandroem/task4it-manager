@@ -31,7 +31,8 @@ class BudgetController extends Controller
         //
         $names = RequirementName::where('parent_id',null)->get();
         $projects = Project::pluck('name','id');
-        return view('budgets.create')->with(compact('names','projects'));
+        $budget = null;
+        return view('budgets.create')->with(compact('names','projects','budget'));
     }
 
     /**
