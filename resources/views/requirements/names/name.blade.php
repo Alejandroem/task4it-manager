@@ -13,7 +13,7 @@
         <div id="collapse-{{$name->id}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body" id="subrequirements-{{$name->id}}">
                 @foreach($name->subrequirements as $subrequirement)
-                <div class="form-group" id="$subrequirement" >
+                <div class="form-group" id="{{$subrequirement->id}}" >
                     <div class="row">
                         <div class="col-md-5">
                             {!! Form::label($subrequirement->name, $subrequirement->name, ['class'=>'form-control']) !!}

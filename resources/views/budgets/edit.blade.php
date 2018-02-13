@@ -47,12 +47,42 @@
 
 @section('script')
 $(document).ready(function(){
-    
+    $('body').on('click','.delete',function(e){
+        e.preventDefault();
+        var toDelete = $(this).data('parent');
+        console.log("Parent", parent);        swal({
+            title: 'Are you sure you want to delete it?',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            showLoaderOnConfirm: true,
+            preConfirm: function (name) {
+                return new Promise(function (resolve, reject) {
+                    $.ajax({
+                        url: "{{ URL::to('requirement/names') }}/"+toDelete,
+                        data:{'_token':'{{ csrf_token() }}','name':toDelete},
+                        type: "DELETE",
+                        success: function(response) {
+                            resolve();
+                        },
+                        error: function(xhr) {
+                            reject("Something went wrong");
+                        }
+                    });
+                })
+            },
+            allowOutsideClick: false
+        }).then(function (name) {
+            $("#"+toDelete).remove();
+            swal({
+                type: 'success',
+                title: 'The name has been deleted!'
+            })
+        });
+    });
     $('body').on('click','.add',function(e){
         e.preventDefault();
         var parent = $(this).data('parent');
         parent = parent? parent: -1;
-        console.log("Parent", parent);
         swal({
             title: 'Enter the new name:',
             input: 'text',

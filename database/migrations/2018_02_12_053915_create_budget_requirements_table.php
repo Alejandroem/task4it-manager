@@ -17,8 +17,8 @@ class CreateBudgetRequirementsTable extends Migration
             $table->double('rate');
             $table->integer('budget_id')->unsigned();
             $table->foreign('budget_id')->references('id')->on('budgets');
-            $table->integer('requirement_id')->unsigned();
-            $table->foreign('requirement_id')->references('id')->on('requirement_names');
+            $table->integer('requirement_id')->unsigned()->nullable();
+            $table->foreign('requirement_id')->references('id')->on('requirement_names')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -50,7 +50,7 @@ $(document).ready(function(){
     $('body').on('click','.delete',function(e){
         e.preventDefault();
         var toDelete = $(this).data('parent');
-        console.log("Parent", parent);        swal({
+        swal({
             title: 'Are you sure you want to delete it?',
             showCancelButton: true,
             confirmButtonText: 'Submit',
@@ -72,6 +72,7 @@ $(document).ready(function(){
             },
             allowOutsideClick: false
         }).then(function (name) {
+            console.log("#"+toDelete);
             $("#"+toDelete).remove();
             swal({
                 type: 'success',
