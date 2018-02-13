@@ -47,12 +47,42 @@
 
 @section('script')
 $(document).ready(function(){
-    
+    $('body').on('click','.delete',function(e){
+        e.preventDefault();
+        var toDelete = $(this).data('parent');
+        console.log("Parent", parent);        swal({
+            title: 'Are you sure you want to delete it?',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            showLoaderOnConfirm: true,
+            preConfirm: function (name) {
+                return new Promise(function (resolve, reject) {
+                    $.ajax({
+                        url: "{{ URL::to('requirement/names') }}/"+toDelete,
+                        data:{'_token':'{{ csrf_token() }}','name':toDelete},
+                        type: "DELETE",
+                        success: function(response) {
+                            resolve();
+                        },
+                        error: function(xhr) {
+                            reject("Something went wrong");
+                        }
+                    });
+                })
+            },
+            allowOutsideClick: false
+        }).then(function (name) {
+            $("#"+toDelete).remove();
+            swal({
+                type: 'success',
+                title: 'The name has been deleted!'
+            })
+        });
+    });
     $('body').on('click','.add',function(e){
         e.preventDefault();
         var parent = $(this).data('parent');
         parent = parent? parent: -1;
-        console.log("Parent", parent);
         swal({
             title: 'Enter the new name:',
             input: 'text',
@@ -71,12 +101,14 @@ $(document).ready(function(){
                             if(parent==-1){
                                 $('#pannel').append(
                                 `
-                                <div class="col-md-4">
+                                <div class="col-md-4" id="`+id+`">
                                     <div class="card">
                                         <div class="card-header" id="headingOne">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    `+name+`<button class="btn btn-primary add" data-parent="`+id+`">Add SubReq</button>      
+                                                    `+name+`
+                                                    <button class="btn btn-danger pull-right delete" data-parent="`+id+`">-</button>
+                                                    <button class="btn btn-primary add pull-right" data-parent="`+id+`">Add SubReq</button>
                                                 </button>
                                             </h5>
                                         </div>
@@ -95,9 +127,9 @@ $(document).ready(function(){
                             }else{
                                 $('#subrequirements-'+parent).append(
                                 `
-                                <div class="form-group" >
+                                <div class="form-group" id="`+id+`">
                                     <div class="row">
-                                        <div class="col-md-7">
+                                        <div class="col-md-5">
                                             <label for="`+name+`" class="form-control">`+name+`</label>
                                         </div>
                                         <div class="col-md-2">
@@ -105,6 +137,9 @@ $(document).ready(function(){
                                         </div>
                                         <div class="col-md-3">
                                             <input class="form-control" min="0" name="`+name+`-amount" type="number" value="0">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button class="btn btn-danger delete" data-parent="`+id+`">-</button>
                                         </div>
                                     </div>
                                 </div>
@@ -123,6 +158,7 @@ $(document).ready(function(){
             },
             allowOutsideClick: false
         }).then(function (name) {
+            $("#"+toDelete).remove();
             swal({
                 type: 'success',
                 title: 'The name has been added!',

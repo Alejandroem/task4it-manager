@@ -48,6 +48,15 @@ class BudgetController extends Controller
             'name'=>'required'
         ]);
         
+        $all = RequirementName::whereNotNull('parent_id')->get();
+        foreach( $all as $requirement){
+            Debugbar::info($all);
+            Debugbar::info($request->input());
+            Debugbar::info(str_replace(" ", "_",$requirement->name).'-amount');
+            $requirement->base_rate = $request->get(str_replace(" ", "_",$requirement->name).'-amount');
+            $requirement->save();
+        }
+        
         $values = $request->input();
         $selectedReq = 
         array_filter($values, function($element){
@@ -60,9 +69,9 @@ class BudgetController extends Controller
         ]);
         
         foreach($selectedReq as $key => $requirement){
-            $rate = $request->get($key.'-amount');
+            $rate = $request->get(str_replace(" ", "_",$key).'-amount');
             $rate = $rate? $rate : 0;
-            $reqObj =  RequirementName::where('name',$key)->first();
+            $reqObj =  RequirementName::where('name',str_replace("_"," ",$key))->first();
             $budget->requirements()->save($reqObj,['rate'=>$rate]);
         }
         return redirect()->route('budgets.index');
@@ -108,6 +117,14 @@ class BudgetController extends Controller
         $this->validate($request,[
             'name'=>'required'
         ]);
+        $all = RequirementName::whereNotNull('parent_id')->get();
+        foreach( $all as $requirement){
+            Debugbar::info($all);
+            Debugbar::info($request->input());
+            Debugbar::info(str_replace(" ", "_",$requirement->name).'-amount');
+            $requirement->base_rate = $request->get(str_replace(" ", "_",$requirement->name).'-amount');
+            $requirement->save();
+        }
         
         $values = $request->input();
         $selectedReq = 
@@ -121,7 +138,7 @@ class BudgetController extends Controller
         foreach($selectedReq as $key => $requirement){
             $rate = $request->get($key.'-amount');
             $rate = $rate? $rate : 0;
-            $reqObj =  RequirementName::where('name',$key)->first();
+            $reqObj =  RequirementName::where('name',str_replace("_"," ",$key))->first();
             $budget->requirements()->save($reqObj,['rate'=>$rate]);
         }
         $budget->save();

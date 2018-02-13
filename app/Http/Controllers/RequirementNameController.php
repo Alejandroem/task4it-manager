@@ -100,8 +100,15 @@ class RequirementNameController extends Controller
      * @param  \App\RequirementName  $requirementName
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RequirementName $requirementName)
+    public function destroy(RequirementName $name,Request $request)
     {
         //
+        $name->delete();
+        if($request->ajax()){
+            return response()->json([
+                'message'=>'success'
+            ],201);
+        }
+        return back();
     }
 }
