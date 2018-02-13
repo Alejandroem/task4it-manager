@@ -16,6 +16,7 @@ class AddRelationRequirementNamesTable extends Migration
         //
         Schema::table('requirement_names', function (Blueprint $table) {
             $table->integer('parent_id')->unsigned()->nullable();
+            $table->foreign('parent_id')->references('id')->on('requirement_names')->onDelete('cascade');
             $table->double('base_rate')->default(0);
         });
     }

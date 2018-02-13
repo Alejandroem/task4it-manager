@@ -71,12 +71,14 @@ $(document).ready(function(){
                             if(parent==-1){
                                 $('#pannel').append(
                                 `
-                                <div class="col-md-4">
+                                <div class="col-md-4" id="`+id+`">
                                     <div class="card">
                                         <div class="card-header" id="headingOne">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    `+name+`<button class="btn btn-primary add" data-parent="`+id+`">Add SubReq</button>      
+                                                    `+name+`
+                                                    <button class="btn btn-danger pull-right delete" data-parent="`+id+`">-</button>
+                                                    <button class="btn btn-primary add pull-right" data-parent="`+id+`">Add SubReq</button>
                                                 </button>
                                             </h5>
                                         </div>
@@ -95,9 +97,9 @@ $(document).ready(function(){
                             }else{
                                 $('#subrequirements-'+parent).append(
                                 `
-                                <div class="form-group" >
+                                <div class="form-group" id="`+id+`">
                                     <div class="row">
-                                        <div class="col-md-7">
+                                        <div class="col-md-5">
                                             <label for="`+name+`" class="form-control">`+name+`</label>
                                         </div>
                                         <div class="col-md-2">
@@ -105,6 +107,9 @@ $(document).ready(function(){
                                         </div>
                                         <div class="col-md-3">
                                             <input class="form-control" min="0" name="`+name+`-amount" type="number" value="0">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button class="btn btn-danger delete" data-parent="`+id+`">-</button>
                                         </div>
                                     </div>
                                 </div>
@@ -123,6 +128,7 @@ $(document).ready(function(){
             },
             allowOutsideClick: false
         }).then(function (name) {
+            $("#"+toDelete).remove();
             swal({
                 type: 'success',
                 title: 'The name has been added!',
