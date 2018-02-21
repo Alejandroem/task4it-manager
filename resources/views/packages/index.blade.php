@@ -1,55 +1,172 @@
 @extends('layout.app')
 @section('content')
+
+{!! Form::open(['route'=>'budgets.store']) !!}
+{{csrf_field()}}
 <div class="card mb-3">
     <div class="card-header">
-        <a class="btn btn-primary pull-right" href="{{route('budgets.create')}}">Add Package</a>
-        <i class="fa fa-table"></i> Packages </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>
-                                Budget Name
-                            </th>
-                            <th>
-                                Project
-                            </th>
-                            <th>
-                                Actions
-                            </th>
-                        </tr>
-                    </thead>
-                    <hbody>
-                        @foreach($budgets as $budget)
-                        <tr>
-                            <td>
-                                {{$budget->name}}
-                            </td>
-                            <td>
-                                {{$budget->project? $budget->project->name : "Unassigned"}}
-                            </td>
-                            <td>
-                                <a href="{{ route('budgets.export',['id'=>$budget->id]) }}" title="download">
-                                    <i class="btn btn-primary fa fa-download fa-lg" aria-hidden="true"></i>
-                                </a>
-                                <a href="{{ route('budgets.edit',['id'=>$budget->id]) }}" title="Edit budget">
-                                    <i class="btn btn-primary fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
-                                </a>
-                                {{Form::open(array('route'=>array('budgets.destroy',$budget->id),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
-                                    {{csrf_field()}}
-                                    <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete project">
-                                        <i class="btn btn-danger fa fa-trash" aria-hidden="true"></i>
-                                    </button>
-                                {{Form::close()}}
-                            </td>
-                        </tr>
-                        @endforeach
-                    </hbody>
-                </table>
+        @include('layout.errors')
+         <div class="row">
+            <div class="col-md-6">
+                Manage Packages  
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-primary pull-right add">Add a Package </button> 
             </div>
         </div>
-        {{--<div class="card-footer small text-muted">Updated today at 11:59 PM</div> --}}
+    </div>
+    <div class="card-body">
+        <div class="row" id="pannel">
+            
+            @foreach($packages as $package)
+                @include('packages.package')
+            @endforeach
+        </div>
+        
     </div>
 </div>
+
+{!! Form::close() !!}
+
+@stop
+
+@section('script')
+$(document).ready(function(){
+    $('body').on('click','.delete',function(e){
+        e.preventDefault();
+        var toDelete = $(this).data('parent');
+        swal({
+            title: 'Are you sure you want to delete it?',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            showLoaderOnConfirm: true,
+            preConfirm: function (name) {
+                return new Promise(function (resolve, reject) {
+                    $.ajax({
+                        url: "{{ URL::to('requirement/names') }}/"+toDelete,
+                        data:{'_token':'{{ csrf_token() }}','name':toDelete},
+                        type: "DELETE",
+                        success: function(response) {
+                            resolve();
+                        },
+                        error: function(xhr) {
+                            reject("Something went wrong");
+                        }
+                    });
+                })
+            },
+            allowOutsideClick: false
+        }).then(function (name) {
+            console.log("#"+toDelete);
+            $("#"+toDelete).remove();
+            swal({
+                type: 'success',
+                title: 'The name has been deleted!'
+            })
+        });
+    });
+    $('body').on('click','.add',function(e){
+        e.preventDefault();
+        var parent = $(this).data('parent');
+        parent = parent? parent: -1;
+        console.log("Parent", parent);
+        swal({
+            title: 'Enter the new name:',
+            input: 'text',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            showLoaderOnConfirm: true,
+            preConfirm: function (name) {
+                return new Promise(function (resolve, reject) {
+                    $.ajax({
+                        url: "{{ route('names.store') }}",
+                        data:{'_token':'{{ csrf_token() }}','name':name,'parent':parent},
+                        type: "POST",
+                        success: function(response) {
+                            var id = response.id;
+                            var name = response.name;
+                            if(parent==-1){
+                                $('#pannel').append(`<div class="col-md-4" id="`+id+`">
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    `+name+`
+                                                    <button class="btn btn-danger pull-right delete" data-parent="`+id+`">-</button>
+                                                    <button class="btn btn-primary add pull-right" data-parent="`+id+`">Add SubReq</button>
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <div class="form-group" id="subrequirements-`+id+`">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                `
+                                );
+                            }else{
+                                $('#subrequirements-'+parent).append(`<div class="form-group" id="`+id+`">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <label for="`+name+`" class="form-control">`+name+`</label>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" name="`+name+`" type="checkbox" id="`+name+`-check">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input class="form-control" min="0" name="`+name+`-amount" type="number" value="0">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button class="btn btn-danger delete" data-parent="`+id+`">-</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                `
+                                );
+                                
+                            }
+                            console.log(response);
+                            resolve();
+                        },
+                        error: function(xhr) {
+                            reject("Something went wrong");
+                        }
+                    });
+                })
+            },
+            allowOutsideClick: false
+        }).then(function (name) {
+            swal({
+                type: 'success',
+                title: 'The name has been added!',
+                html: 'New requirement name: ' + name
+            })
+        });
+    });
+    //updateNames();
+
+});
+
+function updateNames(){
+    $.ajax({
+        url:"{{route('names.index')}}",
+        {{--  data:{'_token':'{{ csrf_token() }}'},  --}}
+        type: "GET",
+        success: function(response) {
+            if(response.names){
+                $.each( response.names, function( index, value ){
+                    console.log(value);
+                });
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+};
 @stop
