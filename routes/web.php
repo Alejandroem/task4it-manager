@@ -10,11 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Auth::routes();
 Route::get('/',[
     'uses'=> 'PackageController@index',
-    'as'=>'home'
-])->name('home');
+    'as'=>'packages'
+])->name('packages');
 
 Route::get('/projects/export',[
     'uses'=>'ProjectController@exportRequirements',
