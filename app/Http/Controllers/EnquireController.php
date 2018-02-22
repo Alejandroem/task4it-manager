@@ -36,6 +36,7 @@ class EnquireController extends Controller
     public function store(Request $request)
     {
         //
+        return $request->input();
     }
 
     /**

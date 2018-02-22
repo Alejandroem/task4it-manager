@@ -17,6 +17,7 @@ class PackageController extends Controller
         //
         $packages = Package::all();
         return view('packages.index')->with(compact('packages'));
+        
     }
 
     /**
@@ -27,6 +28,8 @@ class PackageController extends Controller
     public function create()
     {
         //
+        $packages = Package::all();
+        return view('packages.create')->with(compact('packages'));
     }
 
     /**
@@ -64,6 +67,7 @@ class PackageController extends Controller
     public function show(Package $package)
     {
         //
+        return view('packages.show')->with(compact('package'));
     }
 
     /**
