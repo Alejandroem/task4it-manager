@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get('/',[
     'uses'=> 'PackageController@index',
@@ -64,7 +65,7 @@ Route::get('notifications/list/{user}',[
 
 Route::resource('notifications','NotificationController');
 Route::resource('requirements.questions','QuestionController');
-Auth::routes();
+
 
 
 Route::group(['middleware' => config('laradrop.middleware') ? config('laradrop.middleware') : null], function () {
