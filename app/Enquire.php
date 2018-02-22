@@ -14,4 +14,8 @@ class Enquire extends Model
         return $this->hasMany('\App\EnquireOptions');
     }
 
+    public function amount(){
+        return $this->options->sum('current_option_value');
+    }
+
 }

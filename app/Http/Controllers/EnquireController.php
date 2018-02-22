@@ -19,6 +19,8 @@ class EnquireController extends Controller
     public function index()
     {
         //
+        $enquires = Enquire::all();
+        return view('enquires.index')->with(compact('enquires'));
     }
 
     /**
@@ -50,7 +52,7 @@ class EnquireController extends Controller
         $enquire = Enquire::create([
             'first_name'=> $request->first_name,
             'last_name'=> $request->last_name,
-            'email'=> $request->first_name,
+            'email'=> $request->email,
         ]);
         foreach($request->option as $key => $option){
             $value = OptionValue::find($option);
@@ -77,6 +79,7 @@ class EnquireController extends Controller
     public function show(Enquire $enquire)
     {
         //
+        return view('enquires.show')->with(compact('enquire'));
     }
 
     /**
@@ -111,5 +114,7 @@ class EnquireController extends Controller
     public function destroy(Enquire $enquire)
     {
         //
+        $enquire->delete();
+        return back();
     }
 }

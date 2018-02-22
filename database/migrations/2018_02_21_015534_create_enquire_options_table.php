@@ -16,7 +16,7 @@ class CreateEnquireOptionsTable extends Migration
         Schema::create('enquire_options', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('enquire_id')->unsigned();
-            $table->foreign('enquire_id')->references('id')->on('enquires');
+            $table->foreign('enquire_id')->references('id')->on('enquires')->onDelete('cascade');
             $table->integer('option_id')->unsigned()->nullable();
             $table->foreign('option_id')->references('id')->on('option_values')->onDelete('set null');
             $table->integer('option_value_id')->unsigned()->nullable();

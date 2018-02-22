@@ -29,7 +29,7 @@
                             {{$value->name}}
                         </label>
                         <span class="symbol">
-                                €   
+                                $   
                             </span>
                             <span class="yellow-text">
                                 {{$value->value}}
