@@ -11,11 +11,10 @@
 |
 */
 Auth::routes();
-
 Route::get('/',[
     'uses'=> 'PackageController@index',
     'as'=>'home'
-]);
+])->name('home');
 
 Route::get('/projects/export',[
     'uses'=>'ProjectController@exportRequirements',
