@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Debugbar;
 class OptionValueController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
