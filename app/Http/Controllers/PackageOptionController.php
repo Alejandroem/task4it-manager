@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\PackageOption;
 use Illuminate\Http\Request;
-
+use Debugbar;
 class PackageOptionController extends Controller
 {
     /**
@@ -15,6 +15,7 @@ class PackageOptionController extends Controller
     public function index()
     {
         //
+        return "index";
     }
 
     /**
@@ -25,6 +26,7 @@ class PackageOptionController extends Controller
     public function create()
     {
         //
+        return "create";
     }
 
     /**
@@ -36,6 +38,23 @@ class PackageOptionController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request,[
+            'name'=>'required',
+            'parent'=> 'required'
+        ]);
+
+        $option = PackageOption ::create([
+            'subject'=>$request->name,
+            'package_id'=>$request->parent
+        ]);
+
+        if($request->ajax()){
+            return response()->json([
+                'id'=>$option->id,
+                'name'=>$option->subject
+            ],201);
+        }
+        return $option;
     }
 
     /**
@@ -47,6 +66,7 @@ class PackageOptionController extends Controller
     public function show(PackageOption $packageOption)
     {
         //
+        return "show";
     }
 
     /**
@@ -58,6 +78,7 @@ class PackageOptionController extends Controller
     public function edit(PackageOption $packageOption)
     {
         //
+        return "edit";
     }
 
     /**
@@ -70,6 +91,7 @@ class PackageOptionController extends Controller
     public function update(Request $request, PackageOption $packageOption)
     {
         //
+        return "update";
     }
 
     /**
@@ -78,8 +100,19 @@ class PackageOptionController extends Controller
      * @param  \App\PackageOption  $packageOption
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PackageOption $packageOption)
+    public function destroy(PackageOption $option,Request $request)
     {
         //
+        
+        Debugbar::info($option);
+        if($request->ajax() && $option->delete()){
+            return response()->json([
+                'message'=>'success'
+            ],201);
+        }else{
+            $option->delete();
+        }
+        return $option;
+        return back();
     }
 }

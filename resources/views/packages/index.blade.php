@@ -1,8 +1,7 @@
 @extends('layout.app')
 @section('content')
 
-{!! Form::open(['route'=>'budgets.store']) !!}
-{{csrf_field()}}
+
 <div class="card mb-3">
     <div class="card-header">
         @include('layout.errors')
@@ -11,13 +10,13 @@
                 Manage Packages  
             </div>
             <div class="col-md-4">
-                <button class="btn btn-primary pull-right add">Add a Package </button> 
+                <button class="btn btn-primary pull-right add" data-type="1">Add a Package </button> 
             </div>
         </div>
     </div>
+   
     <div class="card-body">
         <div class="row" id="pannel">
-            
             @foreach($packages as $package)
                 @include('packages.package')
             @endforeach
@@ -26,50 +25,76 @@
     </div>
 </div>
 
-{!! Form::close() !!}
 
 @stop
 
 @section('script')
 $(document).ready(function(){
+
     $('body').on('click','.delete',function(e){
         e.preventDefault();
-        var toDelete = $(this).data('parent');
+        var toDelete = $(this).data('id');
+        console.log(toDelete);
+        var type = $(this).data('type');
+        console.log(type);
+        var url = "";
+        if(type === 1){
+            url = "{{ URL::to('packages') }}/"+toDelete;
+        }else if (type === 2) {
+            url = "{{ URL::to('options') }}/"+toDelete;
+        }else if (type === 3){
+            url = "{{ URL::to('values') }}/"+toDelete;
+        }
+        console.log(url);
         swal({
             title: 'Are you sure you want to delete it?',
             showCancelButton: true,
             confirmButtonText: 'Submit',
             showLoaderOnConfirm: true,
-            preConfirm: function (name) {
-                return new Promise(function (resolve, reject) {
-                    $.ajax({
-                        url: "{{ URL::to('requirement/names') }}/"+toDelete,
-                        data:{'_token':'{{ csrf_token() }}','name':toDelete},
-                        type: "DELETE",
-                        success: function(response) {
-                            resolve();
-                        },
-                        error: function(xhr) {
-                            reject("Something went wrong");
+            preConfirm: function () {
+                $.ajax({
+                    url: url,
+                    data:{'_method': 'delete','_token':'{{ csrf_token() }}','_method':'DELETE'},
+                    type: 'POST',
+                    success: function(response) {
+                        var del = "";
+                        if(type === 1){
+                            del = "#package-"+toDelete;
+                        }else if (type === 2) {
+                            del = "#option-"+toDelete;
+                        }else if (type === 3){
+                            del = "#value-"+toDelete;
                         }
-                    });
-                })
+                        console.log(del);
+                        $(del).remove();
+                        swal({
+                            type: 'success',
+                            title: 'The name has been deleted!'
+                        })
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+                
             },
             allowOutsideClick: false
-        }).then(function (name) {
-            console.log("#"+toDelete);
-            $("#"+toDelete).remove();
-            swal({
-                type: 'success',
-                title: 'The name has been deleted!'
-            })
         });
     });
+
     $('body').on('click','.add',function(e){
         e.preventDefault();
+        var type = $(this).data('type');
+        var url = "";
+        if(type === 1){
+            url = "{{ route('packages.store') }}";
+        }else if (type === 2) {
+            url = "{{ route('options.store') }}";
+        }else if (type=== 3){
+            url = "{{ route('values.store') }}";
+        }
         var parent = $(this).data('parent');
-        parent = parent? parent: -1;
-        console.log("Parent", parent);
+
         swal({
             title: 'Enter the new name:',
             input: 'text',
@@ -79,56 +104,18 @@ $(document).ready(function(){
             preConfirm: function (name) {
                 return new Promise(function (resolve, reject) {
                     $.ajax({
-                        url: "{{ route('names.store') }}",
+                        url: url,
                         data:{'_token':'{{ csrf_token() }}','name':name,'parent':parent},
                         type: "POST",
                         success: function(response) {
                             var id = response.id;
                             var name = response.name;
-                            if(parent==-1){
-                                $('#pannel').append(`<div class="col-md-4" id="`+id+`">
-                                    <div class="card">
-                                        <div class="card-header" id="headingOne">
-                                            <h5 class="mb-0">
-                                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    `+name+`
-                                                    <button class="btn btn-danger pull-right delete" data-parent="`+id+`">-</button>
-                                                    <button class="btn btn-primary add pull-right" data-parent="`+id+`">Add SubReq</button>
-                                                </button>
-                                            </h5>
-                                        </div>
-                                        
-                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <div class="form-group" id="subrequirements-`+id+`">
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                `
-                                );
-                            }else{
-                                $('#subrequirements-'+parent).append(`<div class="form-group" id="`+id+`">
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <label for="`+name+`" class="form-control">`+name+`</label>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input class="form-control" name="`+name+`" type="checkbox" id="`+name+`-check">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input class="form-control" min="0" name="`+name+`-amount" type="number" value="0">
-                                        </div>
-                                        <div class="col-md-1">
-                                            <button class="btn btn-danger delete" data-parent="`+id+`">-</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                `
-                                );
-                                
+                            if(type === 1){
+                                $('#pannel').append(@include('packages.javascripts.package'));
+                            }else if (type === 2) {
+                                $('#options-'+parent).append(@include('packages.javascripts.option'));
+                            }else if (type=== 3){
+                                $('#values-'+parent).append(@include('packages.javascripts.value'));
                             }
                             console.log(response);
                             resolve();
@@ -147,26 +134,9 @@ $(document).ready(function(){
                 html: 'New requirement name: ' + name
             })
         });
-    });
-    //updateNames();
 
+    });
+
+    
 });
-
-function updateNames(){
-    $.ajax({
-        url:"{{route('names.index')}}",
-        {{--  data:{'_token':'{{ csrf_token() }}'},  --}}
-        type: "GET",
-        success: function(response) {
-            if(response.names){
-                $.each( response.names, function( index, value ){
-                    console.log(value);
-                });
-            }
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
-    });
-};
 @stop

@@ -17,7 +17,7 @@ class CreatePackageOptionsTable extends Migration
             $table->increments('id');
             $table->string('subject');
             $table->integer('package_id')->unsigned();
-            $table->foreign('package_id')->references('id')->on('packages');
+            $table->foreign('package_id')->references('id')->on('packages')->onDelete('cascade');
             $table->timestamps();
         });
     }

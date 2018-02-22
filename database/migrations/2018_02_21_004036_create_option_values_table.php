@@ -16,9 +16,9 @@ class CreateOptionValuesTable extends Migration
         Schema::create('option_values', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->double('value');
+            $table->double('value')->nullable();
             $table->integer('package_option_id')->unsigned();
-            $table->foreign('package_option_id')->references('id')->on('package_options');
+            $table->foreign('package_option_id')->references('id')->on('package_options')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -130,3 +130,5 @@ Route::get('/budgets/{budget}/export',[
 Route::resource('/budgets','BudgetController');
 
 Route::resource('/packages','PackageController');
+Route::resource('/options','PackageOptionController');
+Route::resource('/values','OptionValueController');
