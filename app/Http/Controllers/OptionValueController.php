@@ -15,6 +15,7 @@ class OptionValueController extends Controller
     public function index()
     {
         //
+        return "index";
     }
 
     /**
@@ -25,6 +26,7 @@ class OptionValueController extends Controller
     public function create()
     {
         //
+        return "create";
     }
 
     /**
@@ -64,6 +66,7 @@ class OptionValueController extends Controller
     public function show(OptionValue $optionValue)
     {
         //
+        return "show";
     }
 
     /**
@@ -75,6 +78,7 @@ class OptionValueController extends Controller
     public function edit(OptionValue $optionValue)
     {
         //
+        return "edit";
     }
 
     /**
@@ -84,9 +88,21 @@ class OptionValueController extends Controller
      * @param  \App\OptionValue  $optionValue
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, OptionValue $optionValue)
+    public function update(Request $request, OptionValue $value)
     {
         //
+        
+        $this->validate($request,[
+            'new_value'=>'required'
+        ]);
+
+        $value->value = $request->new_value;
+        if($request->ajax() && $value->save()){
+            return response()->json([
+                'message'=>'success'
+            ],201);
+        }
+        return back();
     }
 
     /**

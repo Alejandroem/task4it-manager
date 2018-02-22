@@ -30,6 +30,42 @@
 
 @section('script')
 $(document).ready(function(){
+    $('body').on('click','.value',function(e){
+        var id_value = $(this).data('idvalue');
+        var me = $(this);
+        e.preventDefault();
+          swal({
+            title: 'Enter the new value:',
+            input: 'number',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            showLoaderOnConfirm: true,
+            preConfirm: function (value) {
+                return new Promise(function (resolve, reject) {
+                    $.ajax({
+                        url: "{{URL::to('/values')}}/"+id_value,
+                        data:{'_token':'{{ csrf_token() }}','new_value':value,'value':id_value},
+                        type: "PUT",
+                        success: function(response) {
+                            console.log(me);
+                            me.text(value);
+                            resolve(value);
+                        },
+                        error: function(xhr) {
+                            reject("Something went wrong");
+                        }
+                    });
+                })
+            },
+            allowOutsideClick: false
+        }).then(function (value) {
+            swal({
+                type: 'success',
+                title: 'The value has been updated!',
+                html: 'New option value: ' + value
+            })
+        });
+    });
 
     $('body').on('click','.delete',function(e){
         e.preventDefault();

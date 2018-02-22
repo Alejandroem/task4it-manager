@@ -29,7 +29,7 @@
                                             {!! Form::label($value->name, $value->name, ['class'=>'form-control']) !!}
                                         </div>
                                         <div class="col-md-5">
-                                            {!! Form::label($value->value, $value->value, ['class'=>'form-control']) !!}
+                                            {!! Form::label($value->value, $value->value, ['class'=>'form-control value','id'=>'option-value-'.$value->id,'data-idvalue'=>$value->id]) !!}
                                         </div>
                                         <div class="col-md-1">
                                             <button class="btn btn-danger delete"  data-id="{{$value->id}}" data-type="3">-</button>
