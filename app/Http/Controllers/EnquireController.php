@@ -14,7 +14,7 @@ class EnquireController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('store');
     }
     /**
      * Display a listing of the resource.

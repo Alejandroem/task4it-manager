@@ -11,11 +11,10 @@
 |
 */
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
-
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
+Route::get('/',[
+    'uses'=> 'PackageController@index',
+    'as'=>'home'
+]);
 
 Route::get('/projects/export',[
     'uses'=>'ProjectController@exportRequirements',
