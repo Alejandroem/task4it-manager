@@ -14,10 +14,14 @@ class CreateEnquireOptionsTable extends Migration
     public function up()
     {
         Schema::create('enquire_options', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('enquire_id')->unsigned();
             $table->foreign('enquire_id')->references('id')->on('enquires');
-            $table->integer('option_value_id')->unsigned();
-            $table->foreign('option_value_id')->references('id')->on('option_values');
+            $table->integer('option_id')->unsigned()->nullable();
+            $table->foreign('option_id')->references('id')->on('option_values')->onDelete('set null');
+            $table->integer('option_value_id')->unsigned()->nullable();
+            $table->foreign('option_value_id')->references('id')->on('option_values')->onDelete('set null');
+            $table->string('current_option_subject');
             $table->double('current_option_value');
             $table->timestamps();
         });

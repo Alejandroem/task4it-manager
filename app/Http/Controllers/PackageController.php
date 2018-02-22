@@ -42,11 +42,13 @@ class PackageController extends Controller
     {
         //
         $this->validate($request,[
-            'name'=>'required'
+            'name'=>'required',
+            'description'=>'required'
         ]);
 
         $package = Package::create([
-            'name'=>$request->name
+            'name'=>$request->name,
+            'description'=>$request->description
         ]);
 
         if($request->ajax()){

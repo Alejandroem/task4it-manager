@@ -13,14 +13,15 @@
 </head>
 
 <body>
+
     <h2 style="text-align:center" >Select a package to customize</h2>
     <ul>
         @for ($i = 0; $i < count($packages); $i++)
         <li id="{{$i}}" class="open">
-            <h4>{{$packages[$i]->name}}</h4>
-            <p class="quote">{{$packages[$i]->name}}</p>
+            <h2>{{$packages[$i]->name}}</h2>
+            <p class="quote">{{$packages[$i]->description}}</p>
             @if($i+1 < count($packages))
-            <a class="button" href="#{{$i+1}}">Next
+            <a class="button" href="#{{$i+1}}">Show me the next package
             </a>
             @endif
             <a class="button" href="{{route('packages.show',$packages[$i]->id)}}">Customize it!<span>&#9997;</span>
@@ -33,7 +34,12 @@
 
 
     @include('packages.js')
-    
+    <script src="{{ asset('/vendor/sweetalert2/sweetalert2.all.min.js')}}"></script>
+    @if (Session::has('sweet_alert.alert'))
+        <script>
+            swal({!! Session::get('sweet_alert.alert') !!});
+        </script>
+    @endif
 </body>
 
 </html>

@@ -117,13 +117,19 @@ $(document).ready(function(){
             allowOutsideClick: false
         });
     });
-
+    
     $('body').on('click','.add',function(e){
         e.preventDefault();
         var type = $(this).data('type');
         var url = "";
+        var title="Enter the name";
+        var html="";
+        var input ="text";
         if(type === 1){
             url = "{{ route('packages.store') }}";
+            title = 'Enter the name and description';
+            input="";
+            html ='<input type="text" id="package-name" class="swal2-input"><textarea id="description" class="swal2-input"></textarea>';
         }else if (type === 2) {
             url = "{{ route('options.store') }}";
         }else if (type=== 3){
@@ -132,16 +138,22 @@ $(document).ready(function(){
         var parent = $(this).data('parent');
 
         swal({
-            title: 'Enter the new name:',
-            input: 'text',
+            title: title,
+            input: input,
+            html: html,
             showCancelButton: true,
             confirmButtonText: 'Submit',
             showLoaderOnConfirm: true,
             preConfirm: function (name) {
+                var description = $('#description').val();
+                if(type === 1){
+                    name = $('#package-name').val();
+                }
+
                 return new Promise(function (resolve, reject) {
                     $.ajax({
                         url: url,
-                        data:{'_token':'{{ csrf_token() }}','name':name,'parent':parent},
+                        data:{'_token':'{{ csrf_token() }}','name':name,'parent':parent,'description':description},
                         type: "POST",
                         success: function(response) {
                             var id = response.id;

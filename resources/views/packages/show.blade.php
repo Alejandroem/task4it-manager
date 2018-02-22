@@ -15,7 +15,7 @@
 <body>
     {{ Form::open(['route' => 'enquires.store'])}}
     {{ Form::token() }}
-    <input type="text" name="package" value="{{$package->id}}">
+    <input type="text" name="package" value="{{$package->id}}" hidden>
     <h2 style="text-align:center">You are customizing {{$package->name}}</h2>
     <ul>
         @for ($i = 0; $i< count($package->options); $i++)
@@ -24,7 +24,7 @@
                 <div>
                     @foreach($package->options[$i]->values as $value)
                     <span>
-                        <input id="option{{$package->options[$i]->id}}_{{$value->id}}" data-price="{{$value->value}}" name="option{{$package->options[$i]->id}}" type="radio" class="field radio" value="{{$value->id}}" @if ($value == $package->options[$i]->values->first()) checked @endif/>
+                        <input id="option{{$package->options[$i]->id}}_{{$value->id}}" data-price="{{$value->value}}" name="option[{{$package->options[$i]->id}}]" type="radio" class="field radio" value="{{$value->id}}" @if ($value == $package->options[$i]->values->first()) checked @endif/>
                         <label class="choice" for="option{{$package->options[$i]->id}}_{{$value->id}}">
                             {{$value->name}}
                         </label>
