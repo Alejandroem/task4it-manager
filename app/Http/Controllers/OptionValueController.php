@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\RequirementName;
+use App\OptionValue;
 use Illuminate\Http\Request;
-
-class RequirementNameController extends Controller
+use Debugbar;
+class OptionValueController extends Controller
 {
     public function __construct()
     {
@@ -16,16 +16,10 @@ class RequirementNameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         //
-        $names = RequirementName::all();
-        if($request->ajax()){
-            return response()->json([
-                'names'=>$names
-            ],201);
-        }
-        return $names;
+        return "index";
     }
 
     /**
@@ -36,6 +30,7 @@ class RequirementNameController extends Controller
     public function create()
     {
         //
+        return "create";
     }
 
     /**
@@ -47,71 +42,89 @@ class RequirementNameController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'name'=>'required|unique:requirement_names'
+        $this->validate($request,[
+            'name'=>'required'
         ]);
-        $requirement = RequirementName::create([
+
+        $option = OptionValue::create([
             'name'=>$request->name,
-            'parent_id'=>$request->parent == -1? null : $request->parent
+            'package_option_id'=>$request->parent,
+            'value'=>0
         ]);
 
         if($request->ajax()){
             return response()->json([
-                'id'=>$requirement->id,
-                'name'=>$requirement->name
+                'id'=>$option->id,
+                'name'=>$option->name
             ],201);
         }
-        return back();
+        return $option;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\RequirementName  $requirementName
+     * @param  \App\OptionValue  $optionValue
      * @return \Illuminate\Http\Response
      */
-    public function show(RequirementName $requirementName)
+    public function show(OptionValue $optionValue)
     {
         //
+        return "show";
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\RequirementName  $requirementName
+     * @param  \App\OptionValue  $optionValue
      * @return \Illuminate\Http\Response
      */
-    public function edit(RequirementName $requirementName)
+    public function edit(OptionValue $optionValue)
     {
         //
+        return "edit";
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RequirementName  $requirementName
+     * @param  \App\OptionValue  $optionValue
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RequirementName $requirementName)
+    public function update(Request $request, OptionValue $value)
     {
         //
+        
+        $this->validate($request,[
+            'new_value'=>'required'
+        ]);
+
+        $value->value = $request->new_value;
+        if($request->ajax() && $value->save()){
+            return response()->json([
+                'message'=>'success'
+            ],201);
+        }
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\RequirementName  $requirementName
+     * @param  \App\OptionValue  $optionValue
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RequirementName $name,Request $request)
+    public function destroy(OptionValue $value,Request $request)
     {
         //
-        $name->delete();
-        if($request->ajax()){
+        Debugbar::info($value);
+        if($request->ajax() && $value->delete()){
             return response()->json([
                 'message'=>'success'
             ],201);
+        }else{
+            $value->delete();
         }
         return back();
     }

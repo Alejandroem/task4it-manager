@@ -11,11 +11,10 @@
 |
 */
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
-
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
+Route::get('/',[
+    'uses'=> 'PackageController@index',
+    'as'=>'home'
+]);
 
 Route::get('/projects/export',[
     'uses'=>'ProjectController@exportRequirements',
@@ -128,3 +127,8 @@ Route::get('/budgets/{budget}/export',[
     'as'=>'budgets.export'
 ]);
 Route::resource('/budgets','BudgetController');
+
+Route::resource('/packages','PackageController');
+Route::resource('/options','PackageOptionController');
+Route::resource('/values','OptionValueController');
+Route::resource('/enquires','EnquireController');

@@ -95,6 +95,14 @@
                 </a>
             </li>
             @endhasanyrole
+            @hasanyrole('admin')
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Enquires">
+                <a class="nav-link" href="{{ route('enquires.index') }}">
+                    <i class="fa fa-archive" aria-hidden="true"></i>
+                    <span class="nav-link-text">Enquires</span>
+                </a>
+            </li>
+            @endhasanyrole
 
         </ul>
 
