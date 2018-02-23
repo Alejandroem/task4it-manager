@@ -13,8 +13,8 @@
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Auth::routes();
 Route::get('/',[
-    'uses'=> 'PackageController@index',
-    'as'=>'packages'
+    'uses'=> 'HomeController@index',
+    'as'=>'index'
 ])->name('packages');
 
 Route::get('/projects/export',[
@@ -129,6 +129,10 @@ Route::get('/budgets/{budget}/export',[
 ]);
 Route::resource('/budgets','BudgetController');
 
+Route::get('/customizer',[
+    'uses'=>'PackageController@index',
+    'as'=>'customizer'
+]);
 Route::resource('/packages','PackageController');
 Route::resource('/options','PackageOptionController');
 Route::resource('/values','OptionValueController');
