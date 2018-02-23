@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Fantasy Form</title>
+    <title>Task4It</title>
 
 
    @include('packages.css')
