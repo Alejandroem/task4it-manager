@@ -9,5 +9,6 @@
     <div class="col-md-1">
         <button class="btn btn-danger delete"  data-id="`+id+`" data-type="3">-</button>
     </div>
+    
 </div>
 `

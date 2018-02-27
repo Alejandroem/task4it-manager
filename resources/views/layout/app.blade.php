@@ -10,6 +10,7 @@
     <title>Task4It Manager</title>
     
     <link src="{{ asset('vendor/timelinejs-slider/timeline.min.css')}}" rel="stylesheet">
+    
     <!-- Bootstrap core CSS-->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Custom fonts for this template-->
@@ -21,7 +22,9 @@
     
     <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet" type="text/css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js" ></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js" ></script> 
+
+    
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/app.min.css')}}" rel="stylesheet">
@@ -75,9 +78,12 @@
     <script src="{{ asset('/vendor/jasekz/laradrop/js/laradrop.js')}}"></script>
 
     <script src="{{ asset('/vendor/sweetalert2/sweetalert2.all.min.js')}}"></script>
+    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+    
 
-
+    
     <script>
         $(document).ready(function() {
             $('.notify-bubble').show(400);

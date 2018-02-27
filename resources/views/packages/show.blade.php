@@ -7,12 +7,14 @@
 
 
     @include('packages.css')
-
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 
+    
 </head>
 
 <body>
+    <div class="w3-container">
     {{ Form::open(['route' => 'enquires.store'])}}
     {{ Form::token() }}
     <input type="text" name="package" value="{{$package->id}}" hidden>
@@ -33,6 +35,9 @@
                         </span>
                         <span class="symbol">
                             €   
+                        </span>
+                        <span>
+                            
                         </span>
                     </span>
                     <br>
@@ -87,10 +92,10 @@
 
     {{Form::close()}}
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
-
-    @include('packages.js')
     
+    
+    @include('packages.js')
+</div>
 </body>
 
 </html>
