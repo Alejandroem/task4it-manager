@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Fantasy Form</title>
+    <title>Task4It</title>
 
 
     @include('packages.css')
@@ -28,12 +28,12 @@
                         <label class="choice" for="option{{$package->options[$i]->id}}_{{$value->id}}">
                             {{$value->name}}
                         </label>
+                        <span class="yellow-text">
+                            {{$value->value}}
+                        </span>
                         <span class="symbol">
-                                $   
-                            </span>
-                            <span class="yellow-text">
-                                {{$value->value}}
-                            </span>
+                            €   
+                        </span>
                     </span>
                     <br>
                     @endforeach
@@ -50,12 +50,10 @@
             <li id="budget">
 
                 <p style="margin-bottom:1.5em; color:#fff;">This is the total amount of your choices</p>
-
-
-                <span class="symbol">$</span>
                 <span>
                     <input id="total" name="total" disabled type="text" class="field text currency nospin" value="" size="10" />
                 </span>
+                <span class="symbol">€</span>
                 <br>
                 <a class="button" href="#enquire">Get in touch! &rarr;</a>
             </li>

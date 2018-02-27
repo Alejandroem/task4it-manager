@@ -42,5 +42,8 @@
                 @endforeach 
             </div>
         </div>
+        <div class="card-footer text-muted">
+            <a target="_blank" class="btn btn-primary pull-right btn-sm" href="{{route('packages.show',$package->id)}}">Go to package</a>
+        </div>
     </div>
 </div>
