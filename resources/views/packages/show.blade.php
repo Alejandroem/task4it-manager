@@ -36,9 +36,15 @@
                         <span class="symbol">
                             €   
                         </span>
-                        <span>
-                            
-                        </span>
+                        @if($value->image())
+                            <span>
+                                <button 
+                                style="border-radius: 12px; margin:0px 30px 0px 30px; padding:0px 10px 0px 10px; font-size:12px; background-color: white; color: black; border: 2px solid #4CAF50;"
+                                class="button example" data-src="{{$value->image()->public_resource_url}}" data-caption="{{$value->name}}">
+                                    See Example
+                                </button>
+                            </span>
+                        @endif
                     </span>
                     <br>
                     @endforeach
@@ -95,6 +101,17 @@
     
     
     @include('packages.js')
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+    <!-- The Close Button -->
+    <span class="close">&times;</span>
+
+    <!-- Modal Content (The Image) -->
+    <img class="modal-content" id="img01">
+
+    <!-- Modal Caption (Image Text) -->
+    <div id="caption"></div>
 </div>
 </body>
 
