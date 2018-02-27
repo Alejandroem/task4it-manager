@@ -14,7 +14,7 @@ class AddMultipleColumnPackage extends Migration
     public function up()
     {
         //
-        Schema::table('packages', function (Blueprint $table) {
+        Schema::table('package_options', function (Blueprint $table) {
             $table->boolean('multiple')->default(0);
         });
     }
@@ -27,7 +27,7 @@ class AddMultipleColumnPackage extends Migration
     public function down()
     {
         //
-        Schema::table('packages', function (Blueprint $table) {
+        Schema::table('package_options', function (Blueprint $table) {
             $table->boolean(['multiple']);
         });
     }

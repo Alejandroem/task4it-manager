@@ -26,7 +26,7 @@
                 <div>
                     @foreach($package->options[$i]->values as $value)
                     <span>
-                        <input id="option{{$package->options[$i]->id}}_{{$value->id}}" data-price="{{$value->value}}" name="option[{{$package->options[$i]->id}}]" type="radio" class="field radio" value="{{$value->id}}" @if ($value == $package->options[$i]->values->first()) checked @endif/>
+                        <input id="option{{$package->options[$i]->id}}_{{$value->id}}" data-price="{{$value->value}}" name="option[{{$package->options[$i]->id}}][{{$value->id}}]" type="{{$package->options[$i]->multiple? 'checkbox' : 'radio'}}" class="field radio" value="{{$value->id}}" @if ($value == $package->options[$i]->values->first()) checked @endif/>
                         <label class="choice" for="option{{$package->options[$i]->id}}_{{$value->id}}">
                             {{$value->name}}
                         </label>
@@ -48,6 +48,8 @@
                     </span>
                     <br>
                     @endforeach
+
+
                     @if($i+1< count($package->options))
                         <a class="button" href="#{{$i+1}}">Next
                         </a>

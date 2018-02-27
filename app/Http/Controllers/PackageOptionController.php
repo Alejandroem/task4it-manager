@@ -92,10 +92,21 @@ class PackageOptionController extends Controller
      * @param  \App\PackageOption  $packageOption
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PackageOption $packageOption)
+    public function update(Request $request, PackageOption $option)
     {
         //
-        return "update";
+        if($request->has('multiple')){
+            $option->multiple = $request->multiple;
+        }
+
+        if($request->ajax() && $option->save()){
+            return response()->json([
+                'message'=>'success'
+            ],201);
+        }else{
+            $option->save();
+        }
+        return back();
     }
 
     /**

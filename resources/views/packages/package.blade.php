@@ -7,7 +7,6 @@
                     
                     <button class="btn btn-danger pull-right delete" data-id="{{$package->id}}" data-type="1">-</button>
                     <button class="btn btn-primary add pull-right" data-parent="{{$package->id}}" data-type="2">Add Option</button>
-                    <button class="btn {{ $package->multiple? 'btn-outline-secondary': 'btn-secondary'}} pull-right multiple" data-multiple="{{$package->multiple}}" data-parent="{{$package->id}}">Multiple</button>
                 </button>
             </h5>
         </div>
@@ -21,6 +20,7 @@
                                 {{$option->subject}}
                                 <button class="btn btn-danger pull-right delete" data-id="{{$package->id}}" data-type="2">-</button>
                                 <button class="btn btn-primary add pull-right" data-parent="{{$option->id}}" data-type="3">Add Value</button>
+                                <button class="btn {{ $option->multiple? 'btn-outline-secondary': 'btn-secondary'}} pull-right multiple" data-multiple="{{$option->multiple}}" data-parent="{{$option->id}}">Multiple</button>
                             </button>
                         </div>
                         <div id="collapse-option-{{$option->id}}" class=" collapse show card-body text-secondary">

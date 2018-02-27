@@ -74,7 +74,7 @@ $(document).ready(function(){
         $(this).data('multiple', multiple === 'true'? 'false' : 'true');
         var me = $(this);
         $.ajax({
-            url: "{{URL::to('/packages')}}/"+id_parent,
+            url: "{{URL::to('/options')}}/"+id_parent,
             data:{'_token':'{{ csrf_token() }}','multiple':bolMultiple},
             type: "PUT",
             success: function(response) {

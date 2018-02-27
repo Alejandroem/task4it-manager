@@ -98,18 +98,7 @@ class PackageController extends Controller
     {
         //
 
-        if($request->has('multiple')){
-            $package->multiple = $request->multiple;
-        }
-
-        if($request->ajax() && $package->save()){
-            return response()->json([
-                'message'=>'success'
-            ],201);
-        }else{
-            $package->save();
-        }
-        return back();
+        
     }
 
     /**

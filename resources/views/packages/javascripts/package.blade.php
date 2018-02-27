@@ -7,7 +7,6 @@
                     `+name+` 
                     <button class="btn btn-danger pull-right delete" data-id="`+id+`" data-type="1">-</button>
                     <button class="btn btn-primary add pull-right" data-parent="`+id+`" data-type="2">Add Option</button>
-                    <button class="btn btn-secondary pull-right multiple" data-multiple="false" data-parent="`+id+`">Multiple</button>
                 </button>
             </h5>
         </div>
