@@ -30,6 +30,38 @@
 
 @section('script')
 $(document).ready(function(){
+    $('body').on('click','.multiple',function(e){
+        var id_parent = $(this).data('parent');
+        var multiple = $(this).data('multiple');
+        var bolMultiple = multiple === 'true'? 0 : 1;
+        $(this).data('multiple', multiple === 'true'? 'false' : 'true');
+        var me = $(this);
+        $.ajax({
+            url: "{{URL::to('/packages')}}/"+id_parent,
+            data:{'_token':'{{ csrf_token() }}','multiple':bolMultiple},
+            type: "PUT",
+            success: function(response) {
+                swal({
+                    type: 'success',
+                    title: 'Value updated!'
+                });
+                me.removeClass('btn-outline-secondary');
+                me.removeClass('btn-secondary');
+                var add = multiple === 'true'? 'btn-secondary' : 'btn-outline-secondary';
+                me.addClass(add);
+                
+            },
+            error: function(xhr) {
+                swal({
+                    type: 'error',
+                    title: 'Something wrong try again'
+                });
+            }
+        });
+        
+
+    });
+
     $('body').on('click','.value',function(e){
         var id_value = $(this).data('idvalue');
         var me = $(this);
@@ -63,7 +95,7 @@ $(document).ready(function(){
                 type: 'success',
                 title: 'The value has been updated!',
                 html: 'New option value: ' + value
-            })
+            });
         });
     });
 

@@ -4,8 +4,10 @@
             <h5 class="mb-0">
                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-{{$package->id}}" aria-expanded="true" aria-controls="collapseOne">
                     {{$package->name}} 
+                    
                     <button class="btn btn-danger pull-right delete" data-id="{{$package->id}}" data-type="1">-</button>
                     <button class="btn btn-primary add pull-right" data-parent="{{$package->id}}" data-type="2">Add Option</button>
+                    <button class="btn {{ $package->multiple? 'btn-outline-secondary': 'btn-secondary'}} pull-right multiple" data-multiple="{{$package->multiple}}" data-parent="{{$package->id}}">Multiple</button>
                 </button>
             </h5>
         </div>
