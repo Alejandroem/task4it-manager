@@ -32,10 +32,10 @@
                             {{$option->value->name}}
                         </td>
                         <td>
-                            ${{number_format($option->value->value,2)}}
+                            {{number_format($option->value->value,2)}}€
                         </td>
                         <td>
-                            ${{number_format($option->current_option_value,2)}}
+                            {{number_format($option->current_option_value,2)}}€
                         </td>
 
                     </tr>

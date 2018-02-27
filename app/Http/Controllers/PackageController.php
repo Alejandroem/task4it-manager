@@ -97,6 +97,8 @@ class PackageController extends Controller
     public function update(Request $request, Package $package)
     {
         //
+
+        
     }
 
     /**

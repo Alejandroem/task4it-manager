@@ -59,16 +59,19 @@ class EnquireController extends Controller
             'last_name'=> $request->last_name,
             'email'=> $request->email,
         ]);
-        foreach($request->option as $key => $option){
-            $value = OptionValue::find($option);
+        foreach($request->option as $key => $optionValue){
             $option = PackageOption::find($key);
-            $enquireOption = EnquireOptions::create([
-                'enquire_id'=>$enquire->id,
-                'option_id'=>$option->id,
-                'option_value_id'=>$value->id,
-                'current_option_subject'=>$option->subject,
-                'current_option_value'=>$value->value
-            ]);         
+
+            foreach($optionValue as $key => $slug){
+                $value = OptionValue::find($key);
+                $enquireOption = EnquireOptions::create([
+                    'enquire_id'=>$enquire->id,
+                    'option_id'=>$option->id,
+                    'option_value_id'=>$value->id,
+                    'current_option_subject'=>$option->subject,
+                    'current_option_value'=>$value->value
+                ]);         
+            }
         }
         Alert::success('Thank you for your message, we will contact you soon!!')->persistent("Close");        ;
 

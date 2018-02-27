@@ -16,6 +16,9 @@
                 
             </div>
         </div>
+        <div class="card-footer text-muted">
+            Refresh to see package short link.
+        </div>
     </div>
 </div>
 `

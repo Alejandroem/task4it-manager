@@ -99,12 +99,12 @@ gulp.task('copy', function() {
     ])
     .pipe(gulp.dest('public/vendor/sweetalert2/'))
 
- /*    gulp.src([
-        'node_modules/timelinejs-slider/dist/js/*.js',
-        'node_modules/timelinejs-slider/dist/css/*.css',
-        'node_modules/timelinejs-slider/dist/js/*.img'
+    gulp.src([
+        'node_modules/lightbox2/dist/css/*.js',
+        'node_modules/lightbox2/dist/js/*.css',
     ])
-    .pipe(gulp.dest('public/vendor/timelinejs-slider/')) */
+    .pipe(gulp.dest('public/vendor/lightbox/'))
+
 })
 
 // Compress images
@@ -122,7 +122,7 @@ gulp.task('images', function () {
 });
 
 // Default task
-gulp.task('default', ['sass', 'minify-css', 'minify-js', 'copy', 'images']);
+gulp.task('default', ['copy', 'sass', 'minify-css', 'minify-js',  'images']);
 
 // Dev task with browserSync
 gulp.task('dev', ['sass', 'minify-css', 'minify-js'], function() {

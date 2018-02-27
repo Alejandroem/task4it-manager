@@ -66,7 +66,7 @@ class FileController extends Controller
                 'data' => $out,
             ]);
         }
-        catch (Exception $e) {
+        catch (\Exception $e) {
             return $this->handleError($e);
         }
     }
@@ -95,7 +95,7 @@ class FileController extends Controller
                 'status' => 'success'
             ]);
         }
-        catch (Exception $e) {
+        catch (\Exception $e) {
             return $this->handleError($e);
         }
         
@@ -112,11 +112,11 @@ class FileController extends Controller
         try {
 
             if (! $request->hasFile('file')) {
-                throw new Exception(trans('err.fileNotProvided'));
+                throw new \Exception(trans('err.fileNotProvided'));
             }
             
             if( ! $request->file('file')->isValid()) {
-                throw new Exception(trans('err.invalidFile'));
+                throw new \Exception(trans('err.invalidFile'));
             }
             
             /*
@@ -130,7 +130,7 @@ class FileController extends Controller
             $fileSize = $request->file('file')->getSize();
 
             if($fileSize > ( (int) config('laradrop.max_upload_size') * 1000000) ) {
-                throw new Exception(trans('err.invalidFileSize'));
+                throw new \Exception(trans('err.invalidFileSize'));
             }
             
             $request->file('file')->move($tmpStorage, $movedFileName);
@@ -184,6 +184,15 @@ class FileController extends Controller
                     $disk->delete($oldAvatar->filename);
                     $disk->delete('_thumb_' . $oldAvatar->filename);
                     $oldAvatar->delete();
+                }
+            }else if($request->relation=="option-value"){
+                $oldValue = File::where('relation_id',$request->relation_id)
+                ->where('relation','option-value')
+                ->first();
+                if($oldValue){
+                    $disk->delete($oldValue->filename);
+                    $disk->delete('_thumb_' . $oldValue->filename);
+                    $oldValue->delete();
                 }
             }
 
@@ -259,7 +268,7 @@ class FileController extends Controller
             ]);
         } 
 
-        catch (Exception $e) {
+        catch (\Exception $e) {
             return $this->handleError($e);
         }
     }
@@ -300,7 +309,7 @@ class FileController extends Controller
                 ]);
             } 
 
-            catch (Exception $e) {
+            catch (\Exception $e) {
                 return $this->handleError($e);
             }
         }else{

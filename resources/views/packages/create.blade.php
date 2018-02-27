@@ -1,7 +1,6 @@
 @extends('layout.app')
 @section('content')
 
-
 <div class="card mb-3">
     <div class="card-header">
         @include('layout.errors')
@@ -23,6 +22,7 @@
         </div>
         
     </div>
+    <input type="file" name="file" id="file" hidden data-parent="-1">
 </div>
 
 
@@ -30,6 +30,75 @@
 
 @section('script')
 $(document).ready(function(){
+
+    $("#file").change(function (){
+        //var fileName = $(this).val();
+        //alert(fileName);
+        var files = $('#file')[0].files[0];
+        var parent_id = $(this).data('parent');
+        var files = $('#file')[0].files[0];
+        var fd = new FormData();
+        fd.append('file',files);
+        fd.append('relation','option-value');
+        fd.append('relation_id',parent_id);
+        $.ajax({
+            url: '{{route('files.store')}}',
+            type: 'POST',
+             headers: {
+                'X-CSRF-Token': '{{ csrf_token() }}'
+            },
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function(response){
+                swal({
+                    type: 'success',
+                    title: 'File updated!'
+                });
+            },
+        });
+        
+        $(this).val("");
+     });
+
+    $('body').on('click','.add-image',function(e){
+        e.preventDefault();
+        $("#file").data('parent',$(this).data('parent'));
+        $("#file").click();
+    });
+
+    $('body').on('click','.multiple',function(e){
+        var id_parent = $(this).data('parent');
+        var multiple = $(this).data('multiple');
+        var bolMultiple = multiple === 'true'? 0 : 1;
+        $(this).data('multiple', multiple === 'true'? 'false' : 'true');
+        var me = $(this);
+        $.ajax({
+            url: "{{URL::to('/options')}}/"+id_parent,
+            data:{'_token':'{{ csrf_token() }}','multiple':bolMultiple},
+            type: "PUT",
+            success: function(response) {
+                swal({
+                    type: 'success',
+                    title: 'Value updated!'
+                });
+                me.removeClass('btn-outline-secondary');
+                me.removeClass('btn-secondary');
+                var add = multiple === 'true'? 'btn-secondary' : 'btn-outline-secondary';
+                me.addClass(add);
+                
+            },
+            error: function(xhr) {
+                swal({
+                    type: 'error',
+                    title: 'Something wrong try again'
+                });
+            }
+        });
+        
+
+    });
+
     $('body').on('click','.value',function(e){
         var id_value = $(this).data('idvalue');
         var me = $(this);
@@ -63,7 +132,7 @@ $(document).ready(function(){
                 type: 'success',
                 title: 'The value has been updated!',
                 html: 'New option value: ' + value
-            })
+            });
         });
     });
 

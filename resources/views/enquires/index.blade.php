@@ -44,7 +44,7 @@
                                 {{$enquire->created_at->toFormattedDateString()}}
                             </td>
                             <td>
-                                ${{number_format($enquire->amount(),2)}}
+                                {{number_format($enquire->amount(),2)}}€
                             </td>
                             <td>
                                 <a href="{{ route('enquires.show',['id'=>$enquire->id]) }}" title="Show enquire">
