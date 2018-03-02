@@ -53,7 +53,8 @@ class BudgetController extends Controller
             Debugbar::info($all);
             Debugbar::info($request->input());
             Debugbar::info(str_replace(" ", "_",$requirement->name).'-amount');
-            $requirement->base_rate = $request->get(str_replace(" ", "_",$requirement->name).'-amount');
+            // $requirement->base_rate = $request->get(str_replace(" ", "_",$requirement->name).'-amount');
+            $requirement->base_rate = $request->get("req-".$requirement->id.'-amount');
             $requirement->save();
         }
         
