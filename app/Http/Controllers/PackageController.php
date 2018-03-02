@@ -2,30 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\RequirementName;
+use App\Package;
 use Illuminate\Http\Request;
-
-class RequirementNameController extends Controller
+use Debugbar;
+class PackageController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('index','show');
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         //
-        $names = RequirementName::all();
-        if($request->ajax()){
-            return response()->json([
-                'names'=>$names
-            ],201);
-        }
-        return $names;
+        $packages = Package::all();
+        return view('packages.index')->with(compact('packages'));
+        
     }
 
     /**
@@ -36,6 +32,8 @@ class RequirementNameController extends Controller
     public function create()
     {
         //
+        $packages = Package::all();
+        return view('packages.create')->with(compact('packages'));
     }
 
     /**
@@ -47,41 +45,44 @@ class RequirementNameController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'name'=>'required|unique:requirement_names'
+        $this->validate($request,[
+            'name'=>'required',
+            'description'=>'required'
         ]);
-        $requirement = RequirementName::create([
+
+        $package = Package::create([
             'name'=>$request->name,
-            'parent_id'=>$request->parent == -1? null : $request->parent
+            'description'=>$request->description
         ]);
 
         if($request->ajax()){
             return response()->json([
-                'id'=>$requirement->id,
-                'name'=>$requirement->name
+                'id'=>$package->id,
+                'name'=>$package->name
             ],201);
         }
-        return back();
+        return $package;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\RequirementName  $requirementName
+     * @param  \App\Package  $package
      * @return \Illuminate\Http\Response
      */
-    public function show(RequirementName $requirementName)
+    public function show(Package $package)
     {
         //
+        return view('packages.show')->with(compact('package'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\RequirementName  $requirementName
+     * @param  \App\Package  $package
      * @return \Illuminate\Http\Response
      */
-    public function edit(RequirementName $requirementName)
+    public function edit(Package $package)
     {
         //
     }
@@ -90,28 +91,32 @@ class RequirementNameController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RequirementName  $requirementName
+     * @param  \App\Package  $package
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RequirementName $requirementName)
+    public function update(Request $request, Package $package)
     {
         //
+
+        
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\RequirementName  $requirementName
+     * @param  \App\Package  $package
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RequirementName $name,Request $request)
+    public function destroy(Package $package,Request $request)
     {
         //
-        $name->delete();
-        if($request->ajax()){
+        Debugbar::info($package);
+        if($request->ajax() && $package->delete()){
             return response()->json([
                 'message'=>'success'
             ],201);
+        }else{
+            $package->delete();
         }
         return back();
     }

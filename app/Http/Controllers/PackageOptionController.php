@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\RequirementName;
+use App\PackageOption;
 use Illuminate\Http\Request;
-
-class RequirementNameController extends Controller
+use Debugbar;
+class PackageOptionController extends Controller
 {
     public function __construct()
     {
@@ -16,16 +16,10 @@ class RequirementNameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         //
-        $names = RequirementName::all();
-        if($request->ajax()){
-            return response()->json([
-                'names'=>$names
-            ],201);
-        }
-        return $names;
+        return "index";
     }
 
     /**
@@ -36,6 +30,7 @@ class RequirementNameController extends Controller
     public function create()
     {
         //
+        return "create";
     }
 
     /**
@@ -47,72 +42,92 @@ class RequirementNameController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'name'=>'required|unique:requirement_names'
+        $this->validate($request,[
+            'name'=>'required',
+            'parent'=> 'required'
         ]);
-        $requirement = RequirementName::create([
-            'name'=>$request->name,
-            'parent_id'=>$request->parent == -1? null : $request->parent
+
+        $option = PackageOption ::create([
+            'subject'=>$request->name,
+            'package_id'=>$request->parent
         ]);
 
         if($request->ajax()){
             return response()->json([
-                'id'=>$requirement->id,
-                'name'=>$requirement->name
+                'id'=>$option->id,
+                'name'=>$option->subject
             ],201);
         }
-        return back();
+        return $option;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\RequirementName  $requirementName
+     * @param  \App\PackageOption  $packageOption
      * @return \Illuminate\Http\Response
      */
-    public function show(RequirementName $requirementName)
+    public function show(PackageOption $packageOption)
     {
         //
+        return "show";
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\RequirementName  $requirementName
+     * @param  \App\PackageOption  $packageOption
      * @return \Illuminate\Http\Response
      */
-    public function edit(RequirementName $requirementName)
+    public function edit(PackageOption $packageOption)
     {
         //
+        return "edit";
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RequirementName  $requirementName
+     * @param  \App\PackageOption  $packageOption
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RequirementName $requirementName)
+    public function update(Request $request, PackageOption $option)
     {
         //
+        if($request->has('multiple')){
+            $option->multiple = $request->multiple;
+        }
+
+        if($request->ajax() && $option->save()){
+            return response()->json([
+                'message'=>'success'
+            ],201);
+        }else{
+            $option->save();
+        }
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\RequirementName  $requirementName
+     * @param  \App\PackageOption  $packageOption
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RequirementName $name,Request $request)
+    public function destroy(PackageOption $option,Request $request)
     {
         //
-        $name->delete();
-        if($request->ajax()){
+        
+        Debugbar::info($option);
+        if($request->ajax() && $option->delete()){
             return response()->json([
                 'message'=>'success'
             ],201);
+        }else{
+            $option->delete();
         }
+        return $option;
         return back();
     }
 }

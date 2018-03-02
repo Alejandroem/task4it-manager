@@ -10,12 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
-
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
+Auth::routes();
+Route::get('/',[
+    'uses'=> 'HomeController@index',
+    'as'=>'index'
+])->name('packages');
 
 Route::get('/projects/export',[
     'uses'=>'ProjectController@exportRequirements',
@@ -65,7 +65,7 @@ Route::get('notifications/list/{user}',[
 
 Route::resource('notifications','NotificationController');
 Route::resource('requirements.questions','QuestionController');
-Auth::routes();
+
 
 
 Route::group(['middleware' => config('laradrop.middleware') ? config('laradrop.middleware') : null], function () {
@@ -128,3 +128,12 @@ Route::get('/budgets/{budget}/export',[
     'as'=>'budgets.export'
 ]);
 Route::resource('/budgets','BudgetController');
+
+Route::get('/customizer',[
+    'uses'=>'PackageController@index',
+    'as'=>'customizer'
+]);
+Route::resource('/packages','PackageController');
+Route::resource('/options','PackageOptionController');
+Route::resource('/values','OptionValueController');
+Route::resource('/enquires','EnquireController');

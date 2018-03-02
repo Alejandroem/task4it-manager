@@ -191,6 +191,9 @@ return [
         
         Barryvdh\DomPDF\ServiceProvider::class,
         
+        
+        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+        
     ],
 
     /*
@@ -249,6 +252,7 @@ return [
         
         'PDF' => Barryvdh\DomPDF\Facade::class,
         
+        'Alert' => UxWeb\SweetAlert\SweetAlert::class,
     ],
 
 ];
