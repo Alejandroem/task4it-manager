@@ -47,6 +47,7 @@ class EnquireController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request->input());
         $this->validate($request,[
             'package'=>'required',
             'first_name'=>'required',
@@ -63,7 +64,7 @@ class EnquireController extends Controller
             $option = PackageOption::find($key);
 
             foreach($optionValue as $key => $slug){
-                $value = OptionValue::find($key);
+                $value = OptionValue::find($slug);
                 $enquireOption = EnquireOptions::create([
                     'enquire_id'=>$enquire->id,
                     'option_id'=>$option->id,
