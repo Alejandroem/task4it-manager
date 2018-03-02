@@ -45,7 +45,7 @@
                         @if($value->image())
                             <span>
                                 <button 
-                                style="border-radius: 12px; margin:0px 30px 0px 30px; padding:0px 10px 0px 10px; font-size:12px; background-color: white; color: black; border: 2px solid #4CAF50;"
+                                style="border-radius: 12px; margin:0px 30px 0px 30px; padding:0px 10px 0px 10px; font-size:12px; background-color: white; color: black; border: 2px solid #009eff;"
                                 class="button example" data-src="{{$value->image()->public_resource_url}}" data-caption="{{$value->name}}">
                                     See Example
                                 </button>
@@ -68,7 +68,7 @@
             @endfor
             <li id="budget">
 
-                <p style="margin-bottom:1.5em; color:#fff;">This is the total amount of your choices</p>
+                <p style="margin-bottom:1.5em; color:#fff;">Total amount of your options</p>
                 <span>
                     <input id="total" name="total" disabled type="text" class="field text currency nospin" value="" size="10" />
                 </span>
@@ -78,7 +78,7 @@
             </li>
             <li id="enquire">
                 <p style="margin-bottom:1.5em; color:#fff;">Personal Information</p>
-                <h4>We will contact you as soon as posible!!</h4>
+                <h4>We will contact you as soon as possible!!</h4>
                 <span>
                     <input id="first_name" name="first_name" type="text" class="field text fn" value="" size="15" tabindex="33" placeholder="First Name"
                         style="margin-right:1.5em" required>

@@ -141,7 +141,7 @@
         }
 
         h2 {
-            color: #fad05c;
+            color: #009eff;
             font-size: 3em;
             margin-bottom: 1.5em;
             font-family: "Source Sans Pro", sans-serif;
@@ -164,7 +164,7 @@
         .button {
             display: inline-block;
             cursor: default;
-            background-color: #fdc539;
+            background-color: #009eff;
             width: auto;
             height: 35px;
             margin-top: 3.5em;
@@ -181,7 +181,7 @@
             -webkit-transition: background-color ease-out 100ms 0;
             -o-transition: background-color ease-out 100ms 0;
             transition: background-color ease-out 100ms 0;
-            color: #2a2a2a;
+            color: white;
             background-image: url(https://s3-eu-west-1.amazonaws.com/typeform-media-static/button-gradient-light.png);
             border-top: 1px solid #000000;
             border-left: 1px solid #000000;
@@ -208,7 +208,7 @@
 
         .symbol {
             font-size: 120%;
-            color: #fad05c
+            color: #009eff;
         }
 
         input[type=radio] {
@@ -235,7 +235,7 @@
             font-size: 150% !important;
             background: 0;
             color: #fad05c;
-            border-bottom: 1px dashed #d9e0eb;
+            border-bottom: 1px dashed #009eff;
             font: inherit;
             min-width: 30px;
         }
