@@ -55,9 +55,9 @@ class BudgetController extends Controller
         
         $all = RequirementName::whereNotNull('parent_id')->get();
         foreach( $all as $requirement){
-            Debugbar::info($all);
+            /* Debugbar::info($all);
             Debugbar::info($request->input());
-            Debugbar::info(str_replace(" ", "_",$requirement->name).'-amount');
+            Debugbar::info(str_replace(" ", "_",$requirement->name).'-amount'); */
             // $requirement->base_rate = $request->get(str_replace(" ", "_",$requirement->name).'-amount');
             $requirement->base_rate = $request->get("req-".$requirement->id.'-amount');
             $requirement->save();
@@ -125,10 +125,10 @@ class BudgetController extends Controller
         ]);
         $all = RequirementName::whereNotNull('parent_id')->get();
         foreach( $all as $requirement){
-            Debugbar::info($all);
+            /* Debugbar::info($all);
             Debugbar::info($request->input());
-            Debugbar::info(str_replace(" ", "_",$requirement->name).'-amount');
-            $requirement->base_rate = $request->get(str_replace(" ", "_",$requirement->name).'-amount');
+            Debugbar::info(str_replace(" ", "_",$requirement->name).'-amount'); */
+            $requirement->base_rate = $request->get("req-".$requirement->id.'-amount');
             $requirement->save();
         }
         
