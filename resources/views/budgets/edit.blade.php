@@ -125,18 +125,16 @@ $(document).ready(function(){
                                 `
                                 );
                             }else{
-                                $('#subrequirements-'+parent).append(
-                                `
-                                <div class="form-group" id="`+id+`">
+                                $('#subrequirements-'+parent).append(`<div class="form-group" id="`+id+`">
                                     <div class="row">
                                         <div class="col-md-5">
-                                            <label for="`+name+`" class="form-control">`+name+`</label>
+                                            <label for="req-`+id+`" class="form-control">`+name+`</label>
                                         </div>
                                         <div class="col-md-2">
-                                            <input class="form-control" name="`+name+`" type="checkbox" id="`+name+`-check">
+                                            <input class="form-control" name="req-`+id+`" type="checkbox" id="`+name+`-check">
                                         </div>
                                         <div class="col-md-3">
-                                            <input class="form-control" min="0" name="`+name+`-amount" type="number" value="0">
+                                            <input class="form-control" min="0" name="req-`+id+`-amount" type="number" value="0">
                                         </div>
                                         <div class="col-md-1">
                                             <button class="btn btn-danger delete" data-parent="`+id+`">-</button>
