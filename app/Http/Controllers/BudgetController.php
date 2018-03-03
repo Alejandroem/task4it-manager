@@ -75,9 +75,9 @@ class BudgetController extends Controller
         ]);
         
         foreach($selectedReq as $key => $requirement){
-            $rate = $request->get(str_replace(" ", "_",$key).'-amount');
+            $rate = $request->get('req-'.$key.'-amount');
             $rate = $rate? $rate : 0;
-            $reqObj =  RequirementName::where('name',str_replace("_"," ",$key))->first();
+            $reqObj =  RequirementName::where('id',str_replace("req-","",$key))->first();
             $budget->requirements()->save($reqObj,['rate'=>$rate]);
         }
         return redirect()->route('budgets.index');
@@ -137,14 +137,15 @@ class BudgetController extends Controller
         array_filter($values, function($element){
             return isset($element) && $element== "on";
         });
+        
         $budget = Budget::find($id);
         $budget->name = $request->name;
         $budget->project_id = $request->project? $request->project : null;
         $budget->requirements()->detach($budget->requirements()->pluck('id'));
         foreach($selectedReq as $key => $requirement){
-            $rate = $request->get($key.'-amount');
+            $rate = $request->get('req-'.$key.'-amount');
             $rate = $rate? $rate : 0;
-            $reqObj =  RequirementName::where('name',str_replace("_"," ",$key))->first();
+            $reqObj =  RequirementName::where('id',str_replace("req-","",$key))->first();
             $budget->requirements()->save($reqObj,['rate'=>$rate]);
         }
         $budget->save();
