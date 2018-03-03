@@ -59,6 +59,7 @@ class BudgetController extends Controller
             Debugbar::info($request->input());
             Debugbar::info(str_replace(" ", "_",$requirement->name).'-amount'); */
             // $requirement->base_rate = $request->get(str_replace(" ", "_",$requirement->name).'-amount');
+            
             $requirement->base_rate = $request->get("req-".$requirement->id.'-amount');
             $requirement->save();
         }
@@ -75,7 +76,7 @@ class BudgetController extends Controller
         ]);
         
         foreach($selectedReq as $key => $requirement){
-            $rate = $request->get('req-'.$key.'-amount');
+            $rate = $request->get($key.'-amount');
             $rate = $rate? $rate : 0;
             $reqObj =  RequirementName::where('id',str_replace("req-","",$key))->first();
             $budget->requirements()->save($reqObj,['rate'=>$rate]);
@@ -125,6 +126,7 @@ class BudgetController extends Controller
         ]);
         $all = RequirementName::whereNotNull('parent_id')->get();
         foreach( $all as $requirement){
+            
             /* Debugbar::info($all);
             Debugbar::info($request->input());
             Debugbar::info(str_replace(" ", "_",$requirement->name).'-amount'); */
@@ -143,7 +145,7 @@ class BudgetController extends Controller
         $budget->project_id = $request->project? $request->project : null;
         $budget->requirements()->detach($budget->requirements()->pluck('id'));
         foreach($selectedReq as $key => $requirement){
-            $rate = $request->get('req-'.$key.'-amount');
+            $rate = $request->get($key.'-amount');
             $rate = $rate? $rate : 0;
             $reqObj =  RequirementName::where('id',str_replace("req-","",$key))->first();
             $budget->requirements()->save($reqObj,['rate'=>$rate]);
