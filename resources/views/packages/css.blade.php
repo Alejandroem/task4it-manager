@@ -153,7 +153,7 @@
         }
 
         .quote {
-            border-left: .25em solid #fad05c;
+            border-left: .25em solid #0067FF;
             padding-left: 1em;
             background: #2e2e2e;
             padding-top: .5em;
@@ -201,7 +201,7 @@
             -webkit-transition: background-color ease-out 100ms 0;
             -o-transition: background-color ease-out 100ms 0;
             transition: background-color ease-out 100ms 0;
-            background-color: #fed46b;
+            background-color: #0067FF;
             cursor: pointer;
         }
 
