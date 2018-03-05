@@ -234,8 +234,8 @@
             border: 0;
             font-size: 150% !important;
             background: 0;
-            color: #0067FF;
-            border-bottom: 1px dashed #0067FF;
+            color: #009eff;
+            border-bottom: 1px dashed #009eff;
             font: inherit;
             min-width: 30px;
         }
