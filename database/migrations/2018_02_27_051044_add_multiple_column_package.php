@@ -28,7 +28,7 @@ class AddMultipleColumnPackage extends Migration
     {
         //
         Schema::table('package_options', function (Blueprint $table) {
-            $table->boolean(['multiple']);
+            $table->dropColumn(['multiple']);
         });
     }
 }

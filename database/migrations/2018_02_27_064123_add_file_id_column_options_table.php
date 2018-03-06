@@ -28,7 +28,7 @@ class AddFileIdColumnOptionsTable extends Migration
     {
         //
         Schema::table('option_values', function (Blueprint $table) {
-            $table->boolean(['file_id']);
+            $table->dropColumn(['file_id']);
         });
     }
 }
