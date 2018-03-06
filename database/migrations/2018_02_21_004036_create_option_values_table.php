@@ -19,6 +19,7 @@ class CreateOptionValuesTable extends Migration
             $table->double('value')->nullable();
             $table->integer('package_option_id')->unsigned();
             $table->foreign('package_option_id')->references('id')->on('package_options')->onDelete('cascade');
+            $table->integer('file_id')->nullable();
             $table->timestamps();
         });
     }
