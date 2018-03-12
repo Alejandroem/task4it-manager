@@ -27,8 +27,9 @@ class Question extends Model
 
     public function notify(){
         $string = $this->requirement->type ==="bugs"? "bug": "requirement";
+        $id = Auth::id();
         foreach ($this->requirement->project->users as $user){
-            if($user->id == Auth::id()){
+            if($user->id == $id){
                 continue;
             }
             Notification::create([

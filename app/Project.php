@@ -25,9 +25,9 @@ class Project extends Model
     }
 
     public function notify(){
-        
+        $id = Auth::id();
         foreach ($this->users as $user){
-            if($user->id == Auth::id()){
+            if($user->id == $id){
                 continue;
             }
             Notification::create([

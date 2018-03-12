@@ -31,8 +31,9 @@ class Requirement extends Model
     public function notify(){
         
         $string = $this->type ==="bugs"? "bug": "requirement";
+        $id = Auth::id();
         foreach ($this->project->users as $user){
-            if($user->id == Auth::id()){
+            if($user->id == $id){
                 continue;
             }
             Notification::create([
