@@ -123,7 +123,7 @@
                         @if($requirement->percentage===null||$requirement->rate===null)
                             Not available yet
                         @else
-                            {{number_format($requirement->rate+$requirement->percentage + $requirement->rate,2)}}€
+                            {{number_format($requirement->rate+$requirement->percentage,2)}}€
                         @endif
                         @endhasanyrole
                         </td>
@@ -348,7 +348,7 @@
                         @if($requirement->percentage===null||$requirement->rate===null)
                             Not available yet
                         @else
-                            {{number_format($requirement->rate+$requirement->percentage + $requirement->rate,2)}}€
+                            {{number_format($requirement->rate+$requirement->percentage,2)}}€
                         @endif
                         @endhasanyrole
                         </td>

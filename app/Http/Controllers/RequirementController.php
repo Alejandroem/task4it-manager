@@ -157,6 +157,7 @@ class RequirementController extends Controller
             $requirement->status =1;
         }
         $requirement->rate = $request->rate;
+        $requirement->percentage = $request->rate * 2 ; 
         $requirement->save();
         return redirect()->route('requirements.index',['type'=>$request->type,'project_sel'=>$request->project_sel]);
     }
