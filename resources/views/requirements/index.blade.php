@@ -68,35 +68,7 @@
                         <td>{{$requirement->project->name}}</td>
                         <td>{{$requirement->title}}</td>
                         <td>
-                             {{substr($requirement->description,0,136)}}
-                            @if(strlen($requirement->description)>=136) 
-                                ...
-                                <!-- Trigger the modal with a button -->
-                                <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#desc-{{$requirement->id}}">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-
-                                <!-- Modal -->
-                                <div id="desc-{{$requirement->id}}" class="modal fade" role="dialog">
-                                <div class="modal-dialog">
-
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">{{$requirement->title}}</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>{{$requirement->description}}</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                    </div>
-
-                                </div>
-                                </div>
-                            @endif
+                             @include('requirements.description-modal')
                         </td>
                         
                         
@@ -321,32 +293,7 @@
                         <td>{{$requirement->project->name}}</td>
                         <td>{{$requirement->title}}</td>
                         <td>
-                            {{substr($requirement->description,0,136)}}
-                            @if(strlen($requirement->description)>=136) 
-                                <!-- Trigger the modal with a button -->
-                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#desc-{{$requirement->id}}">Open Modal</button>
-
-                                <!-- Modal -->
-                                <div id="desc-{{$requirement->id}}" class="modal fade" role="dialog">
-                                <div class="modal-dialog">
-
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">{{$requirement->title}}</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>{{$requirement->description}}</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                    </div>
-
-                                </div>
-                                </div>
-                            @endif
+                            @include('requirements.description-modal')
                         </td>
                         
                         
