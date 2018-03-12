@@ -38,7 +38,7 @@
         <div class="container-fluid">
             @if(Session::get('alerts'))
                 @foreach(Session::get('alerts') as $key => $alert)
-                <div style="width:300px !important; top: {{100 + 80*$key}}px !important" data-id="{{$alert->id}}" data-href="{{$alert->url}}" class="flash-message alert {{$alert->type}} alert-dismissible fade show" role="alert">
+                <div style="width:300px !important; top: {{100 + 80*$key}}px !important" data-id="{{$alert->id}}" {{-- data-href="{{$alert->url}}" --}} class="flash-message alert {{$alert->type}} alert-dismissible fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert"  aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
