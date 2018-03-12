@@ -30,7 +30,7 @@
                     {{$notification->created_at->toDateString()}}
                 @endif
                 </span>
-                <div class="dropdown-message small">{{$notification->message}}</div>
+                <div class="dropdown-message small">{{ substr($notification->message,0,45)}} @if(strlen($notification->message)>45) ...@endif</div>
             </div>
         </a>
         <div class="dropdown-divider"></div>
