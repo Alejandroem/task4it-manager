@@ -101,7 +101,8 @@
                         @hasanyrole('admin')
                         <td>
                         @if($requirement->percentage===null)
-                            {{Form::model($requirement, array('route' => array('requirements.updatePercentage', $requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'POST'))}}
+                            Waiting for developer response
+                            {{-- {{Form::model($requirement, array('route' => array('requirements.updatePercentage', $requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'POST'))}}
                             <div class="row">
                                 <div class="col">
                                     {{Form::number('percentage', null,['min'=>0, 'step'=>'any', 'class' => 'form-control'])}}
@@ -110,7 +111,7 @@
                                     <button class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
                                 </div>
                             </div>
-                            {{Form::close()}}
+                            {{Form::close()}} --}}
                             {{--  Waiting for admin response  --}}
                         @else
                             {{number_format($requirement->percentage)." €"}}
@@ -220,14 +221,14 @@
                         <td>
                         <div class="row">
                             <a href="{{route('requirements.questions.index',['bug'=>$requirement->id,'project_sel'=>$project_sel])}}" data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="notify-container">
-                                @if($requirement->newQuestionsNotifications()->count()>0)
-                                    <span class="notify-bubble">{{$requirement->newQuestionsNotifications()->count()}}</span>
+                                @if($requirement->newQuestionsNotifications()>0)
+                                    <span class="notify-bubble">{{$requirement->newQuestionsNotifications()}}</span>
                                 @endif
                                 <i class="btn btn-primary fa fa-comments fa-lg" aria-hidden="true"></i>
                             </a>
                             <a href="{{ route('requirements.show',['requirement'=>$requirement->id,'type'=>$text,'project_sel'=>$project_sel]) }}" title="View files" class="notify-container">
-                                @if($requirement->newFilesNotifications()->count()>0)
-                                    <span class="notify-bubble">{{$requirement->newFilesNotifications()->count()}}</span>
+                                @if($requirement->newFilesNotifications()>0)
+                                    <span class="notify-bubble">{{$requirement->newFilesNotifications()}}</span>
                                 @endif
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
@@ -326,7 +327,8 @@
                         @hasanyrole('admin')
                         <td>
                         @if($requirement->percentage===null)
-                            {{Form::model($requirement, array('route' => array('requirements.updatePercentage', $requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'POST'))}}
+                            Waiting for developer response
+                            {{-- {{Form::model($requirement, array('route' => array('requirements.updatePercentage', $requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'POST'))}}
                             <div class="row">
                                 <div class="col">
                                     {{Form::number('percentage', null,['min'=>0, 'step'=>'any', 'class' => 'form-control'])}}
@@ -335,7 +337,7 @@
                                     <button class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
                                 </div>
                             </div>
-                            {{Form::close()}}
+                            {{Form::close()}} --}}
                             {{--  Waiting for admin response  --}}
                         @else
                             {{number_format($requirement->percentage)." €"}}
@@ -445,14 +447,14 @@
                         <td>
                         <div class="row">
                             <a href="{{route('requirements.questions.index',['bug'=>$requirement->id])}}" data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="notify-container">
-                                @if($requirement->newQuestionsNotifications()->count()>0)
-                                    <span class="notify-bubble">{{$requirement->newQuestionsNotifications()->count()}}</span>
+                                @if($requirement->newQuestionsNotifications()>0)
+                                    <span class="notify-bubble">{{$requirement->newQuestionsNotifications()}}</span>
                                 @endif
                                 <i class="btn btn-primary fa fa-comments fa-lg" aria-hidden="true"></i>
                             </a>
                             <a href="{{ route('requirements.show',['requirement'=>$requirement->id,'type'=>$text,'project_sel'=>$project_sel]) }}" title="View files" class="notify-container">
-                                @if($requirement->newFilesNotifications()->count()>0)
-                                    <span class="notify-bubble">{{$requirement->newFilesNotifications()->count()}}</span>
+                                @if($requirement->newFilesNotifications()>0)
+                                    <span class="notify-bubble">{{$requirement->newFilesNotifications()}}</span>
                                 @endif
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>

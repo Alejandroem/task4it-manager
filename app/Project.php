@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Notification;
 use Auth;
+use Debugbar;
 class Project extends Model
 {
     //
@@ -24,10 +25,14 @@ class Project extends Model
     }
 
     public function notify(){
+        
         foreach ($this->users as $user){
+            if($user->id == Auth::id()){
+                continue;
+            }
             Notification::create([
-                'title'=>"New file added",
-                'message'=>"1",
+                'title'=>"New file added !!",
+                'message'=>"New file added on project ".$this->name.".",
                 'priority'=>1,
                 'user_id'=>$user->id,
                 'asset'=>'file',
@@ -36,8 +41,8 @@ class Project extends Model
             ]);
         }
         Notification::create([
-            'title'=>"New file added",
-            'message'=>"1",
+            'title'=>"New file added!!",
+            'message'=>"New file added on project ".$this->name.".",
             'priority'=>1,
             'user_id'=>1,
             'asset'=>'file',
@@ -58,7 +63,8 @@ class Project extends Model
         Notification::where('relation','projects')
         ->where('relation_id',$this->id)
         ->where('user_id',isset($user)?$user->id : Auth::id())
-        ->where('last_seen',null)
-        ->delete();
+        ->update([
+            'last_seen' => \Carbon\Carbon::now()
+        ]);
     }
 }

@@ -3,7 +3,7 @@
     <i class="fa fa-fw fa-envelope"></i>
     <span class="d-lg-none">Messages
         <span class="badge badge-pill badge-primary">
-        @if(Auth::user()->newnotifications->where('asset',null)->count()>0)
+        @if(Auth::user()->newnotifications->count()>0)
             {{Auth::user()->newnotifications->count()}} New
         @endif
         </span>
@@ -19,8 +19,8 @@
         <h6 class="dropdown-header">New Messages:</h6>
         <div class="dropdown-divider"></div>
          <div class="dropdown-divider"></div>
-        @foreach(Auth::user()->notifications()->where('asset',null)->orderBy('created_at','DESC')->get()->take(3) as $notification)
-        <a class="dropdown-item p-0" href="#">
+        @foreach(Auth::user()->notifications()->orderBy('created_at','DESC')->get()->take(3) as $notification)
+        <a class="dropdown-item p-0" href="{{$notification->url}}">
             <div class="alert {{$notification->type}}">
                 <strong>{{$notification->title}}</strong>
                 <span class="small float-right text-muted">

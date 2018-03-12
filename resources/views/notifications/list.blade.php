@@ -6,7 +6,7 @@
     </div>
     <div class="card-body">
         @foreach($notifications as $notification)
-        <a class="dropdown-item p-0" href="#">
+        <a class="dropdown-item p-0" href="{{$notification->url}}">
             <div class="alert {{$notification->type}}">
                 <strong>{{$notification->title}}</strong>
                 <span class="small float-right text-muted">
@@ -16,7 +16,11 @@
                     {{$notification->created_at->toDateString()}}
                 @endif
                 </span>
-                <div class="dropdown-message small">{{$notification->message}}</div>
+                @if($notification->message==="1")
+                    <div class="dropdown-message small">Go to {{$notification->asset}}</div>
+                @else
+                    <div class="dropdown-message small">{{$notification->message}}</div>
+                @endif
             </div>
         </a>
         <div class="dropdown-divider"></div>
