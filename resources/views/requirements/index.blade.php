@@ -12,7 +12,7 @@
                 <tr>
                     <td>Project:</td>
                     <td>
-                        <form action="{{ route('requirements.index',['type'=>'requirements','project_sel'=>$project_sel]) }}" method="GET">
+                        <form action="{{ route('requirements.index',['type'=>$text,'project_sel'=>$project_sel]) }}" method="GET">
                             <input type="text" value="requirements" name="type" hidden>
                             <select class="custom-select" id="project_sel" name="project_sel" >
                                 <option value="">Select a project</option>
