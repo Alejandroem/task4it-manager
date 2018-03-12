@@ -22,10 +22,16 @@ class RequirementController extends Controller
     public function index(Request $request)
     {
         //
+        
         if(Auth::user()->hasRole('admin'))
         {   
-            $requirements = Requirement::where('type','=',$request->type)->get();
-            $projects = Project::pluck('name');
+            $requirements = Requirement::where('type','=',$request->type);
+            
+            if($request->has('project_sel') && $request->project_sel !== null){
+                $requirements->where('project_id','=',$request->project_sel);
+            }
+            $requirements = $requirements->get();
+            $projects = Project::pluck('name','id');
         }
         else
         {
@@ -36,10 +42,14 @@ class RequirementController extends Controller
 
             $projects = Auth::user()->projects()->whereHas('requirements',function($q)use($request){
                 $q->where('type','=',$request->type);
-            })->pluck('name');
+                if($request->has('project_sel')&&$request->project_sel !== null){
+                    $q->where('project_id','=',$request->project_sel);
+                }
+            })->pluck('name','id');
         }
         $text = $request->type;
-        return view('requirements.index')->with(compact('requirements','text','projects'));
+        $project_sel = $request->project_sel;
+        return view('requirements.index')->with(compact('requirements','text','project_sel','projects'));
     }
 
     /**
@@ -52,7 +62,7 @@ class RequirementController extends Controller
         //
         $requirement = new Requirement();
         $text = $request->type;
-        
+        $project_sel = $request->project_sel;
         if(Auth::user()->hasRole('admin'))
         {   
             $projects = Project::all()->pluck('name','id');            
@@ -63,7 +73,7 @@ class RequirementController extends Controller
             $projects = Project::whereIn('id',$uprojects)->get()->pluck('name','id');
         }
         
-        return view('requirements.create')->with(compact('requirement','text','projects'));
+        return view('requirements.create')->with(compact('requirement','text','project_sel','projects'));
     }
 
     /**
@@ -93,7 +103,7 @@ class RequirementController extends Controller
             'priority'=>$request->priority,
             'due_to'=>Carbon::createFromFormat('m/d/Y', $request->due_to)->format('Y-m-d')
         ]);
-        return redirect()->route('requirements.index',['type'=>$request->type]);
+        return redirect()->route('requirements.index',['type'=>$request->type,'project_sel'=>$request->project_sel]);
     }
 
     /**
@@ -110,7 +120,8 @@ class RequirementController extends Controller
              $requirement->markReadFilesNotifications();
         }    
         $type = $request->type;
-        return view ('requirements.show')->with(compact('requirement','type'));
+        $project_sel =$request->project_sel;
+        return view ('requirements.show')->with(compact('requirement','type','project_sel'));
     }
 
     /**
@@ -146,8 +157,9 @@ class RequirementController extends Controller
             $requirement->status =1;
         }
         $requirement->rate = $request->rate;
+        $requirement->percentage = $request->rate * 2 ; 
         $requirement->save();
-        return redirect()->route('requirements.index',['type'=>$request->type]);
+        return redirect()->route('requirements.index',['type'=>$request->type,'project_sel'=>$request->project_sel]);
     }
 
     public function updatePercentage(Request $request, Requirement $requirement)
@@ -155,12 +167,12 @@ class RequirementController extends Controller
         $request->validate([
             'percentage'=>'required'
         ]);
-        if($requirement->statussatus == 5){
+        if($requirement->status == 5){
             $requirement->status =1;
         }
         $requirement->percentage = $request->percentage;
         $requirement->save();
-        return redirect()->route('requirements.index',['type'=>$request->type]);
+        return redirect()->route('requirements.index',['type'=>$request->type,'project_sel'=>$request->project_sel]);
     }
 
     /**
@@ -173,7 +185,7 @@ class RequirementController extends Controller
     {
         //
         $requirement->delete();
-        return redirect()->route('requirements.index',['type'=>$request->type]);        
+        return redirect()->route('requirements.index',['type'=>$request->type,'project_sel'=>$request->project_sel]);        
 
     }
     
@@ -202,7 +214,7 @@ class RequirementController extends Controller
                 'data'=>json_encode($requirement)
             ]);
         }
-        return redirect()->route('requirements.index',['type'=>$request->type]);
+        return redirect()->route('requirements.index',['type'=>$request->type,'project_sel'=>$request->project_sel]);
 
     }
 }

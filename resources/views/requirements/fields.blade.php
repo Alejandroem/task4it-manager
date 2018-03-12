@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-md-6">
         <input name="type" id="type" value="{{$text}}" hidden>
+        <input name="project_sel" id="project_sel" value="{{$project_sel}}" hidden>
         <div class="form-group">
             {{Form::label('title', 'Title:')}} 
             {{Form::text('title',null,['class' => 'form-control'])}}
