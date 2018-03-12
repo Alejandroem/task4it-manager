@@ -167,7 +167,7 @@ class RequirementController extends Controller
         $request->validate([
             'percentage'=>'required'
         ]);
-        if($requirement->statussatus == 5){
+        if($requirement->status == 5){
             $requirement->status =1;
         }
         $requirement->percentage = $request->percentage;
