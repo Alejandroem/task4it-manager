@@ -45,8 +45,8 @@
     <b>Team:</b>
     <br>
     <br>
-    @foreach(unserialize($proposal->team) as $position=>$name)
-        {{$position}} – {{$name}} <br><br>
+    @foreach(unserialize($proposal->team) as $team)
+        {{$team['position']}} – {{$team['name']}} <br><br>
     @endforeach
     <h3>2.2 - THE CONTRACTOR'S OBLIGATIONS</h3>
     <p style="text-align: justify;text-justify: inter-word;">
