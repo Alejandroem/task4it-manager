@@ -57,8 +57,14 @@ class ProposalController extends Controller
             'date'=>'required'
         ]);
         
-        $team = array_combine($request->positions,$request->names);
-
+        $team = [];
+        foreach($request->positions as $key => $position){
+            $team[$key] =[
+                'position'=>$position,
+                'name'=>$request->names[$key]
+            ];
+        }
+        // dd($team);
         Proposal::create([
             'company'=>$request->company,
             'owner'=>$request->owner,
@@ -78,7 +84,7 @@ class ProposalController extends Controller
         $view =  \View::make('pdf.proposal', compact('proposal'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
-        return $pdf->download('Contract');
+        return $pdf->download('Contract.pdf');
     }
 
 
