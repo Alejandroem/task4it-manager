@@ -18,15 +18,16 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Requirement $requirement)
+    public function index(Requirement $requirement,Request $request)
     {
         //
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
         if(!$pageWasRefreshed ) {
             $requirement->markReadQuestionsNotifications();
         }
+        $project_sel = $request->project_sel;
         $questions = $requirement->questions()->whereNull('question_id')->get();
-        return view ('requirements.questions.index')->with(compact('requirement','questions'));
+        return view ('requirements.questions.index')->with(compact('requirement','questions','project_sel'));
     }
 
     /**

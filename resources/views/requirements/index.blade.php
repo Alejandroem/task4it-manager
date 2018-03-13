@@ -3,7 +3,7 @@
 <div class="card mb-3">
     <div class="card-header">
         
-        <a class="btn btn-primary pull-right @if(Auth::user()->hasRole('client')&& !Auth::user()->can('create')) disabled @endif" href="{{route('requirements.create',['type'=>$text])}}">Create new {{$text}}</a>
+        <a class="btn btn-primary pull-right @if(Auth::user()->hasRole('client')&& !Auth::user()->can('create')) disabled @endif" href="{{route('requirements.create',['type'=>$text,'project_sel'=>$project_sel])}}">Create new {{$text}}</a>
 
         <i class="fa fa-table"></i> {{$text}} </div>
     <div class="card-body">
@@ -12,12 +12,16 @@
                 <tr>
                     <td>Project:</td>
                     <td>
-                        <select class="custom-select" id="project" name="project">
-                            <option value ="" selected>All projects</option>
-                            @foreach($projects as $project)
-                            <option value="{{$project}}">{{$project}}</option>
-                            @endforeach
-                        </select>
+                        <form action="{{ route('requirements.index',['type'=>$text,'project_sel'=>$project_sel]) }}" method="GET">
+                            <input type="text" value="{{$text}}" name="type" hidden>
+                            <select class="custom-select" id="project_sel" name="project_sel" >
+                                <option value="">Select a project</option>
+                                @foreach($projects as $key => $p)
+                                <option @if($project_sel==$key) selected @endif value="{{$key}}">{{$p}}</option>
+                                @endforeach
+                            </select>
+                            <button class="btn btn-primary" type="submit">Filter</button>
+                        </form>
                     </td>
                 </tr>
             </tbody>
@@ -63,13 +67,15 @@
                         <td>{{$requirement->id}}</td>
                         <td>{{$requirement->project->name}}</td>
                         <td>{{$requirement->title}}</td>
-                        <td>{{$requirement->description}}</td>
+                        <td>
+                             @include('requirements.description-modal')
+                        </td>
                         
                         
                         @if($requirement->rate===null)
                             @if(Auth::user()->hasAnyRole('developer'))
                             <td>
-                                {{Form::model($requirement, array('route' => array('requirements.updateRate', 'requirement'=>$requirement->id,'type'=>$text),'method'=>'POST'))}}
+                                {{Form::model($requirement, array('route' => array('requirements.updateRate', 'requirement'=>$requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'POST'))}}
                                 <div class="row">
                                     <div class="col">
                                         {{Form::number('rate', null,['min'=>'0','class' => 'form-control'])}}
@@ -95,7 +101,8 @@
                         @hasanyrole('admin')
                         <td>
                         @if($requirement->percentage===null)
-                            {{Form::model($requirement, array('route' => array('requirements.updatePercentage', $requirement->id,'type'=>$text),'method'=>'POST'))}}
+                            Waiting for developer response
+                            {{-- {{Form::model($requirement, array('route' => array('requirements.updatePercentage', $requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'POST'))}}
                             <div class="row">
                                 <div class="col">
                                     {{Form::number('percentage', null,['min'=>0, 'step'=>'any', 'class' => 'form-control'])}}
@@ -104,7 +111,7 @@
                                     <button class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
                                 </div>
                             </div>
-                            {{Form::close()}}
+                            {{Form::close()}} --}}
                             {{--  Waiting for admin response  --}}
                         @else
                             {{number_format($requirement->percentage)." €"}}
@@ -117,7 +124,7 @@
                         @if($requirement->percentage===null||$requirement->rate===null)
                             Not available yet
                         @else
-                            {{number_format($requirement->rate+$requirement->percentage + $requirement->rate,2)}}€
+                            {{number_format($requirement->rate+$requirement->percentage,2)}}€
                         @endif
                         @endhasanyrole
                         </td>
@@ -125,10 +132,10 @@
                         @if($requirement->status==1)
                             @if($requirement->percentage!==null&&$requirement->rate!==null)
                                 @if(Auth::user()->hasRole('client'))
-                                    {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>2,'type'=>$text),'method'=>'POST'))}}
+                                    {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>2,'type'=>$text ,'project_sel'=>$project_sel),'method'=>'POST'))}}
                                         {{Form::submit('Approve',['class'=>'btn btn-primary'])}}
                                     {{Form::close()}}
-                                    {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>5,'type'=>$text),'method'=>'POST'))}}
+                                    {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>5,'type'=>$text ,'project_sel'=>$project_sel),'method'=>'POST'))}}
                                         {{Form::submit('Reject',['class'=>'btn btn-primary'])}}
                                     {{Form::close()}}
                                 @else
@@ -144,7 +151,7 @@
                         @elseif($requirement->status==2)
                         @hasanyrole('developer')
                             @if($requirement->status == 2)
-                                {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>3,'type'=>$text),'method'=>'POST'))}}
+                                {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>3,'type'=>$text ,'project_sel'=>$project_sel),'method'=>'POST'))}}
                                     {{Form::submit('Finish',['class'=>'btn btn-primary'])}}
                                 {{Form::close()}}
                             @endif
@@ -213,20 +220,20 @@
                         <td>{{$requirement->created_at->toFormattedDateString()}}</td>
                         <td>
                         <div class="row">
-                            <a href="{{route('requirements.questions.index',['bug'=>$requirement->id])}}" data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="notify-container">
-                                @if($requirement->newQuestionsNotifications()->count()>0)
-                                    <span class="notify-bubble">{{$requirement->newQuestionsNotifications()->count()}}</span>
+                            <a href="{{route('requirements.questions.index',['bug'=>$requirement->id,'project_sel'=>$project_sel])}}" data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="notify-container">
+                                @if($requirement->newQuestionsNotifications()>0)
+                                    <span class="notify-bubble">{{$requirement->newQuestionsNotifications()}}</span>
                                 @endif
                                 <i class="btn btn-primary fa fa-comments fa-lg" aria-hidden="true"></i>
                             </a>
-                            <a href="{{ route('requirements.show',['requirement'=>$requirement->id,'type'=>$text]) }}" title="View files" class="notify-container">
-                                @if($requirement->newFilesNotifications()->count()>0)
-                                    <span class="notify-bubble">{{$requirement->newFilesNotifications()->count()}}</span>
+                            <a href="{{ route('requirements.show',['requirement'=>$requirement->id,'type'=>$text,'project_sel'=>$project_sel]) }}" title="View files" class="notify-container">
+                                @if($requirement->newFilesNotifications()>0)
+                                    <span class="notify-bubble">{{$requirement->newFilesNotifications()}}</span>
                                 @endif
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
                             @hasanyrole('admin')
-                            {{Form::open(array('route'=>array('notifications.destroy',$requirement->id,'type'=>$text),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
+                            {{Form::open(array('route'=>array('notifications.destroy',$requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
                                 {{csrf_field()}}
                                 <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete {{$text}}">
                                     <i class="btn btn-danger fa fa-trash fa-lg" aria-hidden="true"></i>
@@ -286,13 +293,15 @@
                         <td>{{$requirement->id}}</td>
                         <td>{{$requirement->project->name}}</td>
                         <td>{{$requirement->title}}</td>
-                        <td>{{$requirement->description}}</td>
+                        <td>
+                            @include('requirements.description-modal')
+                        </td>
                         
                         
                         @if($requirement->rate===null)
                             @if(Auth::user()->hasAnyRole('developer'))
                             <td>
-                                {{Form::model($requirement, array('route' => array('requirements.updateRate', 'requirement'=>$requirement->id,'type'=>$text),'method'=>'POST'))}}
+                                {{Form::model($requirement, array('route' => array('requirements.updateRate', 'requirement'=>$requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'POST'))}}
                                 <div class="row">
                                     <div class="col">
                                         {{Form::number('rate', null,['min'=>'0','class' => 'form-control'])}}
@@ -318,7 +327,8 @@
                         @hasanyrole('admin')
                         <td>
                         @if($requirement->percentage===null)
-                            {{Form::model($requirement, array('route' => array('requirements.updatePercentage', $requirement->id,'type'=>$text),'method'=>'POST'))}}
+                            Waiting for developer response
+                            {{-- {{Form::model($requirement, array('route' => array('requirements.updatePercentage', $requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'POST'))}}
                             <div class="row">
                                 <div class="col">
                                     {{Form::number('percentage', null,['min'=>0, 'step'=>'any', 'class' => 'form-control'])}}
@@ -327,7 +337,7 @@
                                     <button class="btn btn-primary"><i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
                                 </div>
                             </div>
-                            {{Form::close()}}
+                            {{Form::close()}} --}}
                             {{--  Waiting for admin response  --}}
                         @else
                             {{number_format($requirement->percentage)." €"}}
@@ -340,7 +350,7 @@
                         @if($requirement->percentage===null||$requirement->rate===null)
                             Not available yet
                         @else
-                            {{number_format($requirement->rate+$requirement->percentage + $requirement->rate,2)}}€
+                            {{number_format($requirement->rate+$requirement->percentage,2)}}€
                         @endif
                         @endhasanyrole
                         </td>
@@ -348,10 +358,10 @@
                         @if($requirement->status==1)
                             @if($requirement->percentage!==null&&$requirement->rate!==null)
                                 @if(Auth::user()->hasRole('client'))
-                                    {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>2,'type'=>$text),'method'=>'POST'))}}
+                                    {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>2,'type'=>$text,'project_sel'=>$project_sel),'method'=>'POST'))}}
                                         {{Form::submit('Approve',['class'=>'btn btn-primary'])}}
                                     {{Form::close()}}
-                                    {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>5,'type'=>$text),'method'=>'POST'))}}
+                                    {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>5,'type'=>$text,'project_sel'=>$project_sel),'method'=>'POST'))}}
                                         {{Form::submit('Reject',['class'=>'btn btn-primary'])}}
                                     {{Form::close()}}
                                 @else
@@ -367,7 +377,7 @@
                         @elseif($requirement->status==2)
                         @hasanyrole('developer')
                             @if($requirement->status == 2)
-                                {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>3,'type'=>$text),'method'=>'POST'))}}
+                                {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>3,'type'=>$text,'project_sel'=>$project_sel),'method'=>'POST'))}}
                                     {{Form::submit('Finish',['class'=>'btn btn-primary'])}}
                                 {{Form::close()}}
                             @endif
@@ -379,10 +389,10 @@
                         @elseif($requirement->status==3)
                         @hasanyrole('client')
                             
-                            {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>4,'type'=>$text),'method'=>'POST'))}}
+                            {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>4,'type'=>$text,'project_sel'=>$project_sel),'method'=>'POST'))}}
                                 {{Form::submit('Accept',['class'=>'btn btn-primary'])}}
                             {{Form::close()}}
-                            {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>2,'type'=>$text),'method'=>'POST'))}}
+                            {{Form::open(array('route' => array('requirements.status', 'requirement'=>$requirement->id,'status'=>2,'type'=>$text,'project_sel'=>$project_sel),'method'=>'POST'))}}
                                 {{Form::submit('Reject',['class'=>'btn btn-primary'])}}
                             {{Form::close()}}
                             
@@ -437,19 +447,19 @@
                         <td>
                         <div class="row">
                             <a href="{{route('requirements.questions.index',['bug'=>$requirement->id])}}" data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="notify-container">
-                                @if($requirement->newQuestionsNotifications()->count()>0)
-                                    <span class="notify-bubble">{{$requirement->newQuestionsNotifications()->count()}}</span>
+                                @if($requirement->newQuestionsNotifications()>0)
+                                    <span class="notify-bubble">{{$requirement->newQuestionsNotifications()}}</span>
                                 @endif
                                 <i class="btn btn-primary fa fa-comments fa-lg" aria-hidden="true"></i>
                             </a>
-                            <a href="{{ route('requirements.show',['requirement'=>$requirement->id,'type'=>$text]) }}" title="View files" class="notify-container">
-                                @if($requirement->newFilesNotifications()->count()>0)
-                                    <span class="notify-bubble">{{$requirement->newFilesNotifications()->count()}}</span>
+                            <a href="{{ route('requirements.show',['requirement'=>$requirement->id,'type'=>$text,'project_sel'=>$project_sel]) }}" title="View files" class="notify-container">
+                                @if($requirement->newFilesNotifications()>0)
+                                    <span class="notify-bubble">{{$requirement->newFilesNotifications()}}</span>
                                 @endif
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
                             @hasanyrole('admin')
-                            {{Form::open(array('route'=>array('notifications.destroy',$requirement->id,'type'=>$text),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
+                            {{Form::open(array('route'=>array('notifications.destroy',$requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
                                 {{csrf_field()}}
                                 <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete {{$text}}">
                                     <i class="btn btn-danger fa fa-trash fa-lg" aria-hidden="true"></i>
@@ -472,6 +482,7 @@
 @stop
 
 @section('script')
+   /*
     $.fn.dataTable.ext.search.push(
         function( settings, data, dataIndex ) {
             var project = $('#project').val().toUpperCase();
@@ -483,15 +494,34 @@
             return false;
         }
     );
+    */
     $(document).ready(function() {
         $('.dataTable').each(function(){
             $(this).DataTable();
         });
+        /*
         $('#project').change( function() {
+            console.log($("a"));
+            var sel = $(this);
+            console.log(window.location.href);
+            window.location = window.location.href + "&project="+sel.val();
+
+            
+            $("form").each(function(){
+                var currentUrl = window.location.href;
+                var parsedUrl = $.url(currentUrl);
+                var params = parsedUrl.param();
+                params["project"] = sel.val();
+                var newUrl = "?" + $.param(params);
+                $(this).attr('action', newUrl)
+            });
+            console.log($("form"))
+            
             $('.dataTable').each(function(){
                 $(this).DataTable().draw();
             });
         } );
+        */
     } );
 
 @stop

@@ -124,9 +124,9 @@
         <ul class="navbar-nav ml-auto">
         </ul>
         <ul class="navbar-nav ml-auto">
-        @hasanyrole('client')
+        
         @include('layout.partials.nav-items.messages')
-        @endhasanyrole
+        
         <div class="nav-item">
             <div class="mr-4 my-2">
                 @hasanyrole('client')

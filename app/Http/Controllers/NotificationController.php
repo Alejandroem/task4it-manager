@@ -12,7 +12,7 @@ class NotificationController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['role:admin|client']);        
+        /* $this->middleware(['role:admin|client']);       */  
         $this->middleware('auth');
     }
     /**
@@ -28,7 +28,7 @@ class NotificationController extends Controller
     }
 
     public function listNotifications(User $user){
-        $notifications = $user->notifications()->where('asset',null)->get();
+        $notifications = $user->notifications()->OrderBy('created_at','DESC')->get();
         return view('notifications.list')->with(compact('notifications'));
     }
 

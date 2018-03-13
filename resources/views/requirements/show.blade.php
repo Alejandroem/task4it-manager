@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('content')
-    <a class="btn btn-primary" href="{{route('requirements.index',['type'=>$type])}}">Return</a>
+    <a class="btn btn-primary" href="{{route('requirements.index',['type'=>$type,'project_sel'=>$project_sel])}}">Return</a>
     <div class="card">
     <div class="card-body">
         <h4 class="card-title">{{ $requirement->name }}</h4>

@@ -55,6 +55,6 @@ class User extends Authenticatable
     }
 
     public function getNewNotificationsAttribute(){
-        return $this->notifications()->where('last_seen',null)->where('asset',null)->get();
+        return $this->notifications()->where('last_seen',null)->get();
     }
 }
