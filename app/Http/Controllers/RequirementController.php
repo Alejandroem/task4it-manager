@@ -28,7 +28,7 @@ class RequirementController extends Controller
             $requirements = Requirement::where('type','=',$request->type);
             
             if($request->has('project_sel') && $request->project_sel !== null){
-                $requirements->where('project_id','=',$request->project_sel);
+                $requirements->where('project_id',$request->project_sel);
             }
             $requirements = $requirements->get();
             $projects = Project::pluck('name','id');
@@ -37,14 +37,18 @@ class RequirementController extends Controller
         {
             $projects = Auth::user()->projects->pluck('id');
 
-            $requirements = Requirement::where('type','=',$request->type)
-            ->whereIn('project_id',$projects)->get();
+            $requirements = Requirement::where('type','=',$request->type);
+            
+            if($request->has('project_sel') && $request->project_sel !== null){
+                $requirements = $requirements->where('project_id',$request->project_sel);
+            }else{
+                $requirements = $requirements->whereIn('project_id',$projects);
+            }
+            
+            $requirements = $requirements->get();
 
             $projects = Auth::user()->projects()->whereHas('requirements',function($q)use($request){
                 $q->where('type','=',$request->type);
-                if($request->has('project_sel')&&$request->project_sel !== null){
-                    $q->where('project_id','=',$request->project_sel);
-                }
             })->pluck('name','id');
         }
         $text = $request->type;
