@@ -24,28 +24,30 @@ class Project extends Model
         return $this->hasMany('App\Milestone');
     }
 
-    public function notify(){
+    public function notify($title , $message, $asset){
         $id = Auth::id();
         foreach ($this->users as $user){
             if($user->id == $id){
                 continue;
+            }if($user->id== 1){
+                continue;
             }
             Notification::create([
-                'title'=>"New file added !!",
-                'message'=>"New file added on project ".$this->name.".",
+                'title'=>$title,
+                'message'=>$message." ".$this->name.".",
                 'priority'=>1,
                 'user_id'=>$user->id,
-                'asset'=>'file',
+                'asset'=>$asset,
                 'relation'=>'projects',
                 'relation_id'=>$this->id
             ]);
         }
         Notification::create([
-            'title'=>"New file added!!",
-            'message'=>"New file added on project ".$this->name.".",
+            'title'=>$title,
+            'message'=>$message." ".$this->name.".",
             'priority'=>1,
             'user_id'=>1,
-            'asset'=>'file',
+            'asset'=>$asset,
             'relation'=>'projects',
             'relation_id'=>$this->id
         ]);

@@ -28,7 +28,7 @@ class RequirementController extends Controller
             $requirements = Requirement::where('type','=',$request->type);
             
             if($request->has('project_sel') && $request->project_sel !== null){
-                $requirements->where('project_id','=',$request->project_sel);
+                $requirements->where('project_id',$request->project_sel);
             }
             $requirements = $requirements->get();
             $projects = Project::pluck('name','id');
@@ -37,19 +37,27 @@ class RequirementController extends Controller
         {
             $projects = Auth::user()->projects->pluck('id');
 
-            $requirements = Requirement::where('type','=',$request->type)
-            ->whereIn('project_id',$projects)->get();
+            $requirements = Requirement::where('type','=',$request->type);
+            
+            if($request->has('project_sel') && $request->project_sel !== null){
+                $requirements = $requirements->where('project_id',$request->project_sel);
+            }else{
+                $requirements = $requirements->whereIn('project_id',$projects);
+            }
+            
+            $requirements = $requirements->get();
 
             $projects = Auth::user()->projects()->whereHas('requirements',function($q)use($request){
                 $q->where('type','=',$request->type);
-                if($request->has('project_sel')&&$request->project_sel !== null){
-                    $q->where('project_id','=',$request->project_sel);
-                }
             })->pluck('name','id');
         }
         $text = $request->type;
         $project_sel = $request->project_sel;
-        return view('requirements.index')->with(compact('requirements','text','project_sel','projects'));
+        if($request->type=="requirements"){
+            return view('requirements.index')->with(compact('requirements','text','project_sel','projects'));
+        }else{
+            return view('requirements.bugs')->with(compact('requirements','text','project_sel','projects'));
+        }
     }
 
     /**
@@ -93,7 +101,7 @@ class RequirementController extends Controller
             'priority' => 'required',
             'due_to' => 'required',
         ]);
-        Requirement::create([
+        $requirement = Requirement::create([
             'type'=>$request->type,
             'project_id'=>$request->project,
             'user_id'=>Auth::user()->id,
@@ -103,6 +111,9 @@ class RequirementController extends Controller
             'priority'=>$request->priority,
             'due_to'=>Carbon::createFromFormat('m/d/Y', $request->due_to)->format('Y-m-d')
         ]);
+
+        $requirement->notify("New ".$request->type." created!!","Check out the","requirement_creation");
+
         return redirect()->route('requirements.index',['type'=>$request->type,'project_sel'=>$request->project_sel]);
     }
 
@@ -159,6 +170,9 @@ class RequirementController extends Controller
         $requirement->rate = $request->rate;
         $requirement->percentage = $request->rate * 2 ; 
         $requirement->save();
+        
+        $requirement->notify("Update on ".$request->type."!!","A new budget has been set on ","requirement_budget");
+
         return redirect()->route('requirements.index',['type'=>$request->type,'project_sel'=>$request->project_sel]);
     }
 
@@ -190,6 +204,28 @@ class RequirementController extends Controller
     }
     
     public function changeStatus(Requirement $requirement, Request $request){
+        //Requirements flow
+        //status 1 created
+        //Awaits for developer budget
+        //Awaits for client budget approval
+        //status 2 on going
+        //awaits for client finish
+        //status 3 completed
+        //await for client work approval
+        //status 4 awaiting payment 
+        //client did not accepted the budget must re set budget
+        //status 5 Rejected
+
+        //Bugs flow
+        //status 1 created
+        //awaits for client to start 
+        //status 2 on going
+        //awaits for client finish
+        //status 3 completed
+        //await for client work approval
+        //status 4 finished requirement
+        //finished on bugs
+
         $request->validate([
             'status'=>'required',
             'type'=>'required'
@@ -205,8 +241,9 @@ class RequirementController extends Controller
             $requirement->percentage = null;
             $requirement->save();
         }
-            
+        
         $requirement->status = $request->status;
+        
         $requirement->save();
         if($request->has('type') && $request->type =="json"){
             return response()->json([
