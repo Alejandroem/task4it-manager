@@ -17,9 +17,11 @@ class FormMacroServiceProvider extends ServiceProvider
         Form::macro('checkboxes', function ($name, $fields) {
             $response = "<div class=\"form-control\" id=\"".$name."\">";
             $val = 0;
+            
             foreach($fields as $key => $field)
             {
-                $response= $response. '<label>'.Form::checkbox($name.'['.$val.']', $key, false)." ".$field."</label><br>";
+                
+                $response= $response. '<label>'.Form::checkbox($name.'['.$val.']', $key, true)." ".$field."</label><br>";
                 $val++;
             }
             return $response . "</div>";
