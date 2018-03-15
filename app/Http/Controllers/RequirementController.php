@@ -53,7 +53,11 @@ class RequirementController extends Controller
         }
         $text = $request->type;
         $project_sel = $request->project_sel;
-        return view('requirements.index')->with(compact('requirements','text','project_sel','projects'));
+        if($request->type=="requirements"){
+            return view('requirements.index')->with(compact('requirements','text','project_sel','projects'));
+        }else{
+            return view('requirements.bugs')->with(compact('requirements','text','project_sel','projects'));
+        }
     }
 
     /**
@@ -209,8 +213,9 @@ class RequirementController extends Controller
             $requirement->percentage = null;
             $requirement->save();
         }
-            
+        
         $requirement->status = $request->status;
+        
         $requirement->save();
         if($request->has('type') && $request->type =="json"){
             return response()->json([
