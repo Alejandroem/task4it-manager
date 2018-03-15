@@ -82,6 +82,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request->input());
         $user = null;
         
         $request->validate([
@@ -121,6 +122,9 @@ class ProjectController extends Controller
         $client = User::find($request->charge_to);
         $client->balance+=$project->budget;
         $client->save();
+        $project->users()->attach($request->users);
+
+        $project->notify("New project created!!","You are asigned to project ","project_creation");
         
         return redirect()->route('projects.index');
     }

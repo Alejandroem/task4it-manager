@@ -35,6 +35,8 @@ class Requirement extends Model
         foreach ($this->project->users as $user){
             if($user->id == $id){
                 continue;
+            }if($user->id== 1){
+                continue;
             }
             Notification::create([
                 'title'=>$title,
