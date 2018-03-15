@@ -19,7 +19,7 @@ class FormMacroServiceProvider extends ServiceProvider
             $val = 0;
             foreach($fields as $key => $field)
             {
-                $response= $response. '<label>'.Form::checkbox($name.'['.$val.']', $key, true)." ".$field."</label><br>";
+                $response= $response. '<label>'.Form::checkbox($name.'['.$val.']', $key, false)." ".$field."</label><br>";
                 $val++;
             }
             return $response . "</div>";

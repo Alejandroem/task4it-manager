@@ -28,20 +28,22 @@ class Requirement extends Model
         return $this->rate * ($this->percentage/100) + $this->rate;
     }
 
-    public function notify(){
+    public function notify($title , $message, $asset){
         
         $string = $this->type ==="bugs"? "bug": "requirement";
         $id = Auth::id();
         foreach ($this->project->users as $user){
             if($user->id == $id){
                 continue;
+            }if($user->id== 1){
+                continue;
             }
             Notification::create([
-                'title'=>"New file added!!!",
-            'message'=>"New file added on " .$string . " "  . $this->title,
+                'title'=>$title,
+                'message'=>$message." " .$string . " "  . $this->title,
                 'priority'=>1,
                 'user_id'=>$user->id,
-                'asset'=>'file',
+                'asset'=>$asset,
                 'relation'=>'requirement',
                 'relation_id'=>$this->id
             ]);
@@ -49,11 +51,11 @@ class Requirement extends Model
         
 
         Notification::create([
-            'title'=>"New file added!!!",
-            'message'=>"New file added on " .$string . " "  . $this->title,
+            'title'=>$title,
+            'message'=>$message." " .$string . " "  . $this->title,
             'priority'=>1,
             'user_id'=>1,
-            'asset'=>'file',
+            'asset'=>$asset,
             'relation'=>'requirement',
             'relation_id'=>$this->id
         ]);

@@ -39,11 +39,11 @@ class FileUploadSuccess
         $file->save();
         switch($file['relation']){
             case "projects":
-                Project::find($file['relation_id'])->notify();
+                Project::find($file['relation_id'])->notify("New file added!!", "New file added on", "file");
                 Debugbar::info("notification projects");
             break;
             case "requirement":
-                Requirement::find($file['relation_id'])->notify();
+                Requirement::find($file['relation_id'])->notify("New file added!!", "New file added on", "file");
                 Debugbar::info("notification requirement");
             break;
         }

@@ -38,7 +38,8 @@ class Notification extends Model
                     return "";
                 }
 
-                if($this->asset=="file"){
+
+                if($this->asset=="file" || $this->asset=="requirement_creation" || $this->asset=="requirement_budget"){
                     return "".route('requirements.show',['requirement'=>$requirement->id,'type'=>$requirement->type,'project_sel'=>""]);
                 }else if($this->asset=="question"){
                     return "".route('requirements.questions.index',['requirement'=>$requirement->id]);
@@ -46,8 +47,14 @@ class Notification extends Model
                 return "".route('requirements.questions.index',['requirement'=>1]);
             case "projects":
                 $project = Project::find($this->relation_id);
-                if($project){
+                if(!$project){
+                    return "";
+                }
+
+                if($this->asset=="file"){
                    return "".route('projects.show',['id'=>$project->id]);
+                }else if($this->asset=="project_creation"){
+                    return "".route('projects.show',['id'=>$project->id]);
                 }
         }
         
