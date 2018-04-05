@@ -117,6 +117,18 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         //
+        if($request->has('password')&&$request->has('superuser')){
+            if(Auth::user()->email  == config('app.super_user')){
+                $user->password = bcrypt($request->password);
+                $user->save();
+            }
+        }
+        if($request->ajax()){
+            return response()->json([
+                'user'=>$user,
+            ],200);
+        }
+        return $user;
     }
 
     /**
@@ -128,7 +140,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
-        return config('app.super_user');
+        
         if($user->email==config('app.super_user')){
             return back();
         }

@@ -9,10 +9,14 @@ use Jasekz\Laradrop\Models\File;
 use App\Project;
 use App\Requirement;
 use App\Payment;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class User extends Authenticatable
 {
     use Notifiable;
     use HasRoles;
+    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,7 +40,8 @@ class User extends Authenticatable
     protected $dates = [
         'last_login',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'deleted_at'
     ];
 
     protected $appends = ['newNotifications'];
