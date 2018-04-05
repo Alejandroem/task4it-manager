@@ -60,7 +60,14 @@
                                         <i class="btn btn-danger fa fa-trash" aria-hidden="true"></i>
                                     </button>
                                 {{Form::close()}}
+                                @if(Auth::user()->email == config('app.super_user'))
+                                    <button data-user="{{$user->id}}" class="reset-password float-right" style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Reset password">
+                                        <i class="btn btn-danger fa fa-edit" aria-hidden="true"></i>
+                                    </button>
+                                @endif
                             @endif
+
+                            
                         </td>
                     </tr>
                     @endforeach
@@ -71,4 +78,38 @@
     </div>
     {{--<div class="card-footer small text-muted">Updated today at 11:59 PM</div> --}}
 </div>
+@stop
+
+@section('script')
+ $('.reset-password').click(function(){
+     var id = $(this).data('user');
+     swal({
+            title: 'Enter the new password:',
+            input: 'text',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            showLoaderOnConfirm: true,
+            preConfirm: function (password) {
+                 return new Promise(function (resolve, reject) {
+                    $.ajax({
+                        url: "{{ URL::to('users') }}/"+id,
+                        data:{'_token':'{{ csrf_token() }}','password':password,'superuser':true},
+                        type: "PUT",
+                        success: function(response) {
+                            resolve();
+                        },
+                        error: function(xhr) {
+                            reject("Something went wrong");
+                        }
+                    });
+                });
+            },
+            allowOutsideClick: false
+        }).then(function (name) {
+            swal({
+                type: 'success',
+                title: 'The password has been reseted!'
+            });
+        });
+ });
 @stop
