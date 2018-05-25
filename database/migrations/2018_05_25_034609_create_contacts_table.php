@@ -20,9 +20,12 @@ class CreateContactsTable extends Migration
             $table->string('email');
             $table->string('phone');
             $table->string('open_position');
-            $table->string('contact_type_id');
-            $table->string('contact_status_id');
-            $table->string('city_id');
+            $table->unsignedInteger('contact_type_id');
+            $table->unsignedInteger('contact_status_id');
+            $table->unsignedInteger('city_id');
+            $table->foreign('contact_type_id')->references('id')->on('contact_types');
+            $table->foreign('contact_status_id')->references('id')->on('contact_statuses');
+            $table->foreign('city_id')->references('id')->on('cities');
             $table->timestamps();
         });
     }
