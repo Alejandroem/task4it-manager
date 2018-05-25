@@ -9,29 +9,29 @@
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
             @hasanyrole('admin|project-manager')
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-                <i class="fa fa-fw fa-user"></i>
-                <span class="nav-link-text">Users</span>
-            </a>
-            @endhasanyrole
-            <ul class="sidenav-second-level collapse" id="collapseComponents">
-                @hasanyrole('admin|project-manager')
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
-                    <a class="nav-link" href="{{ route('users.index') }}">
-                        <i class="fa fa-fw fa-users"></i>
-                        <span class="nav-link-text">List</span>
-                    </a>
-                </li>
-                @endrole
-                @hasanyrole('admin')
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
-                    <a class="nav-link" href="{{ route('notifications.index') }}">
-                        <i class="fa fa-fw fa-bell"></i>
-                        <span class="nav-link-text">Notifications</span>
-                    </a>
-                </li>
-                @endrole
-            </ul>
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+                    <i class="fa fa-fw fa-user"></i>
+                    <span class="nav-link-text">Users</span>
+                </a>
+                @endhasanyrole
+                <ul class="sidenav-second-level collapse" id="collapseComponents">
+                    @hasanyrole('admin|project-manager')
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+                        <a class="nav-link" href="{{ route('users.index') }}">
+                            <i class="fa fa-fw fa-users"></i>
+                            <span class="nav-link-text">List</span>
+                        </a>
+                    </li>
+                    @endrole
+                    @hasanyrole('admin')
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+                        <a class="nav-link" href="{{ route('notifications.index') }}">
+                            <i class="fa fa-fw fa-bell"></i>
+                            <span class="nav-link-text">Notifications</span>
+                        </a>
+                    </li>
+                    @endrole
+                </ul>
             </li>
         @hasanyrole('admin')
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Projects">
@@ -75,6 +75,7 @@
                 </a>
             </li>
         @endhasanyrole
+        @hasanyrole('admin|project-manager|client|developer')
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Requirements">
                 <a class="nav-link" href="{{ route('requirements.index',['type'=>'requirements']) }}">
                     <i class="fa fa-fw fa-check-square-o"></i>
@@ -87,6 +88,7 @@
                     <span class="nav-link-text">Bugs</span>
                 </a>
             </li>
+        @endhasanyrole
             @hasanyrole('admin|client|projectm')
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Payments">
                 <a class="nav-link" href="{{ route('payments.index') }}">
@@ -109,6 +111,32 @@
                     <i class="fa fa-inbox" aria-hidden="true"></i>
                     <span class="nav-link-text">Enquires</span>
                 </a>
+            </li>
+            @endhasanyrole
+            @hasanyrole('comercial|admin')
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Contacts">
+                <a class="nav-link" href="{{ route('contacts.index') }}">
+                    <i class="fa fa-address-book" aria-hidden="true"></i>
+                    <span class="nav-link-text">Contacts</span>
+                </a>
+            </li>
+            @endhasanyrole
+            @hasanyrole('admin')
+              <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Settings">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#settings_menu" data-parent="#exampleAccordion">
+                    <i class="fa fa-fw fa-cog"></i>
+                    <span class="nav-link-text">Settings</span>
+                </a>
+                
+                <ul class="sidenav-second-level collapse" id="settings_menu">
+                    
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Catalogs">
+                        <a class="nav-link" href="{{ route('catalogs.index') }}">
+                            <i class="fa fa-fw fa-bars"></i>
+                            <span class="nav-link-text">Catalogs</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             @endhasanyrole
 
