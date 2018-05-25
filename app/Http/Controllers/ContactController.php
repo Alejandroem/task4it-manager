@@ -7,6 +7,7 @@ use App\Country;
 use App\City;
 use App\ContactStatus;
 use App\ContactType;
+use Auth;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -19,7 +20,13 @@ class ContactController extends Controller
     public function index()
     {
         //
-        $contacts = Contact::all();
+
+        if (Auth::user()->hasAnyRole('admin')) {
+            $contacts = Contact::all();
+        } else {
+            $contacts = Contact::where('user_id',Auth::id())->get();
+        }
+
         return view('contacts.index')->with(compact('contacts'));
     }
 
@@ -31,7 +38,7 @@ class ContactController extends Controller
     public function create()
     {
         //
-        $cities = City::all()->pluck('name','id');
+        $cities = City::all();
         $countries = Country::all()->pluck('name','id');
         $types = ContactType::all()->pluck('name','id');
 
@@ -56,10 +63,7 @@ class ContactController extends Controller
             "company_name" => "required",
             "contact_type" => "required",
             "email" => "required",
-            "phone" => "required",
-            "open_position" => "required",
-            "status" => "required",
-            "observations" => "required"
+            "status" => "required"
         ]); 
         Contact::create([
             //"country_id" => $request->country,
@@ -71,7 +75,8 @@ class ContactController extends Controller
             "phone" => $request->phone,
             "open_position" => $request->open_position,
             "contact_status_id" => $request->status,
-            "observations" =>$request->observations
+            "observations" =>$request->observations,
+            "user_id"=>Auth::id()
         ]);
         return redirect()->route('contacts.index');
 
@@ -97,7 +102,7 @@ class ContactController extends Controller
     public function edit(Contact $contact)
     {
         //
-        $cities = City::all()->pluck('name','id');
+        $cities = City::all();
         $countries = Country::all()->pluck('name','id');
         $types = ContactType::all()->pluck('name','id');
         $status = ContactStatus::all();
@@ -137,6 +142,7 @@ class ContactController extends Controller
         $contact->open_position = $request->open_position;
         $contact->contact_status_id = $request->status;
         $contact->observations =$request->observations;
+        $contact->user_id = Auth::id();
         $contact->save();
         
         return redirect()->route('contacts.index');

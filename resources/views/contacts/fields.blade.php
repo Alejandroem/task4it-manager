@@ -33,7 +33,17 @@
                         @endhasanyrole --}}
                     </div>
                 </div>
-                {{ Form::select('city', $cities, isset($contact)? $contact->city->id:null, ['id'=>'cities','placeholder' => 'Pick a City...','class'=>'form-control','required'=>'true']) }}
+                <select name="all_cities" id="all_cities" hidden>               
+                    @foreach($cities as $city)
+                        <option class="all_cities" data-country="{{$city->country_id}}" value="{{$city->id}}" >{{$city->name}}</option>   
+                    @endforeach
+                </select>
+                <select name="city" id="city" class="form-control" placeholder= "Pick a status..." required >               
+                    <option value="null">Pick a city</option>
+                    @foreach($cities as $city)
+                        <option data-country="{{$city->country_id}}" @if( isset($contact) && $city->id == $contact->city_id)  selected @endif  value="{{$city->id}}" >{{$city->name}}</option>   
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="row my-2">
@@ -75,13 +85,13 @@
         <div class="row">
             <div class="col-md-12">
                 {{Form::label('phone', 'Phone:')}}
-                {{Form::number('phone',isset($contact)? $contact->phone:null,['class'=>'form-control','type'=>'email','required'=>'true','tel'])}}
+                {{Form::number('phone',isset($contact)? $contact->phone:null,['class'=>'form-control','type'=>'email','tel'])}}
             </div>
         </div>
         <div class="row my-2">
             <div class="col-md-12">
                 {{Form::label('open_position', 'Open Position:')}}
-                {{Form::text('open_position',isset($contact)? $contact->open_position:null,['class'=>'form-control','type'=>'text','required'=>'true'])}}
+                {{Form::text('open_position',isset($contact)? $contact->open_position:null,['class'=>'form-control','type'=>'text'])}}
             </div>
         </div>
         <div class="row my-2">
@@ -111,7 +121,7 @@
         <div class="row">
             <div class="col-md-12">
                 {{Form::label('observations', 'Observations:')}}
-                {{ Form::textarea('observations', isset($contact)? $contact->observations:null, ['class'=>'form-control','required'=>'true']) }}
+                {{ Form::textarea('observations', isset($contact)? $contact->observations:null, ['class'=>'form-control']) }}
             </div>
         </div>
     </div>

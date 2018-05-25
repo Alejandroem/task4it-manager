@@ -27,12 +27,29 @@
         me.css('font-color',selected.css('font-color'));
 
     });
-    
+    const NONE = "";
     $('#countries').change(function(){
         var selected = $(this).find(":selected");
-        if(selected.val()!==0){
-            $('#cities').prop('enabled','true');
+        var filtered_cities;
+        if(selected.val().localeCompare(NONE)==0){
+            filtered_cities = $("#all_cities option");
+        }else{
+            filtered_cities = $('#all_cities [data-country="'+selected.val()+'"]');
         }
+        $('#city').html(filtered_cities.clone());
+    });
+    $('#city').change(function(){
+        
+        $('#countries').val($(this).find(":selected").data('country'));
+
+        var selected = $('#countries').find(":selected");
+        var filtered_cities;
+        if(selected.val().localeCompare(NONE)==0){
+            filtered_cities = $("#all_cities option");
+        }else{
+            filtered_cities = $('#all_cities [data-country="'+selected.val()+'"]');
+        }
+        $('#city').html(filtered_cities.clone());
     });
 
 @endsection

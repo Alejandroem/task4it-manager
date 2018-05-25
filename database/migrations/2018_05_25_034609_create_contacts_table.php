@@ -18,9 +18,9 @@ class CreateContactsTable extends Migration
             $table->string('website');
             $table->string('company_name');
             $table->string('email');
-            $table->string('phone');
-            $table->string('open_position');
-            $table->text('observations');
+            $table->string('phone')->nullable();
+            $table->string('open_position')->nullable();
+            $table->text('observations')->nullable();
             $table->unsignedInteger('contact_type_id');
             $table->unsignedInteger('contact_status_id');
             $table->unsignedInteger('city_id');
