@@ -88,6 +88,7 @@
     
     <script>
         $(document).ready(function() {
+            $('.datatable').DataTable();
             $('.notify-bubble').show(400);
 
             $('.alert').on('closed.bs.alert', function () {
