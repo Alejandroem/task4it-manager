@@ -25,6 +25,7 @@ class ContactStatusController extends Controller
     public function create()
     {
         //
+        return view('status.create');
     }
 
     /**
@@ -36,6 +37,19 @@ class ContactStatusController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request,[
+            'name'=>'required|unique:contact_statuses',
+            'font_color'=>'required',
+            'background_color'=>'required'
+        ]);
+
+        ContactStatus::create([
+            'background_color'=>$request->background_color,
+            'font_color'=>$request->font_color,
+            'name'=>$request->name
+        ]);
+        //return back();
+        return redirect()->route('catalogs.index');
     }
 
     /**

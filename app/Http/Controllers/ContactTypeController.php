@@ -25,6 +25,7 @@ class ContactTypeController extends Controller
     public function create()
     {
         //
+        return view ('types.create');
     }
 
     /**
@@ -36,6 +37,15 @@ class ContactTypeController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request,[
+            'name'=>'required|unique:contact_types'
+        ]);
+
+        ContactType::create([
+            'name'=>$request->name
+        ]);
+        //return back();
+        return redirect()->route('catalogs.index');
     }
 
     /**

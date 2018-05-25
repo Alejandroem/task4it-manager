@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class ContactStatus extends Model
 {
     //
+    protected $guarded = [];
 }

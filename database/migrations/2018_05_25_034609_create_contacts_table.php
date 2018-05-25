@@ -20,6 +20,7 @@ class CreateContactsTable extends Migration
             $table->string('email');
             $table->string('phone');
             $table->string('open_position');
+            $table->text('observations');
             $table->unsignedInteger('contact_type_id');
             $table->unsignedInteger('contact_status_id');
             $table->unsignedInteger('city_id');

@@ -25,6 +25,7 @@ class CountryController extends Controller
     public function create()
     {
         //
+        return view ('countries.create');
     }
 
     /**
@@ -36,6 +37,15 @@ class CountryController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request,[
+            'name'=>'required|unique:countries'
+        ]);
+
+        Country::create([
+            'name'=>$request->name
+        ]);
+        //return back();
+        return redirect()->route('catalogs.index');
     }
 
     /**

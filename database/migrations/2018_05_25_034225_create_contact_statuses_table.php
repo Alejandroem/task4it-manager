@@ -16,6 +16,8 @@ class CreateContactStatusesTable extends Migration
         Schema::create('contact_statuses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('font_color');
+            $table->string('background_color');
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\Country;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -25,6 +26,8 @@ class CityController extends Controller
     public function create()
     {
         //
+        $countries = Country::all()->pluck('name','id');
+        return view ('cities.create')->with(compact('countries'));
     }
 
     /**
@@ -36,6 +39,17 @@ class CityController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request,[
+            'name'=>'required|unique:cities',
+            'country'=>'required'
+        ]);
+
+        City::create([
+            'country_id'=>$request->country,
+            'name'=>$request->name
+        ]);
+        //return back();
+        return redirect()->route('catalogs.index');
     }
 
     /**
