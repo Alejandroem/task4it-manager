@@ -27,6 +27,14 @@
         me.css('font-color',selected.css('font-color'));
 
     });
+    
+    $('#countries').change(function(){
+        var selected = $(this).find(":selected");
+        if(selected.val()!==0){
+            $('#cities').prop('enabled','true');
+        }
+    });
+
 @endsection
       
       

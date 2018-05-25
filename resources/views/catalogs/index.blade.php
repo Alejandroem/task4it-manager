@@ -22,6 +22,7 @@
                                                 <th>
                                                     Name
                                                 </th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <hbody>
@@ -29,6 +30,15 @@
                                             <tr>
                                                 <td>
                                                     {{$country->name}}
+                                                </td>
+                                                <td>
+                                                {{Form::open(array('route'=>array('countries.destroy',$country),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
+                                                    {{csrf_field()}}
+                                                    <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete country">
+                                                        <i class="btn btn-danger fa fa-trash" aria-hidden="true"></i>
+                                                    </button>
+                                                {{Form::close()}}
+                                                
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -57,6 +67,9 @@
                                                 <th>
                                                     Name
                                                 </th>
+                                                <th>
+                                                    
+                                                </th>
                                             </tr>
                                         </thead>
                                         <hbody>
@@ -67,6 +80,14 @@
                                                 </td>
                                                 <td>
                                                     {{$city->name}}
+                                                </td>
+                                                <td>
+                                                {{Form::open(array('route'=>array('cities.destroy',$city),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
+                                                    {{csrf_field()}}
+                                                    <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete city">
+                                                        <i class="btn btn-danger fa fa-trash" aria-hidden="true"></i>
+                                                    </button>
+                                                {{Form::close()}}
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -100,6 +121,7 @@
                                                 <th>
                                                     Background
                                                 </th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <hbody>
@@ -113,6 +135,14 @@
                                                 </td>
                                                 <td style="background-color:{{$singleStatus->background_color}}">
                                                     
+                                                </td>
+                                                <td>
+                                                {{Form::open(array('route'=>array('status.destroy',$singleStatus),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
+                                                    {{csrf_field()}}
+                                                    <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete status">
+                                                        <i class="btn btn-danger fa fa-trash" aria-hidden="true"></i>
+                                                    </button>
+                                                {{Form::close()}}
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -138,6 +168,9 @@
                                                 <th>
                                                     Name
                                                 </th>
+                                                <th>
+                                                    
+                                                </th>
                                             </tr>
                                         </thead>
                                         <hbody>
@@ -145,6 +178,14 @@
                                             <tr>
                                                 <td>
                                                     {{$type->name}}
+                                                </td>
+                                                <td>
+                                                    {{Form::open(array('route'=>array('types.destroy',$type),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
+                                                        {{csrf_field()}}
+                                                        <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete Type">
+                                                            <i class="btn btn-danger fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    {{Form::close()}}
                                                 </td>
                                             </tr>
                                             @endforeach

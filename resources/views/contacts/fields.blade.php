@@ -14,7 +14,7 @@
                         @endhasanyrole --}}
                     </div>
                 </div>
-                {{ Form::select('country', $countries, isset($contact)? $contact->city->country->id:null, ['placeholder' => 'Pick a country...','class'=>'form-control','required'=>'true']) }}
+                {{ Form::select('country', $countries, isset($contact)? $contact->city->country->id:null, ['id'=>'countries','placeholder' => 'Pick a country...','class'=>'form-control','required'=>'true']) }}
                 <!-- Trigger the modal with a button -->
             </div>
         </div>
@@ -33,7 +33,7 @@
                         @endhasanyrole --}}
                     </div>
                 </div>
-                {{ Form::select('city', $cities, isset($contact)? $contact->city->id:null, ['placeholder' => 'Pick a City...','class'=>'form-control','required'=>'true']) }}
+                {{ Form::select('city', $cities, isset($contact)? $contact->city->id:null, ['id'=>'cities','placeholder' => 'Pick a City...','class'=>'form-control','required'=>'true']) }}
             </div>
         </div>
         <div class="row my-2">

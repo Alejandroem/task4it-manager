@@ -88,8 +88,10 @@ class ContactTypeController extends Controller
      * @param  \App\ContactType  $contactType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ContactType $contactType)
+    public function destroy(ContactType $type)
     {
         //
+        $type->delete();
+        return back();
     }
 }

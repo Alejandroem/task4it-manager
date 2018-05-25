@@ -92,8 +92,10 @@ class ContactStatusController extends Controller
      * @param  \App\ContactStatus  $contactStatus
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ContactStatus $contactStatus)
+    public function destroy(ContactStatus $status)
     {
         //
+        $status->delete();
+        return back();
     }
 }
