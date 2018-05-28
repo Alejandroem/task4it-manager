@@ -126,10 +126,7 @@ class ContactController extends Controller
             "company_name" => "required",
             "contact_type" => "required",
             "email" => "required",
-            "phone" => "required",
-            "open_position" => "required",
-            "status" => "required",
-            "observations" => "required"
+            "status" => "required"
         ]); 
         
         
