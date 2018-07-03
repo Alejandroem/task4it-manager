@@ -141,7 +141,7 @@
             @endhasanyrole
             @hasanyrole('admin|developer')
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Invoice">
-                    <a class="nav-link" href="{{route('invoices.create')}}">
+                    <a class="nav-link" href="{{route('invoices.index')}}">
                         <i class="fa fa-fw fa-money"></i>
                         <span class="nav-link-text">Create new invoice</span>
                     </a>

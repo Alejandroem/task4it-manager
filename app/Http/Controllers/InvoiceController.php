@@ -14,6 +14,13 @@ use Jasekz\Laradrop\Events\FileWasDeleted;
 use \Carbon\Carbon;
 class InvoiceController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['role:admin|developer']);        
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,10 +29,14 @@ class InvoiceController extends Controller
     public function index()
     {
         //
-        $developers = User::with('roles')->get();
-        $developers = $developers->reject(function($user,$key){
-            return $user->hasRole('developer');
-        });
+        if(Auth::user()->hasAnyRole('admin')){
+            $developers = User::with('roles')->get();
+            $developers = $developers->reject(function($user,$key){
+                return $user->hasRole('developer');
+            });
+        }else{
+            $developers = \App\User::where('id',Auth::id())->get();
+        }
         return view('invoices.index')->with(compact('developers'));
     }
 
@@ -76,6 +87,7 @@ class InvoiceController extends Controller
 
             $invoice = Invoice::create([
                 'project_id'=>$request->project,
+                'user_id'=>Auth::id(),
                 'date'=>Carbon::createFromFormat('m/d/Y', $request->date)->format('Y-m-d'),
                 'amount'=>$request->amount
             ]);
