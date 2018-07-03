@@ -41,6 +41,7 @@
     $('#city').change(function(){
         
         $('#countries').val($(this).find(":selected").data('country'));
+        var selectedCity= $(this).find(':selected');
 
         var selected = $('#countries').find(":selected");
         var filtered_cities;
@@ -50,6 +51,7 @@
             filtered_cities = $('#all_cities [data-country="'+selected.val()+'"]');
         }
         $('#city').html(filtered_cities.clone());
+        $('#city').val(selectedCity.val());
     });
 
 @endsection

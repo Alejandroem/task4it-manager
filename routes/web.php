@@ -143,3 +143,10 @@ Route::resource('/cities','CityController');
 Route::resource('/countries','CountryController');
 Route::resource('/contacts/status','ContactStatusController');
 Route::resource('/contact/types','ContactTypeController');
+Route::get('/invoices/list/{project}/{developer}',[
+    'uses'=>'InvoiceController@invoicesList',
+    'as'=>'invoices.list'
+]);
+Route::resource('/invoices','InvoiceController');
+Route::resource('/timetracking','TimeEntryController');
+Route::resource('/calendar','CalendarEventController');

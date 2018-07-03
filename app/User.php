@@ -60,6 +60,8 @@ class User extends Authenticatable
     }
 
     public function getNewNotificationsAttribute(){
-        return $this->notifications()->where('last_seen',null)->get();
+        return $this->notifications()->where('last_seen',null)
+        ->where('created_at',\Carbon\Carbon::now()->subDays(3))
+        ->get();
     }
 }
