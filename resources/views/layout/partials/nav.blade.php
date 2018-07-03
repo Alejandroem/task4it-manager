@@ -172,6 +172,14 @@
                     </a>
                 </li>
             @endhasrole
+            @hasanyrole('developer')
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Calendar">
+                    <a class="nav-link" href="{{route('calendar.index')}}">
+                        <i class="fa fa-fw fa-calendar"></i>
+                        <span class="nav-link-text">Calendar</span>
+                    </a>
+                </li>
+            @endhasrole
             @hasanyrole('admin')
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Employees">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#invoicesMenu" data-parent="#exampleAccordion">
@@ -192,6 +200,14 @@
                         <a class="nav-link" href="{{ route('timetracking.index') }}">
                             <i class="fa fa-fw fa-hourglass-half"></i>
                             <span class="nav-link-text">Time Entries</span>
+                        </a>
+                    </li>
+                    @endhasanyrole
+                    @hasanyrole('admin')
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Calendar">
+                        <a class="nav-link" href="{{route('calendar.index')}}">
+                            <i class="fa fa-fw fa-calendar"></i>
+                            <span class="nav-link-text">Calendar</span>
                         </a>
                     </li>
                     @endhasanyrole
