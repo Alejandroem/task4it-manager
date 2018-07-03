@@ -16,7 +16,11 @@ class TimeEntryController extends Controller
     public function index()
     {
         //
-        $timeentries = TimeEntry::all();
+        if(Auth::user()->hasAnyRole('admin')){
+            $timeentries = TimeEntry::all();
+        }else{
+            $timeentries = TimeEntry::where('user_id',Auth::id())->get();
+        }
         return view('timeentries.index')->with(compact('timeentries'));
     }
 
@@ -99,8 +103,10 @@ class TimeEntryController extends Controller
      * @param  \App\TimeEntry  $timeEntry
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TimeEntry $timeEntry)
+    public function destroy(TimeEntry $timetracking)
     {
         //
+        $timetracking->delete();
+        return redirect()->back();
     }
 }

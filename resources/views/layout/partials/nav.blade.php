@@ -103,7 +103,7 @@
             @hasanyrole('project-manager|client|developer')
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Requirements">
                 <a class="nav-link" href="{{ route('requirements.index',['type'=>'requirements']) }}">
-                    <i class="fa fa-fw fa-check-square-o"></i>
+                    <i class="fa fa-fw fa-list-ul"></i>
                     <span class="nav-link-text">Requirements</span>
                 </a>
             </li>
@@ -156,6 +156,14 @@
                 </ul>
             </li>
             @endhasanyrole
+            @hasanyrole('developer')
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Time entry">
+                    <a class="nav-link" href="{{route('timetracking.index')}}">
+                        <i class="fa fa-fw fa-hourglass-half"></i>
+                        <span class="nav-link-text">Time Entries</span>
+                    </a>
+                </li>
+            @endhasrole
             @hasanyrole('developer')
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Invoice">
                     <a class="nav-link" href="{{route('invoices.index')}}">

@@ -19,6 +19,7 @@
                             <th>
                                 Check invoice
                             </th>
+                            <th></th>
                         </tr>
                     </thead>
                     <hbody>
@@ -34,6 +35,14 @@
                                     @if($invoice->file())
                                         <a href="{{$invoice->file()->public_resource_url}}">{{$invoice->file()->alias}}</a>
                                     @endif
+                                </td>
+                                <td>
+                                {{Form::open(array('route'=>array('invoices.destroy',$invoice->id),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
+                                    {{csrf_field()}}
+                                    <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete invoice">
+                                        <i class="btn btn-danger fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                {{Form::close()}}
                                 </td>
                             </tr>
                         @endforeach

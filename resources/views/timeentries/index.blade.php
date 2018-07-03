@@ -16,6 +16,7 @@
                             <th>Hours</th>
                             <th>Rate</th>
                             <th>Total</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <hbody>
@@ -41,6 +42,14 @@
                             </td>
                             <td>
                                 {{number_format($timeentry->ended_at->diffInHours($timeentry->started_at)*$timeentry->hourly_rate,2)}} €
+                            </td>
+                            <td>
+                                {{Form::open(array('route'=>array('timetracking.destroy',$timeentry->id),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
+                                    {{csrf_field()}}
+                                    <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete entry">
+                                        <i class="btn btn-danger fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                {{Form::close()}}
                             </td>
                         </tr>
                     @endforeach 
