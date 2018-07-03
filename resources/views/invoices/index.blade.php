@@ -11,7 +11,7 @@
                         <tr>
                         @hasanyrole('admin')
                             <th>
-                                Name
+                                Developer Name
                             </th>
                         @endhasanyrole
                             <th>
