@@ -139,6 +139,40 @@
                 </ul>
             </li>
             @endhasanyrole
+            @hasanyrole('admin|developer')
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Invoice">
+                    <a class="nav-link" href="{{route('invoices.create')}}">
+                        <i class="fa fa-fw fa-money"></i>
+                        <span class="nav-link-text">Create new invoice</span>
+                    </a>
+                </li>
+            @endhasrole
+            @hasanyrole('admin')
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#invoicesMenu" data-parent="#exampleAccordion">
+                    <i class="fa fa-fw fa-users"></i>
+                    <span class="nav-link-text">Employees</span>
+                </a>
+                @endhasanyrole
+                <ul class="sidenav-second-level collapse" id="invoicesMenu">
+                    @hasanyrole('admin')
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Invoice">
+                        <a class="nav-link" href="{{ route('invoices.index') }}">
+                            <i class="fa fa-fw fa-users"></i>
+                            <span class="nav-link-text">Invoices</span>
+                        </a>
+                    </li>
+                    @endrole
+                    @hasanyrole('admin')
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+                        <a class="nav-link" href="{{ route('notifications.index') }}">
+                            <i class="fa fa-fw fa-bell"></i>
+                            <span class="nav-link-text">Notifications</span>
+                        </a>
+                    </li>
+                    @endrole
+                </ul>
+            </li>
 
         </ul>
 

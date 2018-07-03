@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Notification;
 use Auth;
 use Debugbar;
+use App\Invoice;
 class Project extends Model
 {
     //
@@ -68,5 +69,9 @@ class Project extends Model
         ->update([
             'last_seen' => \Carbon\Carbon::now()
         ]);
+    }
+
+    public function invoices(){
+        return $this->hasMany('\App\Invoice','project_id');
     }
 }
