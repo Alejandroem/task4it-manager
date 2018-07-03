@@ -28,7 +28,7 @@
                                     {{$invoice->date}}
                                 </td>   
                                 <td>
-                                    {{$invoice->amount}}
+                                    {{number_format($invoice->amount,2)}} €
                                 </td>
                                 <td>
                                     @if($invoice->file())

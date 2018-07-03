@@ -23,7 +23,7 @@
                     </li>
                     @endhasanyrole
                     @hasanyrole('admin')
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Notifications">
                         <a class="nav-link" href="{{ route('notifications.index') }}">
                             <i class="fa fa-fw fa-bell"></i>
                             <span class="nav-link-text">Notifications</span>
@@ -180,10 +180,10 @@
                     </li>
                     @endhasanyrole
                     @hasanyrole('admin')
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
-                        <a class="nav-link" href="{{ route('notifications.index') }}">
-                            <i class="fa fa-fw fa-bell"></i>
-                            <span class="nav-link-text">Notifications</span>
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Time Entries">
+                        <a class="nav-link" href="{{ route('timetracking.index') }}">
+                            <i class="fa fa-fw fa-hourglass-half"></i>
+                            <span class="nav-link-text">Time Entries</span>
                         </a>
                     </li>
                     @endhasanyrole

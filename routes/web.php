@@ -148,3 +148,4 @@ Route::get('/invoices/list/{project}/{developer}',[
     'as'=>'invoices.list'
 ]);
 Route::resource('/invoices','InvoiceController');
+Route::resource('/timetracking','TimeEntryController');

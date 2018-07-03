@@ -88,7 +88,7 @@ class InvoiceController extends Controller
             $invoice = Invoice::create([
                 'project_id'=>$request->project,
                 'user_id'=>Auth::id(),
-                'date'=>Carbon::createFromFormat('m/d/Y', $request->date)->format('Y-m-d'),
+                'date'=>Carbon::createFromFormat('m/d/Y', $request->date)->format('Y-m-d H:m:s'),
                 'amount'=>$request->amount
             ]);
             

@@ -25,7 +25,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet" type="text/css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js" ></script> 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha256-kIxwtDqhOVbQysWu0OpR9QfijdXCfqvXgAUJuv7Uxmg=" crossorigin="anonymous" />
     
 
     <!-- Custom styles for this template-->
@@ -77,7 +77,7 @@
     <!-- <script src="{{ asset('js/sb-admin-charts.min.js')}}"></script> -->
     <script src="{{ asset('vendor/timelinejs-slider/timeline.min.js')}}"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
     <script src="{{ asset('/vendor/jasekz/laradrop/js/enyo.dropzone.js')}}"></script>
     <script src="{{ asset('/vendor/jasekz/laradrop/js/laradrop.js')}}"></script>
 
@@ -104,6 +104,27 @@
                     window.location = $(this).data('href');
                 }
             })
+           /*  jQuery('.datetimepickerend').datetimepicker({
+            format:'d.m.Y H:i',
+            inline:true,
+            lang:'ru'
+            }); */
+            jQuery('.date_timepicker_start').datetimepicker({
+                format:'m/d/Y H:i',
+                onShow:function( ct ){
+                    this.setOptions({
+                        maxDate:jQuery('.date_timepicker_end').val()?jQuery('.date_timepicker_end').val():false
+                    })
+                }
+            });
+            jQuery('.date_timepicker_end').datetimepicker({
+                format:'m/d/Y H:i',
+                onShow:function( ct ){
+                    this.setOptions({
+                        minDate:jQuery('.date_timepicker_start').val()?jQuery('.date_timepicker_start').val():false
+                    })
+                }
+            });          
 
             $('.datepicker').datepicker();
             $('.js-timeline').Timeline();
