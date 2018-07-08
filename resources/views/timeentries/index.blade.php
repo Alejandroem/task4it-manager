@@ -11,8 +11,6 @@
                         <tr>
                             <th>Project</th>
                             <th>User</th>
-                            <th>Started</th>
-                            <th>Ended</th>
                             <th>Hours</th>
                             <th>Rate</th>
                             <th>Total</th>
@@ -29,19 +27,13 @@
                                 {{$timeentry->user->name}}
                             </td>
                             <td>
-                                {{$timeentry->started_at->toDateTimeString()}}
-                            </td>
-                            <td>
-                                {{$timeentry->ended_at->toDateTimeString()}}
-                            </td>
-                            <td>
-                                {{$timeentry->ended_at->diffInHours($timeentry->started_at)}}
+                                {{$timeentry->hours }} H
                             </td>
                             <td>
                                 {{number_format($timeentry->hourly_rate,2)}} €
                             </td>
                             <td>
-                                {{number_format($timeentry->ended_at->diffInHours($timeentry->started_at)*$timeentry->hourly_rate,2)}} €
+                                {{number_format($timeentry->hours*$timeentry->hourly_rate,2)}} €
                             </td>
                             <td>
                                 {{Form::open(array('route'=>array('timetracking.destroy',$timeentry->id),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}

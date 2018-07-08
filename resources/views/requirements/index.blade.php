@@ -233,7 +233,7 @@
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
                             @hasanyrole('admin')
-                            {{Form::open(array('route'=>array('notifications.destroy',$requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
+                            {{Form::open(array('route'=>array('requirements.destroy',$requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
                                 {{csrf_field()}}
                                 <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete {{$text}}">
                                     <i class="btn btn-danger fa fa-trash fa-lg" aria-hidden="true"></i>
@@ -459,7 +459,7 @@
                                 <i class="btn btn-primary fa fa-files-o fa-lg" aria-hidden="true"></i>
                             </a>
                             @hasanyrole('admin')
-                            {{Form::open(array('route'=>array('notifications.destroy',$requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
+                            {{Form::open(array('route'=>array('requirements.destroy',$requirement->id,'type'=>$text,'project_sel'=>$project_sel),'method'=>'DELETE','style'=>'display:inline;border:none;margin:0;padding:0;'))}}
                                 {{csrf_field()}}
                                 <button style="background:none!important;border:none;padding:0!important;border-bottom:1px solid #444; " title="Delete {{$text}}">
                                     <i class="btn btn-danger fa fa-trash fa-lg" aria-hidden="true"></i>

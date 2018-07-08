@@ -31,7 +31,7 @@
                         </td>
                         <td>{{$user->email}}</td>
                         <td>{{$user->created_at->toFormattedDateString()}}</td>
-                        <td>{{$user->roles->first()->display_name}}
+                        <td>{{$user->roles->first()? $user->roles->first()->display_name :""}}
                             @if($user->hasRole('client'))
                                 &nbsp
                                 &nbsp

@@ -22,7 +22,7 @@ $(document).ready(function() {
         events : [
             @foreach($tasks as $task)
             {
-                title : '@hasanyrole('admin'){{ $task->description ."-".$task->user->name }} @else {{ $task->description }}  @endhasanyrole',
+                title : '{{ $task->description ."-".$task->user->name }}',
                 start : '{{ $task->started_at }}',
                 end : '{{ $task->ended_at }}',
                 //url : '{{ route('calendar.edit', $task->id) }}'
