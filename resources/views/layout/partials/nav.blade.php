@@ -172,11 +172,11 @@
                     </a>
                 </li>
             @endhasrole
-            @hasanyrole('developer')
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Calendar">
+            @hasanyrole('developer|project-manager|comercial')
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Holidays calendar">
                     <a class="nav-link" href="{{route('calendar.index')}}">
                         <i class="fa fa-fw fa-calendar"></i>
-                        <span class="nav-link-text">Calendar</span>
+                        <span class="nav-link-text">Holidays calendar</span>
                     </a>
                 </li>
             @endhasrole
@@ -204,10 +204,10 @@
                     </li>
                     @endhasanyrole
                     @hasanyrole('admin')
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Calendar">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Holidays calendar">
                         <a class="nav-link" href="{{route('calendar.index')}}">
                             <i class="fa fa-fw fa-calendar"></i>
-                            <span class="nav-link-text">Calendar</span>
+                            <span class="nav-link-text">Holidays calendar</span>
                         </a>
                     </li>
                     @endhasanyrole

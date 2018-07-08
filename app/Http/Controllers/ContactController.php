@@ -17,17 +17,31 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
 
         if (Auth::user()->hasAnyRole('admin')) {
-            $contacts = Contact::all();
+            $contacts = Contact::query();
         } else {
-            $contacts = Contact::where('user_id',Auth::id())->get();
+            $contacts = Contact::where('user_id',Auth::id());
+        }
+        $cities = City::all();
+        $countries = Country::all()->pluck('name','id');
+
+        if($request->has('country_sel') && $request->country_sel !== null){
+            $cities_ids = Country::find($request->country_sel)->cities->pluck('id')->all();
+            $contacts->whereIn('city_id',$cities_ids);
+        }
+        if($request->has('city_sel') && $request->city_sel !== null){
+            $contacts->where('city_id',$request->city_sel);
         }
 
-        return view('contacts.index')->with(compact('contacts'));
+        $contacts = $contacts->get();
+
+        $city_sel = $request->city_sel;
+        $country_sel = $request->country_sel;
+        return view('contacts.index')->with(compact('contacts','cities','countries','city_sel','country_sel'));
     }
 
     /**

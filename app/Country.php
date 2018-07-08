@@ -8,4 +8,8 @@ class Country extends Model
 {
     //
     protected $guarded = [];
+
+    public function cities(){
+        return $this->hasMany('\App\City','country_id');
+    }
 }

@@ -17,8 +17,7 @@ class CreateTimeEntriesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('project_id')->nullable();
             $table->unsignedInteger('user_id')->nullable();
-            $table->dateTime('started_at');
-            $table->dateTime('ended_at');
+            $table->double('hours','15','2')->nullable();
             $table->double('hourly_rate','15','2')->nullable();
             $table->timestamps();
         });

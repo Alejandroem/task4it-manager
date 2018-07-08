@@ -47,14 +47,13 @@ class TimeEntryController extends Controller
         //
         $this->validate($request,[
             'project_id'=>'required',
-            'started_at'=>'required',
-            'ended_at'=>'required|after:started_at',
+            'hours'=>'required',
+            'minutes'=>'required',
             'hourly_rate'=>'required'
         ]);
         $timeEntry = TimeEntry::create([
             'project_id'=>$request->project_id,
-            'started_at'=>Carbon::createFromFormat('m/d/Y H:i', $request->started_at),
-            'ended_at'=>Carbon::createFromFormat('m/d/Y H:i', $request->ended_at),
+            'hours'=>$request->hours + $request->minutes > 0 ? (60 / $request->minutes) : 0,
             'hourly_rate'=>$request->hourly_rate,
             'user_id'=>Auth::id()
         ]);
