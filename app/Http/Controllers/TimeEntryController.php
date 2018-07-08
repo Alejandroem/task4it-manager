@@ -53,7 +53,7 @@ class TimeEntryController extends Controller
         ]);
         $timeEntry = TimeEntry::create([
             'project_id'=>$request->project_id,
-            'hours'=>$request->hours + $request->minutes > 0 ? (60 / $request->minutes) : 0,
+            'hours'=>$request->hours + ($request->minutes /60),
             'hourly_rate'=>$request->hourly_rate,
             'user_id'=>Auth::id()
         ]);

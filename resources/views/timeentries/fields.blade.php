@@ -13,7 +13,7 @@
             </div>
             <div class="col-md-4 ">
                 {{Form::label('minutes', 'Minutes:')}}
-                {{Form::number('minutes',null,['class' => 'form-control','min'=>'1','step'=>'any','required'=>'true'])}}
+                {{Form::number('minutes',null,['class' => 'form-control','min'=>'1','max'=>'59','step'=>'any','required'=>'true'])}}
             </div>
             <div class="col-md-4 ">
                 {{Form::label('rate', 'Enter your hourly rate:')}}
