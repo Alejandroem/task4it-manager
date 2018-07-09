@@ -17,7 +17,7 @@ class InvoiceController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['role:admin|developer']);        
+        $this->middleware(['role:admin|developer|project-manager|comercial|client']);        
         $this->middleware('auth');
     }
 
@@ -35,7 +35,7 @@ class InvoiceController extends Controller
                 return $user->hasRole('developer');
             });
         }else{
-            $developers = \App\User::where('user_id',Auth::id())->get();
+            $developers = \App\User::where('id',Auth::id())->get();
         }
         return view('invoices.index')->with(compact('developers'));
     }

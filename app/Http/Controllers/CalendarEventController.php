@@ -16,12 +16,12 @@ class CalendarEventController extends Controller
     public function index()
     {
         //
-        if(Auth::user()->hasAnyRole('admin')){
+       // if(Auth::user()->hasAnyRole('admin')){
             $tasks = CalendarEvent::all();
 
-        }else{
-            $tasks = CalendarEvent::where('user_id',Auth::id())->get();            
-        }
+//        }else{
+  //          $tasks = CalendarEvent::where('user_id',Auth::id())->get();            
+    //    }
                 
         return view('calendar.index')->with(compact('tasks'));
     }
