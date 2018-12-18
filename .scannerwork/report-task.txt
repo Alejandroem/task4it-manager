@@ -1,0 +1,6 @@
+projectKey=task4it-manager
+serverUrl=http://localhost:9000
+serverVersion=7.4.0.18908
+dashboardUrl=http://localhost:9000/dashboard?id=task4it-manager
+ceTaskId=AWfCiJETVQplVrlRT45e
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AWfCiJETVQplVrlRT45e
